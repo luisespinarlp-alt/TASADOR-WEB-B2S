@@ -346,7 +346,7 @@ Si ves costuras irregulares, logos deformados o etiquetas mal impresas: es_origi
     const res=await fetch('/api/tasar',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,messages:[{role:'user',content}]})
+      body:JSON.stringify({model:'model:'claude-sonnet-4-5',',max_tokens:900,messages:[{role:'user',content}]})
     });
     const data=await res.json();
     if(data.error){showErr(data.error);return;}
