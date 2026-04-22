@@ -359,7 +359,7 @@ Si ves costuras irregulares, logos deformados o etiquetas mal impresas: es_origi
 function showErr(msg){
   document.getElementById('loading').style.display='none';
   document.getElementById('resultado').style.display='block';
-  document.getElementById('analisis').innerHTML=`<div style="color:var(--red);font-size:13px;">⚠ ${msg}</div>`;
+document.getElementById('analisis').innerHTML=`<div style="color:var(--red);font-size:13px;">⚠ ${JSON.stringify(msg)}</div>`;
   document.getElementById('metrics').innerHTML='';
   document.getElementById('verdict').innerHTML='';
   document.getElementById('breakdown').innerHTML='';
