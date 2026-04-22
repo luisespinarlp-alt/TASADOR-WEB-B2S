@@ -21,7 +21,7 @@ app.post('/api/tasar', async (req, res) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': API_KEY,
+        'anthropic-dangerous-direct-browser-access': 'true',        'x-api-key': API_KEY,
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify(req.body),
