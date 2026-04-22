@@ -16,6 +16,26 @@ app.post('/api/tasar', async (req, res) => {
   }
   try {
     const { default: fetch } = await import('node-fetch');
+    const body = req.body;
+    if (body.messages) {
+      body.messages = body.messages.map(msg => {
+        if (Array.isArray(msg.content)) {
+          msg.content = msg.content.map(block => {
+            if (block.type === 'image' && block.source?.data) {
+              const data = block.source.data;
+              let media_type = 'image/jpeg';
+              if (data.startsWith('iVBORw0KGgo')) media_type = 'image/png';
+              else if (data.startsWith('/9j/')) media_type = 'image/jpeg';
+              else if (data.startsWith('R0lGOD')) media_type = 'image/gif';
+              else if (data.startsWith('UklGR')) media_type = 'image/webp';
+              block.source.media_type = media_type;
+            }
+            return block;
+          });
+        }
+        return msg;
+      });
+    }
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -23,7 +43,7 @@ app.post('/api/tasar', async (req, res) => {
         'x-api-key': API_KEY,
         'anthropic-version': '2023-06-01',
       },
-      body: JSON.stringify(req.body),
+      body: JSON.stringify(body),
     });
     const text = await response.text();
     try {
