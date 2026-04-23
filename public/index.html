@@ -11,32 +11,24 @@
     --text: #1a1a1a; --muted: #666; --light: #999;
     --green: #27500A; --green-bg: #EAF3DE;
     --amber: #633806; --amber-bg: #FAEEDA;
-    --red: #791F1F;   --red-bg: #FCEBEB;
-    --neon: #CCFF00;  --dark: #0c0c0c;
+    --red: #791F1F; --red-bg: #FCEBEB;
+    --neon: #CCFF00; --dark: #0c0c0c;
     --radius: 12px; --radius-sm: 8px;
   }
   body { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
   .container { max-width: 680px; margin: 0 auto; padding: 1rem; }
-
-  /* Header */
   .header { background: var(--dark); border-radius: var(--radius); padding: 1rem 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; }
   .brand { font-size: 18px; font-weight: 700; color: #F0EDE6; letter-spacing: 3px; }
   .brand span { color: var(--neon); }
   .brand-sub { font-size: 9px; color: #444; letter-spacing: 2px; margin-top: 2px; }
   .obj { font-size: 10px; color: #444; }
   .obj span { color: var(--neon); font-weight: 700; }
-
-  /* Tabs */
   .tabs { display: flex; gap: 4px; margin-bottom: 1rem; }
   .tab { flex: 1; padding: 8px; text-align: center; font-size: 12px; font-weight: 500; border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; color: var(--muted); background: var(--card); transition: all 0.15s; }
   .tab.active { background: var(--dark); color: #F0EDE6; border-color: var(--dark); }
   .tab:hover:not(.active) { background: #f0ede6; }
-
-  /* Cards */
   .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
   .card-title { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-
-  /* Upload */
   .upload-zone { border: 1.5px dashed #ccc; border-radius: var(--radius); padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.2s; }
   .upload-zone:hover, .upload-zone.drag { background: #f9f8f5; border-color: #aaa; }
   .upload-text { font-size: 13px; color: var(--muted); }
@@ -45,64 +37,41 @@
   .preview-img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border); }
   .preview-wrap { position: relative; }
   .preview-del { position: absolute; top: 3px; right: 3px; width: 18px; height: 18px; background: rgba(0,0,0,0.6); border-radius: 50%; border: none; color: #fff; font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-
-  /* Form */
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
   .grid4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; }
   .field { margin-bottom: 10px; }
   .field label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 4px; font-weight: 500; }
-  .field input, .field select {
-    width: 100%; padding: 8px 10px; font-size: 13px; border: 1px solid var(--border);
-    border-radius: var(--radius-sm); background: #fafaf8; color: var(--text);
-    transition: border-color 0.15s;
-  }
+  .field input, .field select { width: 100%; padding: 8px 10px; font-size: 13px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: #fafaf8; color: var(--text); transition: border-color 0.15s; }
   .field input:focus, .field select:focus { outline: none; border-color: #999; }
-
-  /* Button */
-  button {
-    padding: 8px 16px; font-size: 13px; font-weight: 500; border: 1px solid var(--border);
-    border-radius: var(--radius-sm); background: var(--card); color: var(--text);
-    cursor: pointer; transition: all 0.15s;
-  }
+  button { padding: 8px 16px; font-size: 13px; font-weight: 500; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--card); color: var(--text); cursor: pointer; transition: all 0.15s; }
   button:hover:not(:disabled) { background: #f0ede6; }
   button:disabled { opacity: 0.4; cursor: not-allowed; }
   .btn-primary { background: var(--dark); color: #F0EDE6; border-color: var(--dark); width: 100%; padding: 12px; font-size: 14px; }
   .btn-primary:hover:not(:disabled) { background: #1a1a1a; }
   .btn-neon { background: var(--neon); color: var(--dark); border-color: var(--neon); font-weight: 700; }
-  .btn-neon:hover:not(:disabled) { background: #d4ff1a; }
-
-  /* Metrics */
   .metric { background: #f5f4f0; border-radius: var(--radius-sm); padding: 10px 12px; }
   .metric-label { font-size: 10px; color: var(--muted); margin-bottom: 2px; }
   .metric-val { font-size: 20px; font-weight: 600; color: var(--text); }
   .metric-sub { font-size: 10px; color: var(--light); }
-
-  /* Results */
-  .result-ok   { background: var(--green-bg); border-radius: var(--radius-sm); padding: 12px 16px; }
+  .result-ok { background: var(--green-bg); border-radius: var(--radius-sm); padding: 12px 16px; }
   .result-warn { background: var(--amber-bg); border-radius: var(--radius-sm); padding: 12px 16px; }
-  .result-bad  { background: var(--red-bg);   border-radius: var(--radius-sm); padding: 12px 16px; }
+  .result-bad { background: var(--red-bg); border-radius: var(--radius-sm); padding: 12px 16px; }
   .result-block { background: var(--red-bg); border-radius: var(--radius); padding: 2rem; text-align: center; margin-bottom: 1rem; border: 1px solid #F09595; }
   .rt { font-size: 12px; font-weight: 600; margin-bottom: 4px; }
   .rb { font-size: 11px; margin-top: 3px; }
-  .rt-ok, .rb-ok   { color: var(--green); }
+  .rt-ok, .rb-ok { color: var(--green); }
   .rt-warn, .rb-warn { color: var(--amber); }
-  .rt-bad, .rb-bad   { color: var(--red); }
-
-  /* Rows */
+  .rt-bad, .rb-bad { color: var(--red); }
   .row-data { display: flex; justify-content: space-between; font-size: 12px; padding: 5px 0; border-bottom: 1px solid #f0ede6; }
   .row-data:last-child { border-bottom: none; }
   .row-data .n { color: var(--muted); }
   .row-data .v { font-weight: 600; color: var(--text); }
-
-  /* Pills & Tags */
   .pill { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
   .p-green { background: var(--green-bg); color: var(--green); }
   .p-amber { background: var(--amber-bg); color: var(--amber); }
-  .p-red   { background: var(--red-bg);   color: var(--red); }
+  .p-red { background: var(--red-bg); color: var(--red); }
   .tag { display: inline-block; font-size: 11px; padding: 2px 7px; border-radius: 4px; margin: 2px; background: #f5f4f0; color: var(--muted); border: 1px solid var(--border); }
-
-  /* History */
   .hist-item { display: flex; align-items: center; gap: 10px; padding: 8px 6px; border-bottom: 1px solid #f0ede6; cursor: pointer; border-radius: var(--radius-sm); transition: background 0.1s; }
   .hist-item:last-child { border-bottom: none; }
   .hist-item:hover { background: #f9f8f5; }
@@ -111,26 +80,17 @@
   .hist-name { font-size: 12px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .hist-meta { font-size: 11px; color: var(--muted); }
   .empty-hist { text-align: center; padding: 3rem; color: var(--light); font-size: 13px; }
-
-  /* Summary */
   .summary-card { background: #f5f4f0; border-radius: var(--radius-sm); padding: 10px 14px; }
   .sc-label { font-size: 10px; color: var(--muted); }
   .sc-val { font-size: 18px; font-weight: 600; color: var(--text); }
-
-  /* Brand tags */
   .brand-tag { font-size: 11px; padding: 4px 10px; border-radius: 4px; background: #f5f4f0; color: var(--muted); border: 1px solid var(--border); cursor: pointer; display: inline-block; margin: 2px; transition: all 0.15s; }
   .brand-tag.on { background: var(--dark); color: var(--neon); border-color: var(--dark); }
-
-  /* Modal */
   .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; padding: 1rem; }
   .modal-overlay.show { display: flex; }
   .modal-box { background: var(--card); border-radius: var(--radius); padding: 1.5rem; width: 100%; max-width: 420px; }
-
-  /* Loading */
   .loading { display: flex; align-items: center; gap: 10px; padding: 1rem; color: var(--muted); font-size: 13px; }
   .spinner { width: 18px; height: 18px; border: 2px solid #ddd; border-top-color: var(--dark); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
   @keyframes spin { to { transform: rotate(360deg); } }
-
   @media (max-width: 480px) {
     .grid2, .grid3 { grid-template-columns: 1fr; }
     .grid4 { grid-template-columns: 1fr 1fr; }
@@ -141,8 +101,7 @@
 </head>
 <body>
 <div class="container">
-
-  <div class="header">
+ <div class="header">
     <div>
       <div class="brand">BACK<span>2</span>STREET</div>
       <div class="brand-sub">TASADOR IA · SOLO MARCAS ORIGINALES</div>
@@ -157,7 +116,6 @@
     <div class="tab" id="tab-export" onclick="go('export')">Exportar</div>
   </div>
 
-  <!-- TASAR -->
   <div id="panel-tasar">
     <div class="card">
       <div class="card-title">Fotos de la prenda</div>
@@ -171,7 +129,6 @@
       <input type="file" id="fi" accept="image/*" multiple style="display:none" onchange="addFiles(this.files)">
       <div class="preview-grid" id="pg"></div>
     </div>
-
     <div class="card">
       <div class="card-title">Datos opcionales</div>
       <div class="grid2">
@@ -183,11 +140,8 @@
         <div class="field"><label>Notas internas</label><input type="text" id="notas" placeholder="Opcional"></div>
       </div>
     </div>
-
     <button class="btn-primary" id="btn" onclick="tasar()" disabled style="margin-bottom:1rem;">Sube fotos para activar</button>
-
     <div id="loading" style="display:none;"><div class="loading"><div class="spinner"></div>Analizando marca y autenticidad con IA…</div></div>
-
     <div id="rechazo" style="display:none;">
       <div class="result-block">
         <div style="font-size:32px;margin-bottom:10px;">🚫</div>
@@ -195,7 +149,6 @@
         <div style="font-size:13px;color:#A32D2D;" id="r-mot"></div>
       </div>
     </div>
-
     <div id="resultado" style="display:none;">
       <div class="card">
         <div class="card-title"><span>Análisis IA</span><span class="pill p-green">Original verificada</span></div>
@@ -218,7 +171,6 @@
     </div>
   </div>
 
-  <!-- HISTORIAL -->
   <div id="panel-hist" style="display:none;">
     <div class="card">
       <div class="card-title"><span>Resumen del lote</span><button style="font-size:11px;padding:3px 8px;" onclick="clearHist()">Limpiar todo</button></div>
@@ -227,11 +179,10 @@
     <div class="card"><div class="card-title">Prendas aceptadas</div><div id="hist-list"></div></div>
   </div>
 
-  <!-- MARCAS -->
   <div id="panel-marcas" style="display:none;">
     <div class="card">
       <div class="card-title">Marcas aceptadas</div>
-      <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">Activa las marcas que aceptas (fondo oscuro). La IA rechazará automáticamente cualquier prenda de marca no incluida.</p>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">Activa las marcas que aceptas. La IA rechazará el resto.</p>
       <div id="brand-list"></div>
       <div style="display:flex;gap:8px;margin-top:14px;">
         <input type="text" id="new-brand" placeholder="Añadir marca…" style="flex:1;padding:7px 10px;font-size:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fafaf8;" onkeydown="if(event.key==='Enter')addBrand()">
@@ -243,20 +194,18 @@
       <div class="row-data"><span class="n">Sin marca reconocible</span><span class="v" style="color:var(--red);">Rechazada</span></div>
       <div class="row-data"><span class="n">Marca no en tu lista</span><span class="v" style="color:var(--red);">Rechazada</span></div>
       <div class="row-data"><span class="n">Posible falsificación detectada</span><span class="v" style="color:var(--red);">Rechazada</span></div>
-      <div class="row-data"><span class="n">Confianza IA baja (sin etiqueta visible)</span><span class="v" style="color:var(--amber);">Alerta — revisar</span></div>
+      <div class="row-data"><span class="n">Confianza IA baja</span><span class="v" style="color:var(--amber);">Alerta — revisar</span></div>
       <div class="row-data"><span class="n">Original verificada y marca aceptada</span><span class="v" style="color:var(--green);">Aceptada</span></div>
     </div>
   </div>
 
-  <!-- EXPORTAR -->
   <div id="panel-export" style="display:none;">
     <div class="card">
       <div class="card-title">Exportar a Excel</div>
-      <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Descarga todas las prendas tasadas en un archivo Excel con todos los datos económicos y de análisis.</p>
       <button style="width:100%;padding:10px;" onclick="toExcel()">Descargar Excel (.xlsx)</button>
     </div>
     <div class="card">
-      <div class="card-title">Enviar resumen por email</div>
+      <div class="card-title">Email resumen</div>
       <div class="field"><label>Destinatario</label><input type="text" id="ed" placeholder="email@correo.com"></div>
       <div class="field"><label>Asunto</label><input type="text" id="ea" value="Back2Street — Resumen de tasaciones"></div>
       <div class="field"><label>Mensaje adicional</label><input type="text" id="em" placeholder="Opcional"></div>
@@ -265,23 +214,19 @@
     </div>
   </div>
 
-</div>
-
-<!-- MODAL EMAIL -->
-<div class="modal-overlay" id="modal-email">
-  <div class="modal-box">
-    <div style="font-size:15px;font-weight:600;margin-bottom:14px;">Enviar informe por email</div>
-    <div class="field"><label>Destinatario</label><input type="text" id="me-d" placeholder="cliente@correo.com"></div>
-    <div class="field"><label>Asunto</label><input type="text" id="me-a"></div>
-    <div class="field"><label>Mensaje adicional</label><input type="text" id="me-m" placeholder="Opcional"></div>
-    <div class="grid2" style="margin-top:12px;">
-      <button class="btn-neon" onclick="sendEmail()">Abrir cliente de email</button>
-      <button onclick="document.getElementById('modal-email').classList.remove('show')">Cancelar</button>
+  <div class="modal-overlay" id="modal-email">
+    <div class="modal-box">
+      <div style="font-size:15px;font-weight:600;margin-bottom:14px;">Enviar por email</div>
+      <div class="field"><label>Destinatario</label><input type="text" id="me-d" placeholder="cliente@correo.com"></div>
+      <div class="field"><label>Asunto</label><input type="text" id="me-a"></div>
+      <div class="field"><label>Mensaje</label><input type="text" id="me-m" placeholder="Opcional"></div>
+      <div class="grid2" style="margin-top:12px;">
+        <button class="btn-neon" onclick="sendEmail()">Abrir cliente de email</button>
+        <button onclick="document.getElementById('modal-email').classList.remove('show')">Cancelar</button>
+      </div>
     </div>
   </div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 const DM=['Nike','Adidas',"Levi's",'Tommy Hilfiger','Ralph Lauren','Stone Island','Moncler','Canada Goose','The North Face','Carhartt','Stüssy','Supreme','Palace','Off-White','Balenciaga','Gucci','Prada','Zara','Mango','H&M','Massimo Dutti','Cos','Arket','Uniqlo','New Balance','Puma','Reebok','Converse','Vans','Jordan','Lacoste','Boss','Calvin Klein','Diesel','Versace','Burberry','Acne Studios','A.P.C.'];
@@ -312,7 +257,12 @@ function toggleB(m){ if(marcas.has(m)) marcas.delete(m); else marcas.add(m); sav
 function addBrand(){ const v=document.getElementById('new-brand').value.trim(); if(!v)return; marcas.add(v); saveMarcas(); renderBrands(); document.getElementById('new-brand').value=''; }
 
 function addFiles(files){
-  Array.from(files).forEach(f=>{ const r=new FileReader(); r.onload=e=>{imgs.push(e.target.result);renderPrev();}; r.readAsDataURL(f); });
+  Array.from(files).forEach(f=>{
+    const r=new FileReader();
+    r.onload=function(e){ imgs.push(e.target.result); renderPrev(); };
+    r.readAsDataURL(f);
+  });
+  document.getElementById('fi').value='';
 }
 function onDrop(e){ e.preventDefault(); document.getElementById('dz').classList.remove('drag'); addFiles(e.dataTransfer.files); }
 function renderPrev(){
@@ -325,7 +275,12 @@ function renderPrev(){
 
 function f(n){return n.toFixed(2).replace('.',',')+' €';}
 function p(n){return Math.round(n)+'%';}
-function calc(r,log){ const tF=TF[r.tier_marca]||1,cF=CF[r.categoria?.toLowerCase()]||1,m=r.precio_mercado_estimado||20,t=m*(r.factor_estado||0.7)*tF*cF,o=t*0.35,v=m*0.90,c=v*0.05,b=v-o-log-c; return{m,t,o,v,c,b,p:(b/v)*100}; }
+function calc(r,log){
+  const tF=TF[r.tier_marca]||1,cF=CF[r.categoria?.toLowerCase()]||1;
+  const m=r.precio_mercado_estimado||20,t=m*(r.factor_estado||0.7)*tF*cF;
+  const o=t*0.35,v=m*0.90,c=v*0.05,b=v-o-log-c;
+  return{m,t,o,v,c,b,p:(b/v)*100};
+}
 
 async function tasar(){
   if(!imgs.length)return;
@@ -346,14 +301,14 @@ Si ves costuras irregulares, logos deformados o etiquetas mal impresas: es_origi
     const res=await fetch('/api/tasar',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,messages:[{role:'user',content}]})
+      body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:900,messages:[{role:'user',content}]})
     });
     const data=await res.json();
-    if(data.error){showErr(data.error);return;}
+    if(data.error){showErr(JSON.stringify(data.error));return;}
     const raw=data.content?.map(b=>b.text||'').join('')||'{}';
     const r=JSON.parse(raw.replace(/```json|```/g,'').trim());
     process(r,log);
-  }catch(err){ showErr('Error de conexión con el servidor. Comprueba que el servidor está corriendo.'); }
+  }catch(err){ showErr(err.message); }
 }
 
 function showErr(msg){
@@ -373,7 +328,7 @@ function process(r,log){
   if(bad){
     document.getElementById('rechazo').style.display='block';
     const tit=!r.es_original?'Prenda rechazada — posible falsificación':`Prenda rechazada — "${r.marca||'Sin marca'}" no aceptada`;
-    const mot=!r.es_original?`La IA ha detectado posibles indicios de que esta prenda no es original. ${r.observaciones||''}`:`Esta marca no está en tu lista de aceptadas. ${r.motivo_rechazo||''}`;
+    const mot=!r.es_original?`La IA detectó indicios de que esta prenda no es original. ${r.observaciones||''}`:`Esta marca no está en tu lista. ${r.motivo_rechazo||''}`;
     document.getElementById('r-tit').textContent=tit;
     document.getElementById('r-mot').textContent=mot;
     return;
@@ -388,7 +343,7 @@ function renderRes(r,log){
   const cC=r.confianza==='alta'?'p-green':r.confianza==='media'?'p-amber':'p-red';
   document.getElementById('analisis').innerHTML=`<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;"><span class="tag">${r.categoria||'—'}</span><span class="tag" style="font-weight:600;">${r.marca||'—'}</span><span class="tag">Tier ${r.tier_marca||'—'}</span><span class="tag">${r.estado||'—'}</span><span class="tag">${r.color||'—'}</span><span class="pill ${cC}">Confianza: ${r.confianza}</span><span class="pill p-green">Original</span></div><div style="font-size:13px;margin-bottom:4px;">${r.descripcion||''}</div>${r.observaciones?`<div style="font-size:11px;color:var(--muted);">${r.observaciones}</div>`:''}`;
   document.getElementById('metrics').innerHTML=`<div class="metric"><div class="metric-label">Precio mercado</div><div class="metric-val">${f(n.m)}</div><div class="metric-sub">ref. Vinted</div></div><div class="metric"><div class="metric-label">Precio tasado</div><div class="metric-val">${f(n.t)}</div><div class="metric-sub">factores IA</div></div><div class="metric"><div class="metric-label">Oferta cliente</div><div class="metric-val">${f(n.o)}</div><div class="metric-sub">pagas tú</div></div><div class="metric"><div class="metric-label">Beneficio neto</div><div class="metric-val">${f(n.b)}</div><div class="metric-sub">${p(n.p)} margen</div></div>`;
-  let vc,vt,vm;
+  let vc,vt,vm,vtxt,vmsg;
   if(n.p>=65){vc='result-ok';vt='rt rt-ok';vm='rb rb-ok';vtxt='Operación rentable';vmsg=`Margen ${p(n.p)} — supera el 65%. Oferta al cliente: ${f(n.o)}.`;}
   else if(n.p>=50){vc='result-warn';vt='rt rt-warn';vm='rb rb-warn';vtxt='Por debajo del objetivo';vmsg=`Margen ${p(n.p)}. Considera ofrecer ${f(n.o*0.85)} para alcanzar el 65%.`;}
   else{vc='result-bad';vt='rt rt-bad';vm='rb rb-bad';vtxt='No rentable — rechazar';vmsg=`Margen ${p(n.p)}. Precio demasiado bajo.`;}
@@ -408,7 +363,7 @@ function save(){
 
 function renderHist(){
   updateCount();
-  if(!hist.length){ document.getElementById('summary').innerHTML=''; document.getElementById('hist-list').innerHTML='<div class="empty-hist">Sin prendas tasadas aún.<br>Tasa tu primera prenda para verla aquí.</div>'; return; }
+  if(!hist.length){ document.getElementById('summary').innerHTML=''; document.getElementById('hist-list').innerHTML='<div class="empty-hist">Sin prendas tasadas aún.</div>'; return; }
   let tp=0,tv=0,tb=0; hist.forEach(h=>{tp+=h.n.o;tv+=h.n.v;tb+=h.n.b;});
   document.getElementById('summary').innerHTML=`<div class="summary-card"><div class="sc-label">Prendas</div><div class="sc-val">${hist.length}</div></div><div class="summary-card"><div class="sc-label">Pagado clientes</div><div class="sc-val">${f(tp)}</div></div><div class="summary-card"><div class="sc-label">Ingresos esperados</div><div class="sc-val">${f(tv)}</div></div><div class="summary-card"><div class="sc-label">Beneficio esperado</div><div class="sc-val">${f(tb)}</div></div>`;
   document.getElementById('hist-list').innerHTML=hist.map((h,i)=>{
@@ -428,15 +383,15 @@ function genPDF(h){
   doc.setTextColor(204,255,0);doc.text('Objetivo: 65% margen',W-m,18,{align:'right'});
   doc.setFillColor(234,243,222);doc.rect(m,26,70,8,'F');
   doc.setTextColor(39,80,10);doc.setFontSize(7);doc.setFont('helvetica','bold');doc.text('PRENDA ORIGINAL VERIFICADA',m+2,31);
-  doc.setTextColor(30,30,30);doc.setFontSize(10);doc.setFont('helvetica','bold');doc.text('DATOS DE LA TASACIÓN',m,y);
+  doc.setTextColor(30,30,30);doc.setFontSize(10);doc.setFont('helvetica','bold');doc.text('DATOS DE LA TASACION',m,y);
   doc.setDrawColor(204,255,0);doc.setLineWidth(0.5);doc.line(m,y+2,W-m,y+2);y+=10;
-  [['Fecha',`${h.fecha} ${h.hora}`],['Referencia',h.ref||'—'],['Descripción',h.r.descripcion||'—'],['Marca',`${h.r.marca||'—'} (Tier ${h.r.tier_marca||'—'}) · Original`],['Estado',h.r.estado||'—'],['Categoría',h.r.categoria||'—'],['Color',h.r.color||'—'],['Confianza IA',h.r.confianza||'—'],['Observaciones',h.r.observaciones||'—'],['Notas',h.notas||'—']].forEach(([k,v])=>{
+  [['Fecha',`${h.fecha} ${h.hora}`],['Referencia',h.ref||'—'],['Descripcion',h.r.descripcion||'—'],['Marca',`${h.r.marca||'—'} (Tier ${h.r.tier_marca||'—'}) · Original`],['Estado',h.r.estado||'—'],['Categoria',h.r.categoria||'—'],['Color',h.r.color||'—'],['Confianza IA',h.r.confianza||'—'],['Observaciones',h.r.observaciones||'—'],['Notas',h.notas||'—']].forEach(([k,v])=>{
     doc.setFontSize(9);doc.setFont('helvetica','bold');doc.setTextColor(80,80,80);doc.text(k+':',m,y);
     doc.setFont('helvetica','normal');doc.setTextColor(30,30,30);doc.text(String(v),m+38,y);y+=7;
   });
-  y+=4;doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text('DESGLOSE ECONÓMICO',m,y);
+  y+=4;doc.setFont('helvetica','bold');doc.setFontSize(10);doc.text('DESGLOSE ECONOMICO',m,y);
   doc.setDrawColor(200,200,200);doc.line(m,y+2,W-m,y+2);y+=10;
-  [['Precio de mercado',f(h.n.m)],['Precio tasado',f(h.n.t)],['Oferta al cliente',f(h.n.o)],['Precio venta Vinted',f(h.n.v)],['Comisión Vinted','−'+f(h.n.c)],['Coste logístico','−'+f(h.n.log||3)]].forEach(([k,v])=>{
+  [['Precio de mercado',f(h.n.m)],['Precio tasado',f(h.n.t)],['Oferta al cliente',f(h.n.o)],['Precio venta Vinted',f(h.n.v)],['Comision Vinted','−'+f(h.n.c)],['Coste logistico','−'+f(h.n.log||3)]].forEach(([k,v])=>{
     doc.setFontSize(9);doc.setFont('helvetica','normal');doc.setTextColor(80,80,80);doc.text(k,m,y);doc.setTextColor(30,30,30);doc.text(v,W-m,y,{align:'right'});y+=7;
   });
   doc.setLineWidth(0.3);doc.line(m,y,W-m,y);y+=6;
@@ -444,7 +399,7 @@ function genPDF(h){
   const col=h.n.p>=65?[39,80,10]:h.n.p>=50?[99,56,6]:[121,31,31];
   doc.setTextColor(...col);doc.text(`${f(h.n.b)} (${p(h.n.p)})`,W-m,y,{align:'right'});
   y+=10;const bg=h.n.p>=65?[234,243,222]:h.n.p>=50?[250,238,218]:[252,235,235];
-  const vt=h.n.p>=65?'OPERACIÓN RENTABLE':h.n.p>=50?'REVISAR OFERTA':'NO RENTABLE';
+  const vt=h.n.p>=65?'OPERACION RENTABLE':h.n.p>=50?'REVISAR OFERTA':'NO RENTABLE';
   doc.setFillColor(...bg);doc.rect(m,y-5,W-2*m,11,'F');
   doc.setFontSize(9);doc.setTextColor(...col);doc.text(vt,W/2,y+1,{align:'center'});
   y+=18;doc.setFontSize(7);doc.setTextColor(160,160,160);
@@ -455,21 +410,21 @@ function makePDF(){ if(ultima) genPDF(ultima); }
 function makePDFItem(i){ genPDF(hist[i]); }
 
 function toExcel(){
-  if(!hist.length){alert('Historial vacío.');return;}
-  const hd=[['Fecha','Hora','Referencia','Descripción','Categoría','Marca','Tier','Estado','Original','Confianza','Precio mercado','Oferta cliente','Precio venta','Beneficio neto','Margen %','Veredicto']];
-  hist.forEach(h=>hd.push([h.fecha,h.hora,h.ref||'',h.r.descripcion||'',h.r.categoria||'',h.r.marca||'',h.r.tier_marca||'',h.r.estado||'','Sí',h.r.confianza||'',+h.n.m.toFixed(2),+h.n.o.toFixed(2),+h.n.v.toFixed(2),+h.n.b.toFixed(2),+h.n.p.toFixed(1),h.n.p>=65?'Rentable':h.n.p>=50?'Revisar':'No rentable']));
+  if(!hist.length){alert('Historial vacio.');return;}
+  const hd=[['Fecha','Hora','Referencia','Descripcion','Categoria','Marca','Tier','Estado','Original','Confianza','Precio mercado','Oferta cliente','Precio venta','Beneficio neto','Margen %','Veredicto']];
+  hist.forEach(h=>hd.push([h.fecha,h.hora,h.ref||'',h.r.descripcion||'',h.r.categoria||'',h.r.marca||'',h.r.tier_marca||'',h.r.estado||'','Si',h.r.confianza||'',+h.n.m.toFixed(2),+h.n.o.toFixed(2),+h.n.v.toFixed(2),+h.n.b.toFixed(2),+h.n.p.toFixed(1),h.n.p>=65?'Rentable':h.n.p>=50?'Revisar':'No rentable']));
   const wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(hd);
   ws['!cols']=hd[0].map((_,i)=>({wch:i<2?10:i<4?28:12}));
   XLSX.utils.book_append_sheet(wb,ws,'Tasaciones');
   XLSX.writeFile(wb,`Back2Street_${new Date().toLocaleDateString('es-ES').replace(/\//g,'-')}.xlsx`);
 }
 
-function buildBody(h){ return `Informe Back2Street\n\nFecha: ${h.fecha} ${h.hora}\nReferencia: ${h.ref||'—'}\nDescripción: ${h.r.descripcion||'—'}\nMarca: ${h.r.marca||'—'} (Tier ${h.r.tier_marca||'—'}) — ORIGINAL\nEstado: ${h.r.estado||'—'}\n\nPrecio mercado: ${f(h.n.m)}\nOferta cliente: ${f(h.n.o)}\nPrecio venta Vinted: ${f(h.n.v)}\nBeneficio neto: ${f(h.n.b)} (${p(h.n.p)})\n${h.r.observaciones?'\nObs: '+h.r.observaciones:''}\n\n— Back2Street · Circular · Pre-Loved · Unisex —`; }
+function buildBody(h){ return `Informe Back2Street\n\nFecha: ${h.fecha} ${h.hora}\nReferencia: ${h.ref||'—'}\nDescripcion: ${h.r.descripcion||'—'}\nMarca: ${h.r.marca||'—'} (Tier ${h.r.tier_marca||'—'}) — ORIGINAL\nEstado: ${h.r.estado||'—'}\n\nPrecio mercado: ${f(h.n.m)}\nOferta cliente: ${f(h.n.o)}\nPrecio venta Vinted: ${f(h.n.v)}\nBeneficio neto: ${f(h.n.b)} (${p(h.n.p)})\n${h.r.observaciones?'\nObs: '+h.r.observaciones:''}\n\n— Back2Street · Circular · Pre-Loved · Unisex —`; }
 function openEmail(){ document.getElementById('modal-email').classList.add('show'); document.getElementById('me-d').value=''; if(ultima) document.getElementById('me-a').value=`Back2Street — ${ultima.r.descripcion||ultima.r.categoria||'prenda'}`; }
 function emailItem(i){ ultima=hist[i]; openEmail(); }
 function sendEmail(){ if(!ultima)return; const d=document.getElementById('me-d').value.trim(),a=encodeURIComponent(document.getElementById('me-a').value),msg=document.getElementById('me-m').value; window.location.href=`mailto:${d}?subject=${a}&body=${encodeURIComponent((msg?msg+'\n\n':'')+buildBody(ultima))}`; document.getElementById('modal-email').classList.remove('show'); }
 function sendSummary(){
-  if(!hist.length){document.getElementById('ef').textContent='Historial vacío.';return;}
+  if(!hist.length){document.getElementById('ef').textContent='Historial vacio.';return;}
   const d=document.getElementById('ed').value.trim(),a=encodeURIComponent(document.getElementById('ea').value),msg=document.getElementById('em').value;
   let tp=0,tv=0,tb=0;hist.forEach(h=>{tp+=h.n.o;tv+=h.n.v;tb+=h.n.b;});
   let body=`Back2Street — Resumen\n${new Date().toLocaleDateString('es-ES')}\n\nPrendas: ${hist.length}\nPagado clientes: ${f(tp)}\nIngresos esperados: ${f(tv)}\nBeneficio esperado: ${f(tb)}\n\nDETALLE\n`;
