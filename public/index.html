@@ -385,6 +385,17 @@ function genPDF(h){
   doc.setTextColor(39,80,10);doc.setFontSize(7);doc.setFont('helvetica','bold');doc.text('PRENDA ORIGINAL VERIFICADA',m+2,31);
  if(h.thumb){
   try{
+    const fotos = h.imgs || [h.thumb];
+    let fx = m;
+    fotos.forEach((foto, i) => {
+      if(i < 4) {
+        doc.addImage(foto, 'JPEG', fx, 32, 38, 38);
+        fx += 40;
+      }
+    });
+  }catch(e){}
+}
+  try{
     doc.addImage(h.thumb, 'JPEG', W-m-40, 32, 40, 40);
   }catch(e){}
 }  doc.setTextColor(30,30,30);doc.setFontSize(10);doc.setFont('helvetica','bold');doc.text('DATOS DE LA TASACION',m,y);
