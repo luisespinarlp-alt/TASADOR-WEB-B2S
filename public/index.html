@@ -114,7 +114,7 @@
 
   <div class="tabs">
     <div class="tab active" id="tab-tasar" onclick="go('tasar')">Tasar prenda</div>
-    <div class="tab" id="tab-hist" onclick="go('hist')">Historial (<span id="hcount">0</span>)</div>
+    <div class="tab" id="tab-hist" onclick="go('hist')">Lote (<span id="hcount">0</span>)</div>
     <div class="tab" id="tab-marcas" onclick="go('marcas')">Marcas</div>
     <div class="tab" id="tab-export" onclick="go('export')">Exportar</div>
   </div>
@@ -187,10 +187,13 @@
 
   <div id="panel-hist" style="display:none;">
     <div class="card">
-      <div class="card-title"><span>Resumen total</span><button style="font-size:11px;padding:3px 8px;" id="btn-limpiar">Limpiar todo</button></div>
+      <div class="card-title"><span>Resumen del lote</span><button style="font-size:11px;padding:3px 8px;" id="btn-limpiar">Limpiar todo</button></div>
       <div class="grid4" id="summary"></div>
     </div>
-    <div class="card"><div class="card-title">Prendas tasadas</div><div id="hist-list"></div></div>
+    <div class="card">
+      <div class="card-title"><span>Prendas del lote</span><button id="btn-pdf-lote" style="font-size:11px;padding:3px 10px;">Descargar PDF del lote</button></div>
+      <div id="hist-list"></div>
+    </div>
   </div>
 
   <div id="panel-marcas" style="display:none;">
@@ -215,7 +218,7 @@
 
   <div id="panel-export" style="display:none;">
     <div class="card">
-      <div class="card-title">Exportar historial completo a Excel</div>
+      <div class="card-title">Exportar lote completo a Excel</div>
       <button style="width:100%;padding:10px;" id="btn-excel">Descargar Excel (.xlsx)</button>
     </div>
     <div class="card">
@@ -255,38 +258,24 @@ try{var sm=JSON.parse(localStorage.getItem('b2s_m'));if(sm){marcas=new Set(sm);}
 document.addEventListener('DOMContentLoaded',function(){
   updateCount();
   renderBrands();
-
-  document.getElementById('zona-subida').addEventListener('click',function(){
-    document.getElementById('input-fotos').click();
-  });
-  document.getElementById('zona-subida').addEventListener('dragover',function(e){
-    e.preventDefault(); this.classList.add('drag');
-  });
-  document.getElementById('zona-subida').addEventListener('dragleave',function(){
-    this.classList.remove('drag');
-  });
-  document.getElementById('zona-subida').addEventListener('drop',function(e){
-    e.preventDefault(); this.classList.remove('drag'); cargarFotos(e.dataTransfer.files);
-  });
-  document.getElementById('input-fotos').addEventListener('change',function(){
-    cargarFotos(this.files); this.value='';
-  });
+  document.getElementById('zona-subida').addEventListener('click',function(){ document.getElementById('input-fotos').click(); });
+  document.getElementById('zona-subida').addEventListener('dragover',function(e){ e.preventDefault(); this.classList.add('drag'); });
+  document.getElementById('zona-subida').addEventListener('dragleave',function(){ this.classList.remove('drag'); });
+  document.getElementById('zona-subida').addEventListener('drop',function(e){ e.preventDefault(); this.classList.remove('drag'); cargarFotos(e.dataTransfer.files); });
+  document.getElementById('input-fotos').addEventListener('change',function(){ cargarFotos(this.files); this.value=''; });
   document.getElementById('btn-tasar-ia').addEventListener('click',tasar);
   document.getElementById('btn-guardar').addEventListener('click',save);
   document.getElementById('btn-pdf').addEventListener('click',function(){ if(ultima) genPDF(ultima); });
   document.getElementById('btn-email').addEventListener('click',openEmail);
   document.getElementById('btn-limpiar').addEventListener('click',clearHist);
+  document.getElementById('btn-pdf-lote').addEventListener('click',genPDFLote);
   document.getElementById('btn-excel').addEventListener('click',toExcel);
   document.getElementById('btn-add-brand').addEventListener('click',addBrand);
   document.getElementById('btn-send-summary').addEventListener('click',sendSummary);
   document.getElementById('btn-send-email').addEventListener('click',sendEmail);
-  document.getElementById('btn-cancel-email').addEventListener('click',function(){
-    document.getElementById('modal-email').classList.remove('show');
-  });
+  document.getElementById('btn-cancel-email').addEventListener('click',function(){ document.getElementById('modal-email').classList.remove('show'); });
   document.getElementById('btn-cerrar-lote').addEventListener('click',cerrarLote);
-  document.getElementById('new-brand').addEventListener('keydown',function(e){
-    if(e.key==='Enter') addBrand();
-  });
+  document.getElementById('new-brand').addEventListener('keydown',function(e){ if(e.key==='Enter') addBrand(); });
 });
 
 function cargarFotos(files){
@@ -302,9 +291,7 @@ function renderPrev(){
     return '<div class="preview-wrap"><img class="preview-img" src="'+d+'"><button class="preview-del" data-idx="'+i+'">x</button></div>';
   }).join('');
   document.querySelectorAll('.preview-del').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      imgs.splice(parseInt(this.getAttribute('data-idx')),1); renderPrev();
-    });
+    btn.addEventListener('click',function(){ imgs.splice(parseInt(this.getAttribute('data-idx')),1); renderPrev(); });
   });
   var b=document.getElementById('btn-tasar-ia');
   b.disabled=imgs.length===0;
@@ -378,10 +365,8 @@ function tasar(){
     document.getElementById('btn-tasar-ia').disabled=false;
     if(data.error){ showErr(JSON.stringify(data.error)); return; }
     var raw=data.content?data.content.map(function(b){ return b.text||''; }).join(''):'{}';
-    try{
-      var r=JSON.parse(raw.replace(/```json|```/g,'').trim());
-      process(r,log);
-    }catch(e){ showErr('Error procesando respuesta: '+raw); }
+    try{ var r=JSON.parse(raw.replace(/```json|```/g,'').trim()); process(r,log); }
+    catch(e){ showErr('Error procesando respuesta: '+raw); }
   }).catch(function(err){
     document.getElementById('loading').style.display='none';
     document.getElementById('btn-tasar-ia').disabled=false;
@@ -461,15 +446,15 @@ function renderLote(){
 function cerrarLote(){
   if(!lote.length){ alert('El lote esta vacio.'); return; }
   if(!confirm('Cerrar el lote y exportar a Excel?')) return;
-  var hd=[['Fecha','Hora','Referencia','Descripcion','Categoria','Marca','Tier','Estado','Precio mercado','Oferta cliente','Precio venta','Beneficio neto','Margen %','Veredicto']];
+  var hd=[['Num','Descripcion','Marca','Estado','Precio mercado','Oferta cliente','Precio venta','Beneficio','Margen %']];
   var tp=0,to=0,tv=0,tb=0;
-  lote.forEach(function(h){
-    tp++; to+=h.n.o; tv+=h.n.v; tb+=h.n.b;
-    hd.push([h.fecha,h.hora,h.ref||'',h.r.descripcion||'',h.r.categoria||'',h.r.marca||'',h.r.tier_marca||'',h.r.estado||'',+h.n.m.toFixed(2),+h.n.o.toFixed(2),+h.n.v.toFixed(2),+h.n.b.toFixed(2),+h.n.p.toFixed(1),h.n.p>=65?'Rentable':h.n.p>=50?'Revisar':'No rentable']);
+  lote.forEach(function(h,i){
+    to+=h.n.o; tv+=h.n.v; tb+=h.n.b;
+    hd.push([i+1,h.r.descripcion||h.r.categoria||'Prenda',h.r.marca||'-',h.r.estado||'-',+h.n.m.toFixed(2),+h.n.o.toFixed(2),+h.n.v.toFixed(2),+h.n.b.toFixed(2),+h.n.p.toFixed(1)]);
   });
-  hd.push(['','','','','','','','TOTALES','',(+to.toFixed(2)),(+tv.toFixed(2)),(+tb.toFixed(2)),'','']);
+  hd.push(['','','','TOTALES','',+to.toFixed(2),+tv.toFixed(2),+tb.toFixed(2),'']);
   var wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(hd);
-  ws['!cols']=hd[0].map(function(_,i){ return{wch:i<2?10:i<4?28:12}; });
+  ws['!cols']=[{wch:5},{wch:30},{wch:15},{wch:20},{wch:14},{wch:14},{wch:14},{wch:14},{wch:10}];
   XLSX.utils.book_append_sheet(wb,ws,'Lote');
   XLSX.writeFile(wb,'Back2Street_Lote_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.xlsx');
   lote=[];
@@ -485,7 +470,11 @@ function renderHist(){
   }
   var tp=0,tv=0,tb=0;
   hist.forEach(function(h){ tp+=h.n.o; tv+=h.n.v; tb+=h.n.b; });
-  document.getElementById('summary').innerHTML='<div class="summary-card"><div class="sc-label">Prendas</div><div class="sc-val">'+hist.length+'</div></div><div class="summary-card"><div class="sc-label">Pagado clientes</div><div class="sc-val">'+f(tp)+'</div></div><div class="summary-card"><div class="sc-label">Ingresos esperados</div><div class="sc-val">'+f(tv)+'</div></div><div class="summary-card"><div class="sc-label">Beneficio esperado</div><div class="sc-val">'+f(tb)+'</div></div>';
+  document.getElementById('summary').innerHTML=
+    '<div class="summary-card"><div class="sc-label">Prendas</div><div class="sc-val">'+hist.length+'</div></div>'+
+    '<div class="summary-card"><div class="sc-label">Pagado clientes</div><div class="sc-val">'+f(tp)+'</div></div>'+
+    '<div class="summary-card"><div class="sc-label">Ingresos esperados</div><div class="sc-val">'+f(tv)+'</div></div>'+
+    '<div class="summary-card"><div class="sc-label">Beneficio esperado</div><div class="sc-val">'+f(tb)+'</div></div>';
   document.getElementById('hist-list').innerHTML=hist.map(function(h,i){
     var pc=h.n.p>=65?'p-green':h.n.p>=50?'p-amber':'p-red';
     return '<div class="hist-item" data-idx="'+i+'">'+(h.thumb?'<img class="hist-thumb" src="'+h.thumb+'">':'<div class="hist-thumb">👕</div>')+'<div class="hist-info"><div class="hist-name">'+(h.r.descripcion||h.r.categoria||'Prenda')+'</div><div class="hist-meta">'+h.fecha+' '+h.hora+(h.ref?' - '+h.ref:'')+'</div><div style="margin-top:2px;"><span class="pill '+pc+'">'+p(h.n.p)+'</span>'+(h.r.marca?' <span class="tag">'+h.r.marca+'</span>':'')+'<span class="pill p-green" style="margin-left:2px;">Original</span></div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:14px;font-weight:600;">'+f(h.n.o)+'</div><div style="font-size:10px;color:var(--muted);">al cliente</div><div style="display:flex;gap:4px;margin-top:5px;"><button class="btn-hist-pdf" data-idx="'+i+'" style="font-size:10px;padding:3px 8px;">PDF</button><button class="btn-hist-email" data-idx="'+i+'" style="font-size:10px;padding:3px 8px;">Email</button></div></div></div>';
@@ -504,10 +493,10 @@ function renderHist(){
 function detail(i){ ultima=hist[i]; go('tasar'); renderRes(hist[i].r,hist[i].log||3); }
 
 function clearHist(){
-  if(!confirm('Borrar todo el historial?')) return;
-  hist=[];
+  if(!confirm('Borrar todo el lote?')) return;
+  hist=[]; lote=[];
   try{localStorage.removeItem('b2s_h');}catch(e){}
-  renderHist();
+  renderHist(); renderLote();
 }
 
 function genPDF(h){
@@ -553,15 +542,66 @@ function genPDF(h){
   doc.save('Back2Street_'+(h.ref||'prenda').replace(/[^a-z0-9]/gi,'_')+'_'+(h.fecha||'').replace(/\//g,'-')+'.pdf');
 }
 
+function genPDFLote(){
+  if(!hist.length){ alert('El lote esta vacio.'); return; }
+  var jsPDF=window.jspdf.jsPDF;
+  var doc=new jsPDF({unit:'mm',format:'a4'});
+  var W=210,m=20,y=42;
+  doc.setFillColor(12,12,12); doc.rect(0,0,W,30,'F');
+  doc.setTextColor(240,237,230); doc.setFontSize(18); doc.setFont('helvetica','bold'); doc.text('BACK2STREET',m,18);
+  doc.setFontSize(7); doc.setFont('helvetica','normal'); doc.setTextColor(68,68,68); doc.text('INFORME DE LOTE - TASADOR IA',m,24);
+  doc.setTextColor(204,255,0); doc.text(new Date().toLocaleDateString('es-ES'),W-m,18,{align:'right'});
+  doc.setTextColor(30,30,30); doc.setFontSize(12); doc.setFont('helvetica','bold'); doc.text('RESUMEN DEL LOTE',m,y);
+  doc.setDrawColor(204,255,0); doc.setLineWidth(0.5); doc.line(m,y+2,W-m,y+2); y+=12;
+  var tp=0,tv=0,tb=0;
+  hist.forEach(function(h){ tp+=h.n.o; tv+=h.n.v; tb+=h.n.b; });
+  doc.setFontSize(9);
+  [['Total prendas:',String(hist.length)],['Total a pagar al cliente:',f(tp)],['Ingresos esperados:',f(tv)],['Beneficio esperado:',f(tb)]].forEach(function(x){
+    doc.setFont('helvetica','normal'); doc.setTextColor(80,80,80); doc.text(x[0],m,y);
+    doc.setFont('helvetica','bold'); doc.setTextColor(x[0].indexOf('Beneficio')>=0?39:30,x[0].indexOf('Beneficio')>=0?80:30,x[0].indexOf('Beneficio')>=0?10:30);
+    doc.text(x[1],m+65,y); y+=7;
+  });
+  y+=8;
+  doc.setTextColor(30,30,30); doc.setFontSize(11); doc.setFont('helvetica','bold'); doc.text('DETALLE DE PRENDAS',m,y);
+  doc.setDrawColor(200,200,200); doc.line(m,y+2,W-m,y+2); y+=10;
+  doc.setFontSize(8); doc.setFont('helvetica','bold'); doc.setTextColor(80,80,80);
+  doc.text('Num',m,y); doc.text('Prenda',m+12,y); doc.text('Marca',m+75,y); doc.text('Estado',m+110,y); doc.text('Oferta cliente',m+145,y); doc.text('Margen',W-m,y,{align:'right'});
+  y+=5; doc.setLineWidth(0.3); doc.line(m,y,W-m,y); y+=5;
+  hist.forEach(function(h,i){
+    if(y>270){ doc.addPage(); y=20; }
+    var col=h.n.p>=65?[39,80,10]:h.n.p>=50?[99,56,6]:[121,31,31];
+    doc.setFontSize(8); doc.setFont('helvetica','normal'); doc.setTextColor(30,30,30);
+    doc.text(String(i+1),m,y);
+    var nombre=(h.r.descripcion||h.r.categoria||'Prenda'); if(nombre.length>32) nombre=nombre.substring(0,32)+'...';
+    doc.text(nombre,m+12,y);
+    doc.text(h.r.marca||'-',m+75,y);
+    var estado=(h.r.estado||'-'); if(estado.length>18) estado=estado.substring(0,18)+'...';
+    doc.text(estado,m+110,y);
+    doc.setFont('helvetica','bold'); doc.text(f(h.n.o),m+145,y);
+    doc.setTextColor(col[0],col[1],col[2]); doc.text(p(h.n.p),W-m,y,{align:'right'});
+    y+=7; doc.setDrawColor(240,240,240); doc.setLineWidth(0.2); doc.line(m,y-2,W-m,y-2);
+  });
+  y+=6;
+  doc.setLineWidth(0.8); doc.setDrawColor(204,255,0); doc.line(m,y,W-m,y); y+=8;
+  doc.setFontSize(11); doc.setFont('helvetica','bold');
+  doc.setTextColor(30,30,30); doc.text('TOTAL A PAGAR AL CLIENTE',m,y);
+  doc.setTextColor(39,80,10); doc.text(f(tp),W-m,y,{align:'right'}); y+=9;
+  doc.setTextColor(30,30,30); doc.text('BENEFICIO TOTAL ESPERADO',m,y);
+  doc.setTextColor(39,80,10); doc.text(f(tb),W-m,y,{align:'right'});
+  y+=16; doc.setFontSize(7); doc.setTextColor(160,160,160);
+  doc.text('Back2Street - Circular - Pre-Loved - Unisex - Solo marcas originales',W/2,y,{align:'center'});
+  doc.save('Back2Street_Lote_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.pdf');
+}
+
 function toExcel(){
-  if(!hist.length){ alert('Historial vacio.'); return; }
+  if(!hist.length){ alert('Lote vacio.'); return; }
   var hd=[['Fecha','Hora','Referencia','Descripcion','Categoria','Marca','Tier','Estado','Original','Confianza','Precio mercado','Oferta cliente','Precio venta','Beneficio neto','Margen %','Veredicto']];
   hist.forEach(function(h){
     hd.push([h.fecha,h.hora,h.ref||'',h.r.descripcion||'',h.r.categoria||'',h.r.marca||'',h.r.tier_marca||'',h.r.estado||'','Si',h.r.confianza||'',+h.n.m.toFixed(2),+h.n.o.toFixed(2),+h.n.v.toFixed(2),+h.n.b.toFixed(2),+h.n.p.toFixed(1),h.n.p>=65?'Rentable':h.n.p>=50?'Revisar':'No rentable']);
   });
   var wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(hd);
   ws['!cols']=hd[0].map(function(_,i){ return{wch:i<2?10:i<4?28:12}; });
-  XLSX.utils.book_append_sheet(wb,ws,'Tasaciones');
+  XLSX.utils.book_append_sheet(wb,ws,'Lote');
   XLSX.writeFile(wb,'Back2Street_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.xlsx');
 }
 
@@ -585,17 +625,18 @@ function sendEmail(){
 }
 
 function sendSummary(){
-  if(!hist.length){ document.getElementById('ef').textContent='Historial vacio.'; return; }
+  if(!hist.length){ document.getElementById('ef').textContent='Lote vacio.'; return; }
   var d=document.getElementById('ed').value.trim();
   var a=encodeURIComponent(document.getElementById('ea').value);
   var msg=document.getElementById('em').value;
   var tp=0,tv=0,tb=0;
   hist.forEach(function(h){ tp+=h.n.o; tv+=h.n.v; tb+=h.n.b; });
-  var body='Back2Street Resumen\n'+new Date().toLocaleDateString('es-ES')+'\n\nPrendas: '+hist.length+'\nPagado clientes: '+f(tp)+'\nIngresos esperados: '+f(tv)+'\nBeneficio esperado: '+f(tb)+'\n\nDETALLE\n';
+  var body='Back2Street - Resumen del lote\n'+new Date().toLocaleDateString('es-ES')+'\n\nPrendas: '+hist.length+'\nTotal a pagar al cliente: '+f(tp)+'\nIngresos esperados: '+f(tv)+'\nBeneficio esperado: '+f(tb)+'\n\nDETALLE\n';
   hist.forEach(function(h,i){
     body+='\n'+(i+1)+'. '+(h.r.descripcion||h.r.categoria)+' - '+(h.r.marca||'-')+'\n   Oferta: '+f(h.n.o)+' Venta: '+f(h.n.v)+' Beneficio: '+f(h.n.b)+' ('+p(h.n.p)+')\n';
   });
-  body+='\n'+(msg?msg+'\n':'')+'\n- Back2Street - Solo marcas originales -';
+  body+='\nTOTAL A PAGAR AL CLIENTE: '+f(tp)+'\nBENEFICIO TOTAL: '+f(tb);
+  body+='\n\n'+(msg?msg+'\n':'')+'\n- Back2Street - Solo marcas originales -';
   window.location.href='mailto:'+d+'?subject='+a+'&body='+encodeURIComponent(body);
   document.getElementById('ef').textContent='Abriendo cliente de email...';
 }
