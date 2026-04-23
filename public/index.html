@@ -257,6 +257,16 @@ function toggleB(m){ if(marcas.has(m)) marcas.delete(m); else marcas.add(m); sav
 function addBrand(){ const v=document.getElementById('new-brand').value.trim(); if(!v)return; marcas.add(v); saveMarcas(); renderBrands(); document.getElementById('new-brand').value=''; }
 
 function addFiles(files){
+  Array.from(files).forEach(function(f){
+    var r=new FileReader();
+    r.onload=function(e){
+      imgs.push(e.target.result);
+      renderPrev();
+    };
+    r.readAsDataURL(f);
+  });
+  document.getElementById('fi').value='';
+}
   Array.from(files).forEach(f=>{
     const r=new FileReader();
     r.onload=function(e){ imgs.push(e.target.result); renderPrev(); };
