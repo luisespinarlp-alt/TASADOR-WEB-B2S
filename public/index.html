@@ -116,7 +116,14 @@
   </div>
 
   <div id="panel-tasar">
-    <div class="card">
+   <div id="lote-activo" style="display:none;background:#0c0c0c;border-radius:12px;padding:1rem 1.5rem;margin-bottom:1rem;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+    <div style="font-size:11px;font-weight:600;color:#CCFF00;letter-spacing:2px;">LOTE ACTIVO</div>
+    <button id="btn-cerrar-lote" style="font-size:11px;padding:3px 10px;background:transparent;border-color:#444;color:#F0EDE6;">Cerrar lote y exportar</button>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;" id="lote-summary"></div>
+  <div style="margin-top:10px;max-height:160px;overflow-y:auto;" id="lote-lista"></div>
+</div>    <div class="card">
       <div class="card-title">Fotos de la prenda</div>
       <div class="upload-zone" id="zona-subida">
         <div class="upload-text">Sube fotos de la prenda</div>
