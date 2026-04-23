@@ -274,7 +274,7 @@ function subirFotos(files){
   });
   document.getElementById('fi').value='';
 }
-function onDrop(e){ e.preventDefault(); document.getElementById('dz').classList.remove('drag'); addFiles(e.dataTransfer.files); }
+subirFotos(e.dataTransfer.files)
 function renderPrev(){
   document.getElementById('pg').innerHTML=imgs.map((d,i)=>
     `<div class="preview-wrap"><img class="preview-img" src="${d}"><button class="preview-del" onclick="imgs.splice(${i},1);renderPrev()">×</button></div>`).join('');
