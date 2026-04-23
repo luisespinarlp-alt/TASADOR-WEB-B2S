@@ -267,7 +267,7 @@ function addBrand(){
   document.getElementById('new-brand').value='';
 }
 
-function subirFotos(files){
+window.subirFotos=function(files){
   var lista=Array.from(files);
   lista.forEach(function(f){
     var reader=new FileReader();
