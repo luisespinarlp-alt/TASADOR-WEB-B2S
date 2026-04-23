@@ -42,8 +42,7 @@
   .grid4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; }
   .field { margin-bottom: 10px; }
   .field label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 4px; font-weight: 500; }
-  .field input, .field select { width: 100%; padding: 8px 10px; font-size: 13px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: #fafaf8; color: var(--text); transition: border-color 0.15s; }
-  .field input:focus, .field select:focus { outline: none; border-color: #999; }
+  .field input, .field select { width: 100%; padding: 8px 10px; font-size: 13px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: #fafaf8; color: var(--text); }
   button { padding: 8px 16px; font-size: 13px; font-weight: 500; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--card); color: var(--text); cursor: pointer; transition: all 0.15s; }
   button:hover:not(:disabled) { background: #f0ede6; }
   button:disabled { opacity: 0.4; cursor: not-allowed; }
@@ -100,8 +99,8 @@
 </style>
 </head>
 <body>
-<div class="container">
- <div class="header">
+ <div class="container">
+  <div class="header">
     <div>
       <div class="brand">BACK<span>2</span>STREET</div>
       <div class="brand-sub">TASADOR IA · SOLO MARCAS ORIGINALES</div>
@@ -119,29 +118,26 @@
   <div id="panel-tasar">
     <div class="card">
       <div class="card-title">Fotos de la prenda</div>
-      <div class="upload-zone" id="zona-subida" onclick="document.getElementById('input-fotos').click()"
-           ondragover="event.preventDefault();this.classList.add('drag')"
-           ondragleave="this.classList.remove('drag')"
-           ondrop="soltarFotos(event)">
+      <div class="upload-zone" id="zona-subida">
         <div class="upload-text">Sube fotos de la prenda</div>
         <div class="upload-sub">Frente · Trasera · Etiqueta con marca · Detalles</div>
       </div>
-      <input type="file" id="input-fotos" accept="image/*" multiple style="display:none" id="input-fotos" onchange="window.subirFotos(this.files)"
+      <input type="file" id="input-fotos" accept="image/*" multiple style="display:none">
       <div class="preview-grid" id="pg"></div>
     </div>
     <div class="card">
       <div class="card-title">Datos opcionales</div>
       <div class="grid2">
-        <div class="field"><label>Referencia / cliente</label><input type="text" id="ref" placeholder="Ej: Maria Garcia — lote 1"></div>
-        <div class="field"><label>Precio Vinted (euros) — 0 = estima IA</label><input type="number" id="pm" value="0" min="0"></div>
+        <div class="field"><label>Referencia / cliente</label><input type="text" id="ref" placeholder="Ej: Maria Garcia lote 1"></div>
+        <div class="field"><label>Precio Vinted (euros) 0 = estima IA</label><input type="number" id="pm" value="0" min="0"></div>
       </div>
       <div class="grid2">
         <div class="field"><label>Coste logistico (euros)</label><input type="number" id="lg" value="3" min="0" step="0.5"></div>
         <div class="field"><label>Notas internas</label><input type="text" id="notas" placeholder="Opcional"></div>
       </div>
     </div>
-    <button class="btn-primary" id="btn-tasar-ia" onclick="tasar()" disabled style="margin-bottom:1rem;">Sube fotos para activar</button>
-    <div id="loading" style="display:none;"><div class="loading"><div class="spinner"></div>Analizando marca y autenticidad con IA...</div></div>
+    <button class="btn-primary" id="btn-tasar-ia" style="margin-bottom:1rem;">Sube fotos para activar</button>
+    <div id="loading" style="display:none;"><div class="loading"><div class="spinner"></div>Analizando con IA...</div></div>
     <div id="rechazo" style="display:none;">
       <div class="result-block">
         <div style="font-size:32px;margin-bottom:10px;">🚫</div>
@@ -164,16 +160,16 @@
         <div id="breakdown"></div>
       </div>
       <div class="grid3" style="margin-bottom:1rem;gap:8px;">
-        <button class="btn-neon" onclick="save()">Guardar</button>
-        <button onclick="makePDF()">Descargar PDF</button>
-        <button onclick="openEmail()">Enviar por email</button>
+        <button class="btn-neon" id="btn-guardar">Guardar</button>
+        <button id="btn-pdf">Descargar PDF</button>
+        <button id="btn-email">Enviar por email</button>
       </div>
     </div>
   </div>
 
   <div id="panel-hist" style="display:none;">
     <div class="card">
-      <div class="card-title"><span>Resumen del lote</span><button style="font-size:11px;padding:3px 8px;" onclick="clearHist()">Limpiar todo</button></div>
+      <div class="card-title"><span>Resumen del lote</span><button style="font-size:11px;padding:3px 8px;" id="btn-limpiar">Limpiar todo</button></div>
       <div class="grid4" id="summary"></div>
     </div>
     <div class="card"><div class="card-title">Prendas aceptadas</div><div id="hist-list"></div></div>
@@ -185,8 +181,8 @@
       <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">Activa las marcas que aceptas. La IA rechazara el resto.</p>
       <div id="brand-list"></div>
       <div style="display:flex;gap:8px;margin-top:14px;">
-        <input type="text" id="new-brand" placeholder="Añadir marca..." style="flex:1;padding:7px 10px;font-size:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fafaf8;" onkeydown="if(event.key==='Enter')addBrand()">
-        <button onclick="addBrand()">Añadir</button>
+        <input type="text" id="new-brand" placeholder="Añadir marca..." style="flex:1;padding:7px 10px;font-size:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fafaf8;">
+        <button id="btn-add-brand">Añadir</button>
       </div>
     </div>
     <div class="card">
@@ -194,7 +190,7 @@
       <div class="row-data"><span class="n">Sin marca reconocible</span><span class="v" style="color:var(--red);">Rechazada</span></div>
       <div class="row-data"><span class="n">Marca no en tu lista</span><span class="v" style="color:var(--red);">Rechazada</span></div>
       <div class="row-data"><span class="n">Posible falsificacion detectada</span><span class="v" style="color:var(--red);">Rechazada</span></div>
-      <div class="row-data"><span class="n">Confianza IA baja</span><span class="v" style="color:var(--amber);">Alerta — revisar</span></div>
+      <div class="row-data"><span class="n">Confianza IA baja</span><span class="v" style="color:var(--amber);">Alerta revisar</span></div>
       <div class="row-data"><span class="n">Original verificada y marca aceptada</span><span class="v" style="color:var(--green);">Aceptada</span></div>
     </div>
   </div>
@@ -202,14 +198,14 @@
   <div id="panel-export" style="display:none;">
     <div class="card">
       <div class="card-title">Exportar a Excel</div>
-      <button style="width:100%;padding:10px;" onclick="toExcel()">Descargar Excel (.xlsx)</button>
+      <button style="width:100%;padding:10px;" id="btn-excel">Descargar Excel (.xlsx)</button>
     </div>
     <div class="card">
       <div class="card-title">Email resumen</div>
       <div class="field"><label>Destinatario</label><input type="text" id="ed" placeholder="email@correo.com"></div>
-      <div class="field"><label>Asunto</label><input type="text" id="ea" value="Back2Street — Resumen de tasaciones"></div>
+      <div class="field"><label>Asunto</label><input type="text" id="ea" value="Back2Street Resumen de tasaciones"></div>
       <div class="field"><label>Mensaje adicional</label><input type="text" id="em" placeholder="Opcional"></div>
-      <button style="width:100%;padding:10px;" onclick="sendSummary()">Enviar resumen</button>
+      <button style="width:100%;padding:10px;" id="btn-send-summary">Enviar resumen</button>
       <div id="ef" style="margin-top:8px;font-size:12px;color:var(--muted);"></div>
     </div>
   </div>
@@ -221,22 +217,98 @@
       <div class="field"><label>Asunto</label><input type="text" id="me-a"></div>
       <div class="field"><label>Mensaje</label><input type="text" id="me-m" placeholder="Opcional"></div>
       <div class="grid2" style="margin-top:12px;">
-        <button class="btn-neon" onclick="sendEmail()">Abrir cliente de email</button>
-        <button onclick="document.getElementById('modal-email').classList.remove('show')">Cancelar</button>
+        <button class="btn-neon" id="btn-send-email">Abrir cliente de email</button>
+        <button id="btn-cancel-email">Cancelar</button>
       </div>
     </div>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 var imgs=[], hist=[], ultima=null, marcas=new Set();
-var DM=['Nike','Adidas',"Levi's",'Tommy Hilfiger','Ralph Lauren','Stone Island','Moncler','Canada Goose','The North Face','Carhartt','Supreme','Palace','Off-White','Balenciaga','Gucci','Prada','Zara','Mango','H&M','Massimo Dutti','Cos','Arket','Uniqlo','New Balance','Puma','Reebok','Converse','Vans','Jordan','Lacoste','Boss','Calvin Klein','Diesel','Versace','Burberry','Acne Studios','A.P.C.'];
+var DM=['Nike','Adidas','Tommy Hilfiger','Ralph Lauren','Stone Island','Moncler','Canada Goose','The North Face','Carhartt','Supreme','Palace','Off-White','Balenciaga','Gucci','Prada','Zara','Mango','H&M','Massimo Dutti','Cos','Arket','Uniqlo','New Balance','Puma','Reebok','Converse','Vans','Jordan','Lacoste','Boss','Calvin Klein','Diesel','Versace','Burberry','Acne Studios'];
 var TF={'S':1.4,'A':1.2,'B':1.0,'C':0.75,'Sin marca':0.5};
 var CF={'camiseta':1.0,'sudadera':1.1,'chaqueta':1.2,'pantalon':1.15,'vestido':1.05,'zapatillas':1.3,'bolso':1.25,'basico':0.9};
 
-try{hist=JSON.parse(localStorage.getItem('b2s_h')||'[]');}catch(e){}
-try{var s=JSON.parse(localStorage.getItem('b2s_m'));if(s)marcas=new Set(s);else DM.forEach(function(m){marcas.add(m);});}catch(e){DM.forEach(function(m){marcas.add(m);});}
-updateCount(); renderBrands();
+try{hist=JSON.parse(localStorage.getItem('b2s_h')||'[]');}catch(e){hist=[];}
+try{
+  var sm=JSON.parse(localStorage.getItem('b2s_m'));
+  if(sm){marcas=new Set(sm);}else{DM.forEach(function(m){marcas.add(m);});}
+}catch(e){DM.forEach(function(m){marcas.add(m);});}
+
+document.addEventListener('DOMContentLoaded', function(){
+
+  updateCount();
+  renderBrands();
+
+  document.getElementById('zona-subida').addEventListener('click', function(){
+    document.getElementById('input-fotos').click();
+  });
+
+  document.getElementById('zona-subida').addEventListener('dragover', function(e){
+    e.preventDefault();
+    this.classList.add('drag');
+  });
+
+  document.getElementById('zona-subida').addEventListener('dragleave', function(){
+    this.classList.remove('drag');
+  });
+
+  document.getElementById('zona-subida').addEventListener('drop', function(e){
+    e.preventDefault();
+    this.classList.remove('drag');
+    cargarFotos(e.dataTransfer.files);
+  });
+
+  document.getElementById('input-fotos').addEventListener('change', function(){
+    cargarFotos(this.files);
+    this.value='';
+  });
+
+  document.getElementById('btn-tasar-ia').addEventListener('click', tasar);
+  document.getElementById('btn-guardar').addEventListener('click', save);
+  document.getElementById('btn-pdf').addEventListener('click', function(){ if(ultima) genPDF(ultima); });
+  document.getElementById('btn-email').addEventListener('click', openEmail);
+  document.getElementById('btn-limpiar').addEventListener('click', clearHist);
+  document.getElementById('btn-excel').addEventListener('click', toExcel);
+  document.getElementById('btn-add-brand').addEventListener('click', addBrand);
+  document.getElementById('btn-send-summary').addEventListener('click', sendSummary);
+  document.getElementById('btn-send-email').addEventListener('click', sendEmail);
+  document.getElementById('btn-cancel-email').addEventListener('click', function(){
+    document.getElementById('modal-email').classList.remove('show');
+  });
+  document.getElementById('new-brand').addEventListener('keydown', function(e){
+    if(e.key==='Enter') addBrand();
+  });
+
+});
+
+function cargarFotos(files){
+  Array.from(files).forEach(function(f){
+    var reader=new FileReader();
+    reader.onload=function(e){
+      imgs.push(e.target.result);
+      renderPrev();
+    };
+    reader.readAsDataURL(f);
+  });
+}
+
+function renderPrev(){
+  document.getElementById('pg').innerHTML=imgs.map(function(d,i){
+    return '<div class="preview-wrap"><img class="preview-img" src="'+d+'"><button class="preview-del" data-idx="'+i+'">x</button></div>';
+  }).join('');
+  document.querySelectorAll('.preview-del').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      imgs.splice(parseInt(this.getAttribute('data-idx')),1);
+      renderPrev();
+    });
+  });
+  var b=document.getElementById('btn-tasar-ia');
+  b.disabled=imgs.length===0;
+  b.textContent=imgs.length>0?'Tasar con IA ('+imgs.length+' foto'+(imgs.length>1?'s':'')+')':'Sube fotos para activar';
+}
 
 function go(t){
   ['tasar','hist','marcas','export'].forEach(function(x){
@@ -248,17 +320,21 @@ function go(t){
 }
 
 function updateCount(){ document.getElementById('hcount').textContent=hist.length; }
-
-function saveMarcas(){ try{localStorage.setItem('b2s_m',JSON.stringify([...marcas]));}catch(e){} }
+function saveMarcas(){ try{localStorage.setItem('b2s_m',JSON.stringify(Array.from(marcas)));}catch(e){} }
 
 function renderBrands(){
-  var all=[...new Set([...DM,...marcas])].sort();
+  var all=Array.from(new Set(DM.concat(Array.from(marcas)))).sort();
   document.getElementById('brand-list').innerHTML=all.map(function(m){
-    return '<span class="brand-tag '+(marcas.has(m)?'on':'')+'" onclick="toggleB(\''+m.replace(/'/g,"\\'")+'\')">' +m+'</span>';
+    return '<span class="brand-tag '+(marcas.has(m)?'on':'')+'" data-marca="'+m.replace(/"/g,'&quot;')+'">'+m+'</span>';
   }).join('');
+  document.querySelectorAll('.brand-tag').forEach(function(el){
+    el.addEventListener('click', function(){
+      var m=this.getAttribute('data-marca');
+      if(marcas.has(m)) marcas.delete(m); else marcas.add(m);
+      saveMarcas(); renderBrands();
+    });
+  });
 }
-
-function toggleB(m){ if(marcas.has(m)) marcas.delete(m); else marcas.add(m); saveMarcas(); renderBrands(); }
 
 function addBrand(){
   var v=document.getElementById('new-brand').value.trim();
@@ -267,43 +343,12 @@ function addBrand(){
   document.getElementById('new-brand').value='';
 }
 
-window.subirFotos=function(files){
-  var lista=Array.from(files);
-  lista.forEach(function(f){
-    var reader=new FileReader();
-    reader.onload=function(evento){
-      imgs.push(evento.target.result);
-      renderPrev();
-    };
-    reader.readAsDataURL(f);
-  });
-  document.getElementById('input-fotos').value='';
-}
-
-function soltarFotos(e){
-  e.preventDefault();
-  document.getElementById('zona-subida').classList.remove('drag');
-  subirFotos(e.dataTransfer.files);
-}
-
-function renderPrev(){
-  document.getElementById('pg').innerHTML=imgs.map(function(d,i){
-    return '<div class="preview-wrap"><img class="preview-img" src="'+d+'"><button class="preview-del" onclick="quitarFoto('+i+')">x</button></div>';
-  }).join('');
-  var b=document.getElementById('btn-tasar-ia');
-  b.disabled=imgs.length===0;
-  b.textContent=imgs.length>0?'Tasar con IA ('+imgs.length+' foto'+(imgs.length>1?'s':')+')':'Sube fotos para activar';
-}
-
-function quitarFoto(i){ imgs.splice(i,1); renderPrev(); }
-
 function f(n){ return n.toFixed(2).replace('.',',')+' euros'; }
 function p(n){ return Math.round(n)+'%'; }
 
 function calc(r,log){
   var tF=TF[r.tier_marca]||1;
-  var cat=(r.categoria||'').toLowerCase();
-  var cF=CF[cat]||1;
+  var cF=CF[(r.categoria||'').toLowerCase()]||1;
   var m=r.precio_mercado_estimado||20;
   var t=m*(r.factor_estado||0.7)*tF*cF;
   var o=t*0.35, v=m*0.90, c=v*0.05, b=v-o-log-c;
@@ -318,7 +363,7 @@ function tasar(){
   document.getElementById('btn-tasar-ia').disabled=true;
   var pm=parseFloat(document.getElementById('pm').value)||0;
   var log=parseFloat(document.getElementById('lg').value)||3;
-  var ml=[...marcas].join(', ');
+  var ml=Array.from(marcas).join(', ');
   var content=imgs.map(function(d){
     return {type:'image',source:{type:'base64',media_type:'image/jpeg',data:d.split(',')[1]}};
   });
@@ -328,30 +373,34 @@ function tasar(){
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:900,messages:[{role:'user',content:content}]})
   }).then(function(res){ return res.json(); }).then(function(data){
+    document.getElementById('loading').style.display='none';
+    document.getElementById('btn-tasar-ia').disabled=false;
     if(data.error){ showErr(JSON.stringify(data.error)); return; }
     var raw=data.content?data.content.map(function(b){ return b.text||''; }).join(''):'{}';
-    var r=JSON.parse(raw.replace(/```json|```/g,'').trim());
-    process(r,log);
-  }).catch(function(err){ showErr(err.message); });
+    try{
+      var r=JSON.parse(raw.replace(/```json|```/g,'').trim());
+      process(r,log);
+    }catch(e){ showErr('Error procesando respuesta: '+raw); }
+  }).catch(function(err){
+    document.getElementById('loading').style.display='none';
+    document.getElementById('btn-tasar-ia').disabled=false;
+    showErr(err.message);
+  });
 }
 
 function showErr(msg){
-  document.getElementById('loading').style.display='none';
   document.getElementById('resultado').style.display='block';
   document.getElementById('analisis').innerHTML='<div style="color:var(--red);font-size:13px;">Error: '+msg+'</div>';
   document.getElementById('metrics').innerHTML='';
   document.getElementById('verdict').innerHTML='';
   document.getElementById('breakdown').innerHTML='';
-  document.getElementById('btn-tasar-ia').disabled=false;
 }
 
 function process(r,log){
-  document.getElementById('loading').style.display='none';
-  document.getElementById('btn-tasar-ia').disabled=false;
   var bad=!r.es_original||!r.marca_en_lista||r.tier_marca==='Sin marca'||r.tier_marca==='C';
   if(bad){
     document.getElementById('rechazo').style.display='block';
-    var tit=!r.es_original?'Prenda rechazada — posible falsificacion':'Prenda rechazada — "'+( r.marca||'Sin marca')+'" no aceptada';
+    var tit=!r.es_original?'Prenda rechazada posible falsificacion':'Prenda rechazada "'+(r.marca||'Sin marca')+'" no aceptada';
     var mot=!r.es_original?'La IA detecto indicios de que esta prenda no es original. '+(r.observaciones||''):'Esta marca no esta en tu lista. '+(r.motivo_rechazo||'');
     document.getElementById('r-tit').textContent=tit;
     document.getElementById('r-mot').textContent=mot;
@@ -365,14 +414,14 @@ function renderRes(r,log){
   var n=calc(r,log);
   ultima={r:r,n:n,log:log,imgs:imgs.slice(),ref:document.getElementById('ref').value,notas:document.getElementById('notas').value,thumb:imgs[0]||null,fecha:new Date().toLocaleDateString('es-ES'),hora:new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}),id:Date.now()};
   var cC=r.confianza==='alta'?'p-green':r.confianza==='media'?'p-amber':'p-red';
-  document.getElementById('analisis').innerHTML='<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;"><span class="tag">'+(r.categoria||'—')+'</span><span class="tag" style="font-weight:600;">'+(r.marca||'—')+'</span><span class="tag">Tier '+(r.tier_marca||'—')+'</span><span class="tag">'+(r.estado||'—')+'</span><span class="tag">'+(r.color||'—')+'</span><span class="pill '+cC+'">Confianza: '+r.confianza+'</span><span class="pill p-green">Original</span></div><div style="font-size:13px;margin-bottom:4px;">'+(r.descripcion||'')+'</div>'+(r.observaciones?'<div style="font-size:11px;color:var(--muted);">'+r.observaciones+'</div>':'');
-  document.getElementById('metrics').innerHTML='<div class="metric"><div class="metric-label">Precio mercado</div><div class="metric-val">'+f(n.m)+'</div><div class="metric-sub">ref. Vinted</div></div><div class="metric"><div class="metric-label">Precio tasado</div><div class="metric-val">'+f(n.t)+'</div><div class="metric-sub">factores IA</div></div><div class="metric"><div class="metric-label">Oferta cliente</div><div class="metric-val">'+f(n.o)+'</div><div class="metric-sub">pagas tu</div></div><div class="metric"><div class="metric-label">Beneficio neto</div><div class="metric-val">'+f(n.b)+'</div><div class="metric-sub">'+p(n.p)+' margen</div></div>';
+  document.getElementById('analisis').innerHTML='<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;"><span class="tag">'+(r.categoria||'-')+'</span><span class="tag" style="font-weight:600;">'+(r.marca||'-')+'</span><span class="tag">Tier '+(r.tier_marca||'-')+'</span><span class="tag">'+(r.estado||'-')+'</span><span class="tag">'+(r.color||'-')+'</span><span class="pill '+cC+'">Confianza: '+r.confianza+'</span><span class="pill p-green">Original</span></div><div style="font-size:13px;margin-bottom:4px;">'+(r.descripcion||'')+'</div>'+(r.observaciones?'<div style="font-size:11px;color:var(--muted);">'+r.observaciones+'</div>':'');
+  document.getElementById('metrics').innerHTML='<div class="metric"><div class="metric-label">Precio mercado</div><div class="metric-val">'+f(n.m)+'</div><div class="metric-sub">ref Vinted</div></div><div class="metric"><div class="metric-label">Precio tasado</div><div class="metric-val">'+f(n.t)+'</div><div class="metric-sub">factores IA</div></div><div class="metric"><div class="metric-label">Oferta cliente</div><div class="metric-val">'+f(n.o)+'</div><div class="metric-sub">pagas tu</div></div><div class="metric"><div class="metric-label">Beneficio neto</div><div class="metric-val">'+f(n.b)+'</div><div class="metric-sub">'+p(n.p)+' margen</div></div>';
   var vc,vt,vm,vtxt,vmsg;
-  if(n.p>=65){vc='result-ok';vt='rt rt-ok';vm='rb rb-ok';vtxt='Operacion rentable';vmsg='Margen '+p(n.p)+' — supera el 65%. Oferta al cliente: '+f(n.o)+'.';}
+  if(n.p>=65){vc='result-ok';vt='rt rt-ok';vm='rb rb-ok';vtxt='Operacion rentable';vmsg='Margen '+p(n.p)+' supera el 65%. Oferta al cliente: '+f(n.o)+'.';}
   else if(n.p>=50){vc='result-warn';vt='rt rt-warn';vm='rb rb-warn';vtxt='Por debajo del objetivo';vmsg='Margen '+p(n.p)+'. Considera ofrecer '+f(n.o*0.85)+' para alcanzar el 65%.';}
-  else{vc='result-bad';vt='rt rt-bad';vm='rb rb-bad';vtxt='No rentable — rechazar';vmsg='Margen '+p(n.p)+'. Precio demasiado bajo.';}
+  else{vc='result-bad';vt='rt rt-bad';vm='rb rb-bad';vtxt='No rentable rechazar';vmsg='Margen '+p(n.p)+'. Precio demasiado bajo.';}
   document.getElementById('verdict').innerHTML='<div class="'+vc+'"><div class="'+vt+'">'+vtxt+'</div><div class="'+vm+'">'+vmsg+'</div></div>';
-  document.getElementById('breakdown').innerHTML=[['Precio mercado',f(n.m)],['Precio tasado',f(n.t)],['Oferta al cliente',f(n.o)],['Precio venta Vinted (-10%)',f(n.v)],['Comision Vinted (~5%)','- '+f(n.c)],['Coste logistico','- '+f(log)],['Beneficio neto',f(n.b)+' ('+p(n.p)+')']].map(function(x){ return '<div class="row-data"><span class="n">'+x[0]+'</span><span class="v">'+x[1]+'</span></div>'; }).join('');
+  document.getElementById('breakdown').innerHTML=[['Precio mercado',f(n.m)],['Precio tasado',f(n.t)],['Oferta al cliente',f(n.o)],['Precio venta Vinted -10%',f(n.v)],['Comision Vinted 5%','- '+f(n.c)],['Coste logistico','- '+f(log)],['Beneficio neto',f(n.b)+' ('+p(n.p)+')']].map(function(x){ return '<div class="row-data"><span class="n">'+x[0]+'</span><span class="v">'+x[1]+'</span></div>'; }).join('');
 }
 
 function save(){
@@ -401,8 +450,27 @@ function renderHist(){
   document.getElementById('summary').innerHTML='<div class="summary-card"><div class="sc-label">Prendas</div><div class="sc-val">'+hist.length+'</div></div><div class="summary-card"><div class="sc-label">Pagado clientes</div><div class="sc-val">'+f(tp)+'</div></div><div class="summary-card"><div class="sc-label">Ingresos esperados</div><div class="sc-val">'+f(tv)+'</div></div><div class="summary-card"><div class="sc-label">Beneficio esperado</div><div class="sc-val">'+f(tb)+'</div></div>';
   document.getElementById('hist-list').innerHTML=hist.map(function(h,i){
     var pc=h.n.p>=65?'p-green':h.n.p>=50?'p-amber':'p-red';
-    return '<div class="hist-item" onclick="detail('+i+')">'+(h.thumb?'<img class="hist-thumb" src="'+h.thumb+'">':'<div class="hist-thumb">👕</div>')+'<div class="hist-info"><div class="hist-name">'+(h.r.descripcion||h.r.categoria||'Prenda')+'</div><div class="hist-meta">'+h.fecha+' '+h.hora+(h.ref?' · '+h.ref:'')+'</div><div style="margin-top:2px;"><span class="pill '+pc+'">'+p(h.n.p)+'</span>'+(h.r.marca?' <span class="tag">'+h.r.marca+'</span>':'')+'<span class="pill p-green" style="margin-left:2px;">Original</span></div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:14px;font-weight:600;">'+f(h.n.o)+'</div><div style="font-size:10px;color:var(--muted);">al cliente</div><div style="display:flex;gap:4px;margin-top:5px;"><button style="font-size:10px;padding:3px 8px;" onclick="event.stopPropagation();makePDFItem('+i+')">PDF</button><button style="font-size:10px;padding:3px 8px;" onclick="event.stopPropagation();emailItem('+i+')">Email</button></div></div></div>';
+    return '<div class="hist-item" data-idx="'+i+'">'+(h.thumb?'<img class="hist-thumb" src="'+h.thumb+'">':'<div class="hist-thumb">👕</div>')+'<div class="hist-info"><div class="hist-name">'+(h.r.descripcion||h.r.categoria||'Prenda')+'</div><div class="hist-meta">'+h.fecha+' '+h.hora+(h.ref?' - '+h.ref:'')+'</div><div style="margin-top:2px;"><span class="pill '+pc+'">'+p(h.n.p)+'</span>'+(h.r.marca?' <span class="tag">'+h.r.marca+'</span>':'')+'<span class="pill p-green" style="margin-left:2px;">Original</span></div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:14px;font-weight:600;">'+f(h.n.o)+'</div><div style="font-size:10px;color:var(--muted);">al cliente</div><div style="display:flex;gap:4px;margin-top:5px;"><button class="btn-hist-pdf" data-idx="'+i+'" style="font-size:10px;padding:3px 8px;">PDF</button><button class="btn-hist-email" data-idx="'+i+'" style="font-size:10px;padding:3px 8px;">Email</button></div></div></div>';
   }).join('');
+  document.querySelectorAll('.hist-item').forEach(function(el){
+    el.addEventListener('click', function(e){
+      if(e.target.tagName==='BUTTON') return;
+      detail(parseInt(this.getAttribute('data-idx')));
+    });
+  });
+  document.querySelectorAll('.btn-hist-pdf').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      genPDF(hist[parseInt(this.getAttribute('data-idx'))]);
+    });
+  });
+  document.querySelectorAll('.btn-hist-email').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      ultima=hist[parseInt(this.getAttribute('data-idx'))];
+      openEmail();
+    });
+  });
 }
 
 function detail(i){ ultima=hist[i]; go('tasar'); renderRes(hist[i].r,hist[i].log||3); }
@@ -425,22 +493,27 @@ function genPDF(h){
   doc.setFillColor(234,243,222); doc.rect(m,26,70,8,'F');
   doc.setTextColor(39,80,10); doc.setFontSize(7); doc.setFont('helvetica','bold'); doc.text('PRENDA ORIGINAL VERIFICADA',m+2,31);
   if(h.imgs && h.imgs.length>0){
-    var fx=m; var maxFotos=Math.min(h.imgs.length,4);
-    for(var i=0;i<maxFotos;i++){
+    var fx=m;
+    var maxF=Math.min(h.imgs.length,4);
+    for(var i=0;i<maxF;i++){
       try{ doc.addImage(h.imgs[i],'JPEG',fx,y,38,38); fx+=40; }catch(e){}
     }
     y+=44;
   }
   doc.setTextColor(30,30,30); doc.setFontSize(10); doc.setFont('helvetica','bold'); doc.text('DATOS DE LA TASACION',m,y);
   doc.setDrawColor(204,255,0); doc.setLineWidth(0.5); doc.line(m,y+2,W-m,y+2); y+=10;
-  [['Fecha',h.fecha+' '+h.hora],['Referencia',h.ref||'—'],['Descripcion',h.r.descripcion||'—'],['Marca',(h.r.marca||'—')+' (Tier '+(h.r.tier_marca||'—')+') - Original'],['Estado',h.r.estado||'—'],['Categoria',h.r.categoria||'—'],['Color',h.r.color||'—'],['Confianza IA',h.r.confianza||'—'],['Observaciones',h.r.observaciones||'—'],['Notas',h.notas||'—']].forEach(function(x){
+  [['Fecha',h.fecha+' '+h.hora],['Referencia',h.ref||'-'],['Descripcion',h.r.descripcion||'-'],['Marca',(h.r.marca||'-')+' Tier '+(h.r.tier_marca||'-')+' Original'],['Estado',h.r.estado||'-'],['Categoria',h.r.categoria||'-'],['Color',h.r.color||'-'],['Confianza IA',h.r.confianza||'-'],['Observaciones',h.r.observaciones||'-'],['Notas',h.notas||'-']].forEach(function(x){
     doc.setFontSize(9); doc.setFont('helvetica','bold'); doc.setTextColor(80,80,80); doc.text(x[0]+':',m,y);
-    doc.setFont('helvetica','normal'); doc.setTextColor(30,30,30); doc.text(String(x[1]),m+38,y); y+=7;
+    doc.setFont('helvetica','normal'); doc.setTextColor(30,30,30);
+    var val=String(x[1]);
+    if(val.length>60) val=val.substring(0,60)+'...';
+    doc.text(val,m+38,y); y+=7;
   });
   y+=4; doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.text('DESGLOSE ECONOMICO',m,y);
   doc.setDrawColor(200,200,200); doc.line(m,y+2,W-m,y+2); y+=10;
   [['Precio de mercado',f(h.n.m)],['Precio tasado',f(h.n.t)],['Oferta al cliente',f(h.n.o)],['Precio venta Vinted',f(h.n.v)],['Comision Vinted','- '+f(h.n.c)],['Coste logistico','- '+f(h.n.log||3)]].forEach(function(x){
-    doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(80,80,80); doc.text(x[0],m,y); doc.setTextColor(30,30,30); doc.text(x[1],W-m,y,{align:'right'}); y+=7;
+    doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(80,80,80); doc.text(x[0],m,y);
+    doc.setTextColor(30,30,30); doc.text(x[1],W-m,y,{align:'right'}); y+=7;
   });
   doc.setLineWidth(0.3); doc.line(m,y,W-m,y); y+=6;
   doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.text('Beneficio neto',m,y);
@@ -452,39 +525,56 @@ function genPDF(h){
   doc.setFillColor(bg[0],bg[1],bg[2]); doc.rect(m,y-5,W-2*m,11,'F');
   doc.setFontSize(9); doc.setTextColor(col[0],col[1],col[2]); doc.text(vt,W/2,y+1,{align:'center'});
   y+=18; doc.setFontSize(7); doc.setTextColor(160,160,160);
-  doc.text('Back2Street - Circular - Pre-Loved - Unisex - Solo marcas originales',W/2,y,{align:'center'});
+  doc.text('Back2Street - Circular - Pre-Loved - Unisex',W/2,y,{align:'center'});
   doc.save('Back2Street_'+(h.ref||'prenda').replace(/[^a-z0-9]/gi,'_')+'_'+(h.fecha||'').replace(/\//g,'-')+'.pdf');
 }
-
-function makePDF(){ if(ultima) genPDF(ultima); }
-function makePDFItem(i){ genPDF(hist[i]); }
 
 function toExcel(){
   if(!hist.length){ alert('Historial vacio.'); return; }
   var hd=[['Fecha','Hora','Referencia','Descripcion','Categoria','Marca','Tier','Estado','Original','Confianza','Precio mercado','Oferta cliente','Precio venta','Beneficio neto','Margen %','Veredicto']];
-  hist.forEach(function(h){ hd.push([h.fecha,h.hora,h.ref||'',h.r.descripcion||'',h.r.categoria||'',h.r.marca||'',h.r.tier_marca||'',h.r.estado||'','Si',h.r.confianza||'',+h.n.m.toFixed(2),+h.n.o.toFixed(2),+h.n.v.toFixed(2),+h.n.b.toFixed(2),+h.n.p.toFixed(1),h.n.p>=65?'Rentable':h.n.p>=50?'Revisar':'No rentable']); });
+  hist.forEach(function(h){
+    hd.push([h.fecha,h.hora,h.ref||'',h.r.descripcion||'',h.r.categoria||'',h.r.marca||'',h.r.tier_marca||'',h.r.estado||'','Si',h.r.confianza||'',+h.n.m.toFixed(2),+h.n.o.toFixed(2),+h.n.v.toFixed(2),+h.n.b.toFixed(2),+h.n.p.toFixed(1),h.n.p>=65?'Rentable':h.n.p>=50?'Revisar':'No rentable']);
+  });
   var wb=XLSX.utils.book_new(), ws=XLSX.utils.aoa_to_sheet(hd);
   ws['!cols']=hd[0].map(function(_,i){ return {wch:i<2?10:i<4?28:12}; });
   XLSX.utils.book_append_sheet(wb,ws,'Tasaciones');
   XLSX.writeFile(wb,'Back2Street_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.xlsx');
 }
 
-function buildBody(h){ return 'Informe Back2Street\n\nFecha: '+h.fecha+' '+h.hora+'\nReferencia: '+(h.ref||'—')+'\nDescripcion: '+(h.r.descripcion||'—')+'\nMarca: '+(h.r.marca||'—')+' (Tier '+(h.r.tier_marca||'—')+') — ORIGINAL\nEstado: '+(h.r.estado||'—')+'\n\nPrecio mercado: '+f(h.n.m)+'\nOferta cliente: '+f(h.n.o)+'\nPrecio venta Vinted: '+f(h.n.v)+'\nBeneficio neto: '+f(h.n.b)+' ('+p(h.n.p)+')\n'+(h.r.observaciones?'\nObs: '+h.r.observaciones:'')+'\n\n— Back2Street - Circular - Pre-Loved - Unisex —'; }
+function buildBody(h){
+  return 'Informe Back2Street\n\nFecha: '+h.fecha+' '+h.hora+'\nReferencia: '+(h.ref||'-')+'\nDescripcion: '+(h.r.descripcion||'-')+'\nMarca: '+(h.r.marca||'-')+' Tier '+(h.r.tier_marca||'-')+' ORIGINAL\nEstado: '+(h.r.estado||'-')+'\n\nPrecio mercado: '+f(h.n.m)+'\nOferta cliente: '+f(h.n.o)+'\nPrecio venta Vinted: '+f(h.n.v)+'\nBeneficio neto: '+f(h.n.b)+' ('+p(h.n.p)+')\n'+(h.r.observaciones?'\nObs: '+h.r.observaciones:'')+'\n\n- Back2Street - Circular - Pre-Loved - Unisex -';
+}
 
-function openEmail(){ document.getElementById('modal-email').classList.add('show'); document.getElementById('me-d').value=''; if(ultima) document.getElementById('me-a').value='Back2Street — '+(ultima.r.descripcion||ultima.r.categoria||'prenda'); }
-function emailItem(i){ ultima=hist[i]; openEmail(); }
-function sendEmail(){ if(!ultima) return; var d=document.getElementById('me-d').value.trim(),a=encodeURIComponent(document.getElementById('me-a').value),msg=document.getElementById('me-m').value; window.location.href='mailto:'+d+'?subject='+a+'&body='+encodeURIComponent((msg?msg+'\n\n':'')+buildBody(ultima)); document.getElementById('modal-email').classList.remove('show'); }
+function openEmail(){
+  document.getElementById('modal-email').classList.add('show');
+  document.getElementById('me-d').value='';
+  if(ultima) document.getElementById('me-a').value='Back2Street '+(ultima.r.descripcion||ultima.r.categoria||'prenda');
+}
+
+function sendEmail(){
+  if(!ultima) return;
+  var d=document.getElementById('me-d').value.trim();
+  var a=encodeURIComponent(document.getElementById('me-a').value);
+  var msg=document.getElementById('me-m').value;
+  window.location.href='mailto:'+d+'?subject='+a+'&body='+encodeURIComponent((msg?msg+'\n\n':'')+buildBody(ultima));
+  document.getElementById('modal-email').classList.remove('show');
+}
 
 function sendSummary(){
   if(!hist.length){ document.getElementById('ef').textContent='Historial vacio.'; return; }
-  var d=document.getElementById('ed').value.trim(),a=encodeURIComponent(document.getElementById('ea').value),msg=document.getElementById('em').value;
-  var tp=0,tv=0,tb=0; hist.forEach(function(h){ tp+=h.n.o; tv+=h.n.v; tb+=h.n.b; });
-  var body='Back2Street — Resumen\n'+new Date().toLocaleDateString('es-ES')+'\n\nPrendas: '+hist.length+'\nPagado clientes: '+f(tp)+'\nIngresos esperados: '+f(tv)+'\nBeneficio esperado: '+f(tb)+'\n\nDETALLE\n';
-  hist.forEach(function(h,i){ body+='\n'+(i+1)+'. '+(h.r.descripcion||h.r.categoria)+' — '+(h.r.marca||'—')+'\n   Oferta: '+f(h.n.o)+' · Venta: '+f(h.n.v)+' · Beneficio: '+f(h.n.b)+' ('+p(h.n.p)+')\n'; });
-  body+='\n'+(msg?msg+'\n':'')+'\n— Back2Street - Solo marcas originales —';
+  var d=document.getElementById('ed').value.trim();
+  var a=encodeURIComponent(document.getElementById('ea').value);
+  var msg=document.getElementById('em').value;
+  var tp=0,tv=0,tb=0;
+  hist.forEach(function(h){ tp+=h.n.o; tv+=h.n.v; tb+=h.n.b; });
+  var body='Back2Street Resumen\n'+new Date().toLocaleDateString('es-ES')+'\n\nPrendas: '+hist.length+'\nPagado clientes: '+f(tp)+'\nIngresos esperados: '+f(tv)+'\nBeneficio esperado: '+f(tb)+'\n\nDETALLE\n';
+  hist.forEach(function(h,i){
+    body+='\n'+(i+1)+'. '+(h.r.descripcion||h.r.categoria)+' - '+(h.r.marca||'-')+'\n   Oferta: '+f(h.n.o)+' Venta: '+f(h.n.v)+' Beneficio: '+f(h.n.b)+' ('+p(h.n.p)+')\n';
+  });
+  body+='\n'+(msg?msg+'\n':'')+'\n- Back2Street - Solo marcas originales -';
   window.location.href='mailto:'+d+'?subject='+a+'&body='+encodeURIComponent(body);
   document.getElementById('ef').textContent='Abriendo cliente de email...';
-};
+}
 </script>
 </body>
 </html>
