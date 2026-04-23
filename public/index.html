@@ -256,7 +256,7 @@ function renderBrands(){
 function toggleB(m){ if(marcas.has(m)) marcas.delete(m); else marcas.add(m); saveMarcas(); renderBrands(); }
 function addBrand(){ const v=document.getElementById('new-brand').value.trim(); if(!v)return; marcas.add(v); saveMarcas(); renderBrands(); document.getElementById('new-brand').value=''; }
 
-function addFiles(files){
+function subirFotos(files){
   Array.from(files).forEach(function(f){
     var r=new FileReader();
     r.onload=function(e){
