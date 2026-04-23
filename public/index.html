@@ -126,7 +126,7 @@
         <div class="upload-text">Sube fotos de la prenda</div>
         <div class="upload-sub">Frente · Trasera · Etiqueta con marca · Detalles</div>
       </div>
-      <input type="file" id="input-fotos" accept="image/*" multiple style="display:none" onchange="subirFotos(this.files)">
+      <input type="file" id="input-fotos" accept="image/*" multiple style="display:none" id="input-fotos" onchange="window.subirFotos(this.files)"
       <div class="preview-grid" id="pg"></div>
     </div>
     <div class="card">
