@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Back2Street — Tasa tu ropa</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0c0c0c; --card: #1a1918; --border: rgba(255,255,255,0.08);
+    --text: #F0EDE6; --muted: #888; --light: #555;
+    --neon: #CCFF00; --dark: #0c0c0c;
+    --green: #1D9E75; --green-bg: #0a2a1a;
+    --radius: 14px; --radius-sm: 8px;
+  }
+  body { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  .container { max-width: 560px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+  .header { text-align: center; margin-bottom: 2rem; padding-top: 1rem; }
+  .brand { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: 4px; margin-bottom: 4px; }
+  .brand span { color: var(--neon); }
+  .brand-sub { font-size: 9px; color: var(--muted); letter-spacing: 3px; }
+  .tagline { font-size: 14px; color: var(--muted); margin-top: 12px; line-height: 1.5; }
+  .card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+  .card-title { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+  .foto-guia { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin-bottom: 14px; }
+  .foto-guia-item { background: #111; border-radius: var(--radius-sm); padding: 10px 4px; text-align: center; border: 0.5px solid var(--border); }
+  .foto-guia-icon { font-size: 22px; margin-bottom: 4px; }
+  .foto-guia-label { font-size: 9px; color: var(--muted); font-weight: 500; letter-spacing: 0.5px; }
+  .aviso { background: #1a1500; border-left: 3px solid var(--neon); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 8px 12px; font-size: 11px; color: #aaa; margin-bottom: 12px; }
+  .aviso strong { color: var(--neon); }
+  .upload-zone { border: 1.5px dashed #333; border-radius: var(--radius); padding: 2rem 1rem; text-align: center; cursor: pointer; transition: all 0.2s; }
+  .upload-zone:hover, .upload-zone.drag { border-color: var(--neon); background: #111; }
+  .upload-icon { font-size: 32px; margin-bottom: 8px; }
+  .upload-text { font-size: 14px; color: var(--text); font-weight: 500; }
+  .upload-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  input[type=file] { display: none; }
+  .preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px,1fr)); gap: 8px; margin-top: 12px; }
+  .preview-img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius-sm); border: 0.5px solid var(--border); }
+  .preview-wrap { position: relative; }
+  .preview-del { position: absolute; top: 3px; right: 3px; width: 18px; height: 18px; background: rgba(0,0,0,0.7); border-radius: 50%; border: none; color: #fff; font-size: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 5px; font-weight: 500; letter-spacing: 0.5px; }
+  .field input { width: 100%; padding: 10px 12px; font-size: 14px; border: 0.5px solid var(--border); border-radius: var(--radius-sm); background: #111; color: var(--text); }
+  .field input:focus { outline: none; border-color: #444; }
+  .btn-tasar { width: 100%; padding: 14px; font-size: 15px; font-weight: 700; border: none; border-radius: var(--radius); background: var(--neon); color: #0c0c0c; cursor: pointer; transition: all 0.15s; letter-spacing: 1px; margin-bottom: 1rem; }
+  .btn-tasar:hover:not(:disabled) { background: #d4ff1a; }
+  .btn-tasar:disabled { opacity: 0.4; cursor: not-allowed; }
+  .loading { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 1.5rem; color: var(--muted); font-size: 13px; }
+  .spinner { width: 20px; height: 20px; border: 2px solid #333; border-top-color: var(--neon); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .resultado-header { text-align: center; padding: 1.5rem 1rem 1rem; }
+  .resultado-emoji { font-size: 40px; margin-bottom: 8px; }
+  .resultado-titulo { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .resultado-sub { font-size: 13px; color: var(--muted); }
+  .prenda-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 0.5px solid var(--border); }
+  .prenda-item:last-child { border-bottom: none; }
+  .prenda-num { width: 24px; height: 24px; border-radius: 50%; background: #222; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--muted); flex-shrink: 0; margin-right: 10px; }
+  .prenda-info { flex: 1; }
+  .prenda-nombre { font-size: 13px; font-weight: 500; color: var(--text); }
+  .prenda-detalle { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .prenda-precio { font-size: 18px; font-weight: 700; color: var(--neon); flex-shrink: 0; margin-left: 10px; }
+  .total-box { background: #111; border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-top: 1rem; }
+  .total-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
+  .total-valor { font-size: 36px; font-weight: 700; color: var(--neon); }
+  .total-sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .condiciones { background: #111; border-radius: var(--radius-sm); padding: 10px 14px; margin-top: 10px; font-size: 11px; color: var(--muted); line-height: 1.6; }
+  .btn-pdf { width: 100%; padding: 12px; font-size: 13px; font-weight: 600; border: 0.5px solid var(--border); border-radius: var(--radius); background: transparent; color: var(--text); cursor: pointer; margin-top: 10px; transition: all 0.15s; }
+  .btn-pdf:hover { background: #222; }
+  .btn-nueva { width: 100%; padding: 12px; font-size: 13px; font-weight: 600; border: 0.5px solid #CCFF00; border-radius: var(--radius); background: transparent; color: var(--neon); cursor: pointer; margin-top: 8px; transition: all 0.15s; }
+  .btn-nueva:hover { background: #0a1a00; }
+  .rechazo-box { background: #1a0505; border: 0.5px solid #F09595; border-radius: var(--radius); padding: 1.5rem; text-align: center; margin-bottom: 1rem; }
+  .steps { display: flex; gap: 0; margin-bottom: 1.5rem; }
+  .step { flex: 1; text-align: center; }
+  .step-num { width: 28px; height: 28px; border-radius: 50%; background: #222; border: 1.5px solid #333; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: var(--muted); margin: 0 auto 6px; }
+  .step-num.active { background: var(--neon); border-color: var(--neon); color: #0c0c0c; }
+  .step-num.done { background: var(--green); border-color: var(--green); color: #fff; }
+  .step-label { font-size: 9px; color: var(--muted); letter-spacing: 0.5px; }
+  .step-line { flex: 1; height: 1.5px; background: #222; margin-top: 14px; }
+  @media (max-width: 480px) {
+    .foto-guia { grid-template-columns: repeat(2,1fr); }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+
+  <div class="header">
+    <div class="brand">BACK<span>2</span>STREET</div>
+    <div class="brand-sub">CIRCULAR · PRE-LOVED · UNISEX</div>
+    <div class="tagline">Tasa tu ropa desde casa y recibe el pago en 48h</div>
+  </div>
+
+  <!-- PASOS -->
+  <div class="steps" id="steps">
+    <div class="step">
+      <div class="step-num active" id="step1">1</div>
+      <div class="step-label">FOTOS</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step">
+      <div class="step-num" id="step2">2</div>
+      <div class="step-label">DATOS</div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step">
+      <div class="step-num" id="step3">3</div>
+      <div class="step-label">OFERTA</div>
+    </div>
+  </div>
+
+  <!-- PANEL SUBIDA -->
+  <div id="panel-subida">
+    <div class="card">
+      <div class="card-title">Fotos necesarias para tasar tu prenda</div>
+      <div class="foto-guia">
+        <div class="foto-guia-item">
+          <div class="foto-guia-icon">👕</div>
+          <div class="foto-guia-label">PARTE DELANTERA</div>
+        </div>
+        <div class="foto-guia-item">
+          <div class="foto-guia-icon">🔄</div>
+          <div class="foto-guia-label">PARTE TRASERA</div>
+        </div>
+        <div class="foto-guia-item">
+          <div class="foto-guia-icon">🏷️</div>
+          <div class="foto-guia-label">ETIQUETA MARCA</div>
+        </div>
+        <div class="foto-guia-item">
+          <div class="foto-guia-icon">🔍</div>
+          <div class="foto-guia-label">DETALLES</div>
+        </div>
+      </div>
+      <div class="aviso"><strong>Importante:</strong> la foto de la etiqueta con la marca y la talla es imprescindible para poder tasarte la prenda correctamente.</div>
+      <div class="upload-zone" id="zona-subida">
+        <div class="upload-icon">📸</div>
+        <div class="upload-text">Pulsa aqui para subir fotos</div>
+        <div class="upload-sub">JPG o PNG · Maximo 8 fotos por prenda</div>
+      </div>
+      <input type="file" id="input-fotos" accept="image/*" multiple>
+      <div class="preview-grid" id="pg"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Tus datos</div>
+      <div class="field"><label>Tu nombre</label><input type="text" id="nombre-cliente" placeholder="Ej: Maria Garcia"></div>
+      <div class="field"><label>Tu email (para recibir la oferta)</label><input type="text" id="email-cliente" placeholder="tucorreo@email.com"></div>
+      <div class="field"><label>Telefono (opcional)</label><input type="text" id="tel-cliente" placeholder="600 000 000"></div>
+    </div>
+    <button class="btn-tasar" id="btn-tasar" disabled>Sube fotos para continuar</button>
+  </div>
+
+  <!-- LOADING -->
+  <div id="panel-loading" style="display:none;">
+    <div class="card" style="text-align:center;padding:2.5rem;">
+      <div class="loading" style="justify-content:center;">
+        <div class="spinner"></div>
+        <span>Analizando tu prenda...</span>
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px;">Esto puede tardar unos segundos</div>
+    </div>
+  </div>
+
+  <!-- RECHAZO -->
+  <div id="panel-rechazo" style="display:none;">
+    <div class="rechazo-box">
+      <div style="font-size:36px;margin-bottom:10px;">😔</div>
+      <div style="font-size:16px;font-weight:700;color:#F09595;margin-bottom:8px;" id="rechazo-tit"></div>
+      <div style="font-size:13px;color:#aaa;line-height:1.5;" id="rechazo-mot"></div>
+    </div>
+    <button class="btn-nueva" id="btn-nueva-rechazo">Tasar otra prenda</button>
+  </div>
+
+  <!-- RESULTADO -->
+  <div id="panel-resultado" style="display:none;">
+    <div class="card">
+      <div class="resultado-header">
+        <div class="resultado-emoji">🎉</div>
+        <div class="resultado-titulo">Tu tasacion esta lista</div>
+        <div class="resultado-sub" id="res-nombre"></div>
+      </div>
+      <div id="lista-prendas"></div>
+      <div class="total-box">
+        <div class="total-label">Total que recibirias</div>
+        <div class="total-valor" id="total-valor">0,00 euros</div>
+        <div class="total-sub">Pago inmediato en el momento de la recogida</div>
+      </div>
+      <div class="condiciones">
+        Esta oferta es orientativa y esta sujeta a verificacion presencial de las prendas en el momento de la recogida. El precio final se confirma cuando nuestro equipo revise el estado real de cada prenda.
+      </div>
+    </div>
+    <button class="btn-pdf" id="btn-pdf">Descargar mi oferta en PDF</button>
+    <button class="btn-nueva" id="btn-nueva">Tasar mas prendas</button>
+  </div>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+var imgs=[], prendas=[], clienteData={};
+var TF={'S':1.4,'A':1.2,'B':1.0,'C':0.75,'Sin marca':0.5};
+var CF={'camiseta':1.0,'sudadera':1.1,'chaqueta':1.2,'pantalon':1.15,'vestido':1.05,'zapatillas':1.3,'bolso':1.25,'basico':0.9};
+var TALLA_F={'xs':0.85,'34':0.85,'36':0.85,'s':0.95,'38':0.95,'m':1.10,'40':1.10,'42':1.10,'l':1.05,'44':1.05,'xl':0.90,'46':0.90,'xxl':0.80,'48':0.80,'unica':1.0,'one size':1.0};
+
+document.addEventListener('DOMContentLoaded',function(){
+  document.getElementById('zona-subida').addEventListener('click',function(){ document.getElementById('input-fotos').click(); });
+  document.getElementById('zona-subida').addEventListener('dragover',function(e){ e.preventDefault(); this.classList.add('drag'); });
+  document.getElementById('zona-subida').addEventListener('dragleave',function(){ this.classList.remove('drag'); });
+  document.getElementById('zona-subida').addEventListener('drop',function(e){ e.preventDefault(); this.classList.remove('drag'); cargarFotos(e.dataTransfer.files); });
+  document.getElementById('input-fotos').addEventListener('change',function(){ cargarFotos(this.files); this.value=''; });
+  document.getElementById('btn-tasar').addEventListener('click',tasar);
+  document.getElementById('btn-pdf').addEventListener('click',generarPDF);
+  document.getElementById('btn-nueva').addEventListener('click',reset);
+  document.getElementById('btn-nueva-rechazo').addEventListener('click',reset);
+});
+
+function cargarFotos(files){
+  Array.from(files).forEach(function(f){
+    if(imgs.length>=8) return;
+    var reader=new FileReader();
+    reader.onload=function(e){ imgs.push(e.target.result); renderPrev(); };
+    reader.readAsDataURL(f);
+  });
+}
+
+function renderPrev(){
+  document.getElementById('pg').innerHTML=imgs.map(function(d,i){
+    return '<div class="preview-wrap"><img class="preview-img" src="'+d+'"><button class="preview-del" data-idx="'+i+'">×</button></div>';
+  }).join('');
+  document.querySelectorAll('.preview-del').forEach(function(btn){
+    btn.addEventListener('click',function(){ imgs.splice(parseInt(this.getAttribute('data-idx')),1); renderPrev(); });
+  });
+  var b=document.getElementById('btn-tasar');
+  b.disabled=imgs.length===0;
+  b.textContent=imgs.length>0?'Obtener mi tasacion ('+imgs.length+' foto'+(imgs.length>1?'s':'')+')':'Sube fotos para continuar';
+}
+
+function getTallaFactor(talla){
+  if(!talla) return 1.0;
+  var t=talla.toLowerCase().trim();
+  if(TALLA_F[t]!==undefined) return TALLA_F[t];
+  var num=parseInt(t);
+  if(!isNaN(num)){
+    if(num<=36) return 0.85;
+    if(num<=38) return 0.95;
+    if(num<=42) return 1.10;
+    if(num<=44) return 1.05;
+    if(num<=46) return 0.90;
+    return 0.80;
+  }
+  return 1.0;
+}
+
+function calcOferta(r){
+  var tF=TF[r.tier_marca]||1.0;
+  var cF=CF[(r.categoria||'').toLowerCase()]||1.0;
+  var tallaF=getTallaFactor(r.talla);
+  var m=r.precio_mercado_estimado||20;
+  var tasado=m*(r.factor_estado||0.7)*tF*cF*tallaF;
+  return Math.round(tasado*0.35*100)/100;
+}
+
+function setStep(n){
+  [1,2,3].forEach(function(i){
+    var el=document.getElementById('step'+i);
+    if(i<n){ el.className='step-num done'; el.textContent='✓'; }
+    else if(i===n){ el.className='step-num active'; el.textContent=String(i); }
+    else{ el.className='step-num'; el.textContent=String(i); }
+  });
+}
+
+async function tasar(){
+  clienteData={
+    nombre: document.getElementById('nombre-cliente').value.trim(),
+    email: document.getElementById('email-cliente').value.trim(),
+    tel: document.getElementById('tel-cliente').value.trim()
+  };
+  document.getElementById('panel-subida').style.display='none';
+  document.getElementById('panel-loading').style.display='block';
+  setStep(2);
+
+  var content=imgs.map(function(d){
+    return{type:'image',source:{type:'base64',media_type:'image/jpeg',data:d.split(',')[1]}};
+  });
+
+  content.push({type:'text',text:'Eres el tasador IA de Back2Street. Analiza TODAS las prendas visibles en las fotos.\nDevuelve SOLO un array JSON con una entrada por prenda, sin texto extra:\n[{"categoria":"camiseta/sudadera/chaqueta/pantalon/vestido/zapatillas/bolso/basico","marca":"nombre o Sin marca","tier_marca":"S/A/B/C/Sin marca","es_original":true,"estado":"nuevo con etiqueta/como nuevo/muy buen estado/buen estado/estado aceptable","factor_estado":0.0,"talla":"talla visible o desconocida","descripcion":"descripcion muy breve de la prenda","precio_mercado_estimado":0,"confianza":"alta/media/baja"}]\nFactores estado: nuevo=1.0,como nuevo=0.85,muy buen=0.70,buen=0.55,aceptable=0.40.\nEstima el precio de mercado en Vinted para cada prenda segun marca, categoria, talla y estado.\nSi una prenda no es de marca reconocible o parece falsificacion, pon tier_marca="Sin marca" o "C" y es_original=false.\nSi hay varias prendas en las fotos analiza cada una por separado.'});
+
+  try{
+    var res=await fetch('/api/tasar',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1500,messages:[{role:'user',content:content}]})
+    });
+    var data=await res.json();
+    document.getElementById('panel-loading').style.display='none';
+    if(data.error){ mostrarError('No hemos podido tasar tu prenda','Por favor intentalo de nuevo o contacta con nosotros.'); return; }
+    var raw=data.content?data.content.map(function(b){ return b.text||''; }).join(''):'[]';
+    var lista=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    if(!Array.isArray(lista)) lista=[lista];
+    procesarResultado(lista);
+  }catch(err){
+    document.getElementById('panel-loading').style.display='none';
+    mostrarError('Error de conexion','Por favor intentalo de nuevo.');
+  }
+}
+
+function procesarResultado(lista){
+  var aceptadas=lista.filter(function(r){ return r.es_original && r.tier_marca!=='Sin marca' && r.tier_marca!=='C'; });
+  if(!aceptadas.length){
+    mostrarError(
+      'No podemos hacer una oferta por estas prendas',
+      'Solo trabajamos con ropa de marca original. Las prendas enviadas no cumplen nuestros criterios de aceptacion. Si crees que es un error, contacta con nosotros.'
+    );
+    return;
+  }
+  prendas=aceptadas.map(function(r){
+    return{ r:r, oferta:calcOferta(r) };
+  });
+  mostrarResultado();
+}
+
+function mostrarError(tit,mot){
+  document.getElementById('rechazo-tit').textContent=tit;
+  document.getElementById('rechazo-mot').textContent=mot;
+  document.getElementById('panel-rechazo').style.display='block';
+  setStep(3);
+}
+
+function f(n){ return n.toFixed(2).replace('.',',')+' euros'; }
+
+function mostrarResultado(){
+  setStep(3);
+  document.getElementById('panel-resultado').style.display='block';
+  var nombre=clienteData.nombre||'';
+  document.getElementById('res-nombre').textContent=nombre?'Hola '+nombre+', aqui tienes tu oferta':'Aqui tienes tu oferta';
+  var total=0;
+  prendas.forEach(function(p){ total+=p.oferta; });
+  document.getElementById('lista-prendas').innerHTML=prendas.map(function(p,i){
+    return '<div class="prenda-item">'+
+      '<div class="prenda-num">'+(i+1)+'</div>'+
+      '<div class="prenda-info">'+
+        '<div class="prenda-nombre">'+(p.r.descripcion||p.r.categoria||'Prenda')+'</div>'+
+        '<div class="prenda-detalle">'+(p.r.marca||'-')+' · '+(p.r.talla||'-')+' · '+(p.r.estado||'-')+'</div>'+
+      '</div>'+
+      '<div class="prenda-precio">'+f(p.oferta)+'</div>'+
+    '</div>';
+  }).join('');
+  document.getElementById('total-valor').textContent=f(total);
+}
+
+function generarPDF(){
+  var jsPDF=window.jspdf.jsPDF;
+  var doc=new jsPDF({unit:'mm',format:'a4'});
+  var W=210,m=20,y=42;
+  doc.setFillColor(12,12,12); doc.rect(0,0,W,30,'F');
+  doc.setTextColor(240,237,230); doc.setFontSize(20); doc.setFont('helvetica','bold'); doc.text('BACK2STREET',m,18);
+  doc.setFontSize(7); doc.setFont('helvetica','normal'); doc.setTextColor(68,68,68); doc.text('CIRCULAR · PRE-LOVED · UNISEX',m,24);
+  doc.setTextColor(204,255,0); doc.text(new Date().toLocaleDateString('es-ES'),W-m,18,{align:'right'});
+  doc.setTextColor(30,30,30); doc.setFontSize(14); doc.setFont('helvetica','bold'); doc.text('OFERTA DE TASACION',m,y);
+  doc.setDrawColor(204,255,0); doc.setLineWidth(0.5); doc.line(m,y+2,W-m,y+2); y+=12;
+  if(clienteData.nombre){
+    doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(80,80,80);
+    doc.text('Nombre:',m,y); doc.setTextColor(30,30,30); doc.setFont('helvetica','bold'); doc.text(clienteData.nombre,m+30,y); y+=7;
+  }
+  if(clienteData.email){
+    doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(80,80,80);
+    doc.text('Email:',m,y); doc.setTextColor(30,30,30); doc.setFont('helvetica','bold'); doc.text(clienteData.email,m+30,y); y+=7;
+  }
+  y+=6;
+  doc.setFontSize(11); doc.setFont('helvetica','bold'); doc.setTextColor(30,30,30); doc.text('DETALLE DE PRENDAS',m,y);
+  doc.setDrawColor(200,200,200); doc.line(m,y+2,W-m,y+2); y+=10;
+  doc.setFontSize(8); doc.setFont('helvetica','bold'); doc.setTextColor(80,80,80);
+  doc.text('Num',m,y); doc.text('Prenda',m+12,y); doc.text('Marca',m+90,y); doc.text('Talla',m+125,y); doc.text('Estado',m+140,y); doc.text('Oferta',W-m,y,{align:'right'});
+  y+=5; doc.setLineWidth(0.3); doc.line(m,y,W-m,y); y+=6;
+  var total=0;
+  prendas.forEach(function(p,i){
+    if(y>260){ doc.addPage(); y=20; }
+    total+=p.oferta;
+    doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(30,30,30);
+    doc.text(String(i+1),m,y);
+    var nombre=(p.r.descripcion||p.r.categoria||'Prenda'); if(nombre.length>30) nombre=nombre.substring(0,30)+'...';
+    doc.text(nombre,m+12,y);
+    doc.text(p.r.marca||'-',m+90,y);
+    doc.text(p.r.talla||'-',m+125,y);
+    var estado=p.r.estado||'-'; if(estado.length>12) estado=estado.substring(0,12)+'...';
+    doc.text(estado,m+140,y);
+    doc.setFont('helvetica','bold'); doc.setTextColor(30,30,30); doc.text(f(p.oferta),W-m,y,{align:'right'});
+    y+=8; doc.setDrawColor(240,240,240); doc.setLineWidth(0.2); doc.line(m,y-3,W-m,y-3);
+  });
+  y+=6;
+  doc.setLineWidth(0.8); doc.setDrawColor(204,255,0); doc.line(m,y,W-m,y); y+=10;
+  doc.setFillColor(12,12,12); doc.rect(m,y-6,W-2*m,18,'F');
+  doc.setFontSize(11); doc.setFont('helvetica','bold'); doc.setTextColor(240,237,230); doc.text('TOTAL QUE RECIBIRAS',m+6,y+2);
+  doc.setFontSize(16); doc.setTextColor(204,255,0); doc.text(f(total),W-m-6,y+2,{align:'right'});
+  y+=20;
+  doc.setFontSize(8); doc.setFont('helvetica','normal'); doc.setTextColor(120,120,120);
+  doc.text('Esta oferta es orientativa y esta sujeta a verificacion presencial en el momento de la recogida.',m,y); y+=5;
+  doc.text('El pago se realiza de forma inmediata una vez verificadas las prendas.',m,y); y+=12;
+  doc.setFontSize(9); doc.setFont('helvetica','bold'); doc.setTextColor(80,80,80);
+  doc.text('Como funciona:',m,y); y+=6;
+  doc.setFont('helvetica','normal');
+  ['1. Aceptas esta oferta y nos contactas para coordinar la recogida.',
+   '2. Nuestro equipo pasa a recoger las prendas a tu domicilio.',
+   '3. Verificamos el estado de cada prenda in situ.',
+   '4. Recibes el pago de forma inmediata.'].forEach(function(s){
+    doc.text(s,m,y); y+=6;
+  });
+  y+=8; doc.setFontSize(7); doc.setTextColor(160,160,160);
+  doc.text('Back2Street · Circular · Pre-Loved · Unisex · back2street.com',W/2,y,{align:'center'});
+  doc.save('Back2Street_Oferta_'+(clienteData.nombre||'cliente').replace(/[^a-z0-9]/gi,'_')+'_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.pdf');
+}
+
+function reset(){
+  imgs=[]; prendas=[]; clienteData={};
+  document.getElementById('pg').innerHTML='';
+  document.getElementById('nombre-cliente').value='';
+  document.getElementById('email-cliente').value='';
+  document.getElementById('tel-cliente').value='';
+  document.getElementById('btn-tasar').disabled=true;
+  document.getElementById('btn-tasar').textContent='Sube fotos para continuar';
+  document.getElementById('panel-subida').style.display='block';
+  document.getElementById('panel-loading').style.display='none';
+  document.getElementById('panel-rechazo').style.display='none';
+  document.getElementById('panel-resultado').style.display='none';
+  setStep(1);
+}
+</script>
+</body>
+</html>
