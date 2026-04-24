@@ -74,13 +74,91 @@
   .total-sub { font-size: 12px; color: #666; margin-top: 4px; }
   .condiciones { background: #111; border-radius: var(--radius-sm); padding: 10px 14px; margin-top: 8px; font-size: 11px; color: var(--muted); line-height: 1.6; border: 0.5px solid var(--border); }
   .rechazo-box { background: #1a0505; border: 0.5px solid #F09595; border-radius: var(--radius); padding: 1.5rem; text-align: center; margin-bottom: 1rem; }
-  @media (max-width: 480px) {
-    .foto-guia { grid-template-columns: repeat(2,1fr); }
-  }
+  @media (max-width: 480px) { .foto-guia { grid-template-columns: repeat(2,1fr); } }
 </style>
 </head>
 <body>
-<div class="container">
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Back2Street — Tasa tu ropa</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0c0c0c; --card: #1a1918; --border: rgba(255,255,255,0.08);
+    --text: #F0EDE6; --muted: #888; --light: #555;
+    --neon: #CCFF00; --dark: #0c0c0c;
+    --green: #1D9E75; --green-bg: #0a2a1a;
+    --radius: 14px; --radius-sm: 8px;
+  }
+  body { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  .container { max-width: 560px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+  .header { text-align: center; margin-bottom: 2rem; padding-top: 1rem; }
+  .brand { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: 4px; margin-bottom: 4px; }
+  .brand span { color: var(--neon); }
+  .brand-sub { font-size: 9px; color: var(--muted); letter-spacing: 3px; }
+  .tagline { font-size: 14px; color: var(--muted); margin-top: 12px; line-height: 1.5; }
+  .card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+  .card-title { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+  .foto-guia { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin-bottom: 14px; }
+  .foto-guia-item { background: #111; border-radius: var(--radius-sm); padding: 10px 4px; text-align: center; border: 0.5px solid var(--border); }
+  .foto-guia-icon { font-size: 22px; margin-bottom: 4px; }
+  .foto-guia-label { font-size: 9px; color: var(--muted); font-weight: 500; letter-spacing: 0.5px; }
+  .aviso { background: #1a1500; border-left: 3px solid var(--neon); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 8px 12px; font-size: 11px; color: #aaa; margin-bottom: 12px; }
+  .aviso strong { color: var(--neon); }
+  .upload-zone { border: 1.5px dashed #333; border-radius: var(--radius); padding: 2rem 1rem; text-align: center; cursor: pointer; transition: all 0.2s; }
+  .upload-zone:hover, .upload-zone.drag { border-color: var(--neon); background: #111; }
+  .upload-icon { font-size: 32px; margin-bottom: 8px; }
+  .upload-text { font-size: 14px; color: var(--text); font-weight: 500; }
+  .upload-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  input[type=file] { display: none; }
+  .preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px,1fr)); gap: 8px; margin-top: 12px; }
+  .preview-img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--radius-sm); border: 0.5px solid var(--border); }
+  .preview-wrap { position: relative; }
+  .preview-del { position: absolute; top: 3px; right: 3px; width: 18px; height: 18px; background: rgba(0,0,0,0.7); border-radius: 50%; border: none; color: #fff; font-size: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 5px; font-weight: 500; letter-spacing: 0.5px; }
+  .field input { width: 100%; padding: 10px 12px; font-size: 14px; border: 0.5px solid var(--border); border-radius: var(--radius-sm); background: #111; color: var(--text); }
+  .field input:focus { outline: none; border-color: #444; }
+  .btn-tasar { width: 100%; padding: 14px; font-size: 15px; font-weight: 700; border: none; border-radius: var(--radius); background: var(--neon); color: #0c0c0c; cursor: pointer; transition: all 0.15s; letter-spacing: 1px; margin-bottom: 8px; }
+  .btn-tasar:hover:not(:disabled) { background: #d4ff1a; }
+  .btn-tasar:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-sec { width: 100%; padding: 12px; font-size: 13px; font-weight: 600; border: 0.5px solid var(--border); border-radius: var(--radius); background: transparent; color: var(--text); cursor: pointer; margin-bottom: 8px; transition: all 0.15s; }
+  .btn-sec:hover { background: #222; }
+  .btn-neon { width: 100%; padding: 12px; font-size: 13px; font-weight: 600; border: 0.5px solid var(--neon); border-radius: var(--radius); background: transparent; color: var(--neon); cursor: pointer; margin-bottom: 8px; transition: all 0.15s; }
+  .btn-neon:hover { background: #0a1a00; }
+  .loading { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 1.5rem; color: var(--muted); font-size: 13px; }
+  .spinner { width: 20px; height: 20px; border: 2px solid #333; border-top-color: var(--neon); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .acumulado-box { background: #111; border-radius: var(--radius); padding: 1rem 1.5rem; margin-bottom: 1rem; border: 0.5px solid #2a2a2a; }
+  .acumulado-title { font-size: 10px; color: var(--neon); font-weight: 600; letter-spacing: 2px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+  .prenda-acum { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 0.5px solid #1a1a1a; font-size: 12px; gap: 6px; }
+  .prenda-acum:last-child { border-bottom: none; }
+  .prenda-acum-nombre { flex: 1; color: var(--text); }
+  .prenda-acum-marca { color: var(--muted); margin: 0 8px; }
+  .prenda-acum-precio { color: var(--neon); font-weight: 600; flex-shrink: 0; }
+  .prenda-acum-del { background: transparent; border: none; color: #F09595; font-size: 14px; cursor: pointer; padding: 0 4px; flex-shrink: 0; }
+  .total-mini { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; margin-top: 6px; border-top: 0.5px solid #2a2a2a; }
+  .total-mini-label { font-size: 11px; color: var(--muted); }
+  .total-mini-valor { font-size: 20px; font-weight: 700; color: var(--neon); }
+  .prenda-result-card { background: #111; border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border: 0.5px solid #2a2a2a; }
+  .prenda-result-info { flex: 1; }
+  .prenda-result-nombre { font-size: 13px; font-weight: 500; color: var(--text); }
+  .prenda-result-detalle { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .prenda-result-precio { font-size: 22px; font-weight: 700; color: var(--neon); flex-shrink: 0; margin-left: 12px; }
+  .total-box { background: #0a1a00; border: 0.5px solid var(--neon); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin: 1rem 0; text-align: center; }
+  .total-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
+  .total-valor { font-size: 40px; font-weight: 700; color: var(--neon); }
+  .total-sub { font-size: 12px; color: #666; margin-top: 4px; }
+  .condiciones { background: #111; border-radius: var(--radius-sm); padding: 10px 14px; margin-top: 8px; font-size: 11px; color: var(--muted); line-height: 1.6; border: 0.5px solid var(--border); }
+  .rechazo-box { background: #1a0505; border: 0.5px solid #F09595; border-radius: var(--radius); padding: 1.5rem; text-align: center; margin-bottom: 1rem; }
+  @media (max-width: 480px) { .foto-guia { grid-template-columns: repeat(2,1fr); } }
+</style>
+</head>
+<body>
+ <div class="container">
 
   <div class="header">
     <div class="brand">BACK<span>2</span>STREET</div>
@@ -88,8 +166,7 @@
     <div class="tagline">Tasa tu ropa desde casa y recibe el pago en 48h</div>
   </div>
 
-  <!-- DATOS CLIENTE (solo primera vez) -->
-  <div id="panel-datos" style="display:block;">
+  <div id="panel-datos">
     <div class="card">
       <div class="card-title">Tus datos</div>
       <div class="field"><label>Tu nombre</label><input type="text" id="nombre-cliente" placeholder="Ej: Maria Garcia"></div>
@@ -99,10 +176,8 @@
     <button class="btn-tasar" id="btn-empezar">Empezar a tasar mis prendas</button>
   </div>
 
-  <!-- PANEL TASAR PRENDA -->
   <div id="panel-tasar" style="display:none;">
 
-    <!-- Acumulado visible mientras se tasan prendas -->
     <div class="acumulado-box" id="acumulado-box" style="display:none;">
       <div class="acumulado-title">
         <span>PRENDAS TASADAS</span>
@@ -116,9 +191,7 @@
     </div>
 
     <div class="card">
-      <div class="card-title">
-        <span id="prenda-titulo">Prenda 1 — Sube las fotos</span>
-      </div>
+      <div class="card-title"><span id="prenda-titulo">Prenda 1 — Sube las fotos</span></div>
       <div class="foto-guia">
         <div class="foto-guia-item"><div class="foto-guia-icon">👕</div><div class="foto-guia-label">DELANTERA</div></div>
         <div class="foto-guia-item"><div class="foto-guia-icon">🔄</div><div class="foto-guia-label">TRASERA</div></div>
@@ -136,13 +209,13 @@
     </div>
 
     <button class="btn-tasar" id="btn-tasar-prenda" disabled>Sube fotos para tasar</button>
+
     <div id="loading-prenda" style="display:none;">
       <div class="card" style="text-align:center;padding:2rem;">
         <div class="loading"><div class="spinner"></div><span>Analizando tu prenda...</span></div>
       </div>
     </div>
 
-    <!-- Resultado prenda individual -->
     <div id="resultado-prenda" style="display:none;">
       <div class="card">
         <div class="card-title">Resultado de la tasacion</div>
@@ -152,7 +225,6 @@
       <button class="btn-sec" id="btn-ver-total">Ver total y finalizar</button>
     </div>
 
-    <!-- Rechazo prenda -->
     <div id="rechazo-prenda" style="display:none;">
       <div class="rechazo-box">
         <div style="font-size:36px;margin-bottom:10px;">😔</div>
@@ -165,7 +237,6 @@
 
   </div>
 
-  <!-- RESUMEN FINAL -->
   <div id="panel-final" style="display:none;">
     <div class="card">
       <div class="card-title">Tu oferta completa</div>
@@ -195,6 +266,7 @@ var imgs=[], prendas=[], clienteData={}, ultimaPrenda=null;
 var TF={'S':1.4,'A':1.2,'B':1.0,'C':0.75,'Sin marca':0.5};
 var CF={'camiseta':1.0,'sudadera':1.1,'chaqueta':1.2,'pantalon':1.15,'vestido':1.05,'zapatillas':1.3,'bolso':1.25,'basico':0.9};
 var TALLA_F={'xs':0.85,'34':0.85,'36':0.85,'s':0.95,'38':0.95,'m':1.10,'40':1.10,'42':1.10,'l':1.05,'44':1.05,'xl':0.90,'46':0.90,'xxl':0.80,'48':0.80,'unica':1.0,'one size':1.0};
+var COSTE_OP=3;
 
 document.addEventListener('DOMContentLoaded',function(){
   document.getElementById('btn-empezar').addEventListener('click',empezar);
@@ -267,14 +339,13 @@ function getTallaFactor(talla){
 
 function calcOferta(r){
   var tallaF=getTallaFactor(r.talla);
-  var tF=TF[r.tier_marca]||1.0;
-  var cF=CF[(r.categoria||'').toLowerCase()]||1.0;
+  var estadoF=r.factor_estado||0.7;
   var m=r.precio_mercado_estimado||20;
   var venta=m*0.90;
-  var costesOp=3;
-  var oferta=venta*(1-0.65)-costesOp;
+  var ofertaBase=(venta*0.35)-COSTE_OP;
+  if(ofertaBase<1) ofertaBase=1;
+  var oferta=ofertaBase*estadoF*tallaF;
   if(oferta<1) oferta=1;
-  oferta=oferta*(r.factor_estado||0.7)*tallaF;
   return Math.round(oferta*100)/100;
 }
 
@@ -322,7 +393,7 @@ function procesarPrenda(r){
     return;
   }
   var oferta=calcOferta(r);
-  ultimaPrenda={r:r, oferta:oferta, imgs:imgs.slice()};
+  ultimaPrenda={r:r,oferta:oferta,imgs:imgs.slice()};
   document.getElementById('prenda-resultado-contenido').innerHTML=
     '<div class="prenda-result-card">'+
       '<div class="prenda-result-info">'+
@@ -332,9 +403,7 @@ function procesarPrenda(r){
       '<div class="prenda-result-precio">'+f(oferta)+'</div>'+
     '</div>';
   document.getElementById('resultado-prenda').style.display='block';
-  var btnTotal=document.getElementById('btn-ver-total');
-  btnTotal.style.display=prendas.length>0?'block':'block';
-  btnTotal.textContent=prendas.length>0?'Ver total ('+( prendas.length+1)+' prendas) y finalizar':'Finalizar con esta prenda';
+  document.getElementById('btn-ver-total').textContent=prendas.length>0?'Ver total ('+(prendas.length+1)+' prendas) y finalizar':'Finalizar con esta prenda';
 }
 
 function mostrarRechazo(tit,mot){
@@ -369,10 +438,7 @@ function prepararNuevaPrenda(){
 }
 
 function renderAcumulado(){
-  if(!prendas.length){
-    document.getElementById('acumulado-box').style.display='none';
-    return;
-  }
+  if(!prendas.length){ document.getElementById('acumulado-box').style.display='none'; return; }
   document.getElementById('acumulado-box').style.display='block';
   var total=0;
   prendas.forEach(function(p){ total+=p.oferta; });
@@ -382,7 +448,7 @@ function renderAcumulado(){
       '<span class="prenda-acum-nombre">'+(i+1)+'. '+(p.r.descripcion||p.r.categoria||'Prenda')+'</span>'+
       '<span class="prenda-acum-marca">'+(p.r.marca||'-')+'</span>'+
       '<span class="prenda-acum-precio">'+f(p.oferta)+'</span>'+
-      '<button class="prenda-acum-del" data-idx="'+i+'" title="Quitar">✕</button>'+
+      '<button class="prenda-acum-del" data-idx="'+i+'">✕</button>'+
     '</div>';
   }).join('');
   document.getElementById('acum-total').textContent=f(total);
