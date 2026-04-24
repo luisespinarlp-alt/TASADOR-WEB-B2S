@@ -29,6 +29,10 @@
   .tab:hover:not(.active) { background: #f0ede6; }
   .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
   .card-title { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+  .foto-guia { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin-bottom: 12px; }
+  .foto-guia-item { background: #f5f4f0; border-radius: var(--radius-sm); padding: 8px 4px; text-align: center; border: 1px solid var(--border); }
+  .foto-guia-icon { font-size: 20px; margin-bottom: 4px; }
+  .foto-guia-label { font-size: 9px; color: var(--muted); font-weight: 500; }
   .upload-zone { border: 1.5px dashed #ccc; border-radius: var(--radius); padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.2s; }
   .upload-zone:hover, .upload-zone.drag { background: #f9f8f5; border-color: #aaa; }
   .upload-text { font-size: 13px; color: var(--muted); }
@@ -62,6 +66,23 @@
   .rt-ok, .rb-ok { color: var(--green); }
   .rt-warn, .rb-warn { color: var(--amber); }
   .rt-bad, .rb-bad { color: var(--red); }
+  .potencial { border-radius: var(--radius-sm); padding: 12px 16px; margin-top: 10px; }
+  .potencial-alto { background: var(--green-bg); }
+  .potencial-medio { background: var(--amber-bg); }
+  .potencial-bajo { background: var(--red-bg); }
+  .potencial-titulo { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .potencial-alto .potencial-titulo { color: var(--green); }
+  .potencial-medio .potencial-titulo { color: var(--amber); }
+  .potencial-bajo .potencial-titulo { color: var(--red); }
+  .potencial-barra { height: 6px; background: rgba(0,0,0,0.1); border-radius: 3px; overflow: hidden; margin: 6px 0; }
+  .potencial-fill { height: 100%; border-radius: 3px; transition: width 0.4s; }
+  .potencial-alto .potencial-fill { background: var(--green); }
+  .potencial-medio .potencial-fill { background: var(--amber); }
+  .potencial-bajo .potencial-fill { background: var(--red); }
+  .potencial-desc { font-size: 11px; }
+  .potencial-alto .potencial-desc { color: var(--green); }
+  .potencial-medio .potencial-desc { color: var(--amber); }
+  .potencial-bajo .potencial-desc { color: var(--red); }
   .row-data { display: flex; justify-content: space-between; font-size: 12px; padding: 5px 0; border-bottom: 1px solid #f0ede6; }
   .row-data:last-child { border-bottom: none; }
   .row-data .n { color: var(--muted); }
@@ -71,11 +92,10 @@
   .p-amber { background: var(--amber-bg); color: var(--amber); }
   .p-red { background: var(--red-bg); color: var(--red); }
   .tag { display: inline-block; font-size: 11px; padding: 2px 7px; border-radius: 4px; margin: 2px; background: #f5f4f0; color: var(--muted); border: 1px solid var(--border); }
-  .hist-item { display: flex; align-items: center; gap: 10px; padding: 8px 6px; border-bottom: 1px solid #f0ede6; cursor: pointer; border-radius: var(--radius-sm); transition: background 0.1s; }
+  .hist-item { display: flex; align-items: center; gap: 10px; padding: 8px 6px; border-bottom: 1px solid #f0ede6; border-radius: var(--radius-sm); }
   .hist-item:last-child { border-bottom: none; }
-  .hist-item:hover { background: #f9f8f5; }
   .hist-thumb { width: 48px; height: 48px; border-radius: var(--radius-sm); object-fit: cover; border: 1px solid var(--border); flex-shrink: 0; background: #f5f4f0; display: flex; align-items: center; justify-content: center; font-size: 22px; }
-  .hist-info { flex: 1; min-width: 0; }
+  .hist-info { flex: 1; min-width: 0; cursor: pointer; }
   .hist-name { font-size: 12px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .hist-meta { font-size: 11px; color: var(--muted); }
   .empty-hist { text-align: center; padding: 3rem; color: var(--light); font-size: 13px; }
@@ -92,13 +112,15 @@
   @keyframes spin { to { transform: rotate(360deg); } }
   .lote-box { background: var(--dark); border-radius: var(--radius); padding: 1rem 1.5rem; margin-bottom: 1rem; display: none; }
   .lote-title { font-size: 11px; font-weight: 600; color: var(--neon); letter-spacing: 2px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-  .lote-item { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #222; font-size: 12px; }
+  .lote-item { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #222; font-size: 12px; gap: 6px; }
   .lote-item:last-child { border-bottom: none; }
+  .lote-del { background: transparent; border: none; color: #F09595; font-size: 14px; cursor: pointer; padding: 0 4px; flex-shrink: 0; }
   @media (max-width: 480px) {
     .grid2, .grid3 { grid-template-columns: 1fr; }
     .grid4 { grid-template-columns: 1fr 1fr; }
     .tabs { flex-wrap: wrap; }
     .tab { flex: none; width: calc(50% - 2px); }
+    .foto-guia { grid-template-columns: repeat(2,1fr); }
   }
 </style>
 </head>
@@ -127,14 +149,35 @@
         <button id="btn-cerrar-lote" style="font-size:11px;padding:3px 10px;background:transparent;border-color:#444;color:#F0EDE6;">Cerrar y exportar Excel</button>
       </div>
       <div class="grid4" id="lote-summary" style="margin-bottom:10px;"></div>
-      <div id="lote-lista" style="max-height:160px;overflow-y:auto;"></div>
+      <div id="lote-lista" style="max-height:180px;overflow-y:auto;"></div>
     </div>
 
     <div class="card">
-      <div class="card-title">Fotos de la prenda</div>
+      <div class="card-title">Fotos necesarias para tasar</div>
+      <div class="foto-guia">
+        <div class="foto-guia-item">
+          <div class="foto-guia-icon">👕</div>
+          <div class="foto-guia-label">PARTE DELANTERA</div>
+        </div>
+        <div class="foto-guia-item">
+          <div class="foto-guia-icon">🔄</div>
+          <div class="foto-guia-label">PARTE TRASERA</div>
+        </div>
+        <div class="foto-guia-item">
+          <div class="foto-guia-icon">🏷️</div>
+          <div class="foto-guia-label">ETIQUETA MARCA</div>
+        </div>
+        <div class="foto-guia-item">
+          <div class="foto-guia-icon">🔍</div>
+          <div class="foto-guia-label">DETALLES O DEFECTOS</div>
+        </div>
+      </div>
+      <div style="background:#FFF8E1;border-radius:var(--radius-sm);padding:8px 12px;margin-bottom:12px;font-size:11px;color:#633806;border-left:3px solid #EF9F27;">
+        La etiqueta con la marca y la talla es imprescindible para una tasacion precisa
+      </div>
       <div class="upload-zone" id="zona-subida">
-        <div class="upload-text">Sube fotos de la prenda</div>
-        <div class="upload-sub">Frente · Trasera · Etiqueta con marca · Detalles</div>
+        <div class="upload-text">Pulsa aqui o arrastra las fotos</div>
+        <div class="upload-sub">Minimo 2 fotos · Maxino 8 fotos · JPG o PNG</div>
       </div>
       <input type="file" id="input-fotos" accept="image/*" multiple style="display:none">
       <div class="preview-grid" id="pg"></div>
@@ -153,7 +196,7 @@
     </div>
 
     <button class="btn-primary" id="btn-tasar-ia" style="margin-bottom:1rem;">Sube fotos para activar</button>
-    <div id="loading" style="display:none;"><div class="loading"><div class="spinner"></div>Analizando con IA...</div></div>
+    <div id="loading" style="display:none;"><div class="loading"><div class="spinner"></div>Analizando marca, talla y potencial de venta...</div></div>
 
     <div id="rechazo" style="display:none;">
       <div class="result-block">
@@ -172,6 +215,7 @@
         <div class="card-title">Tasacion</div>
         <div class="grid4" id="metrics" style="margin-bottom:12px;"></div>
         <div id="verdict"></div>
+        <div id="potencial-venta" style="margin-top:10px;"></div>
       </div>
       <div class="card">
         <div class="card-title">Desglose economico</div>
@@ -214,11 +258,21 @@
       <div class="row-data"><span class="n">Confianza IA baja</span><span class="v" style="color:var(--amber);">Alerta revisar</span></div>
       <div class="row-data"><span class="n">Original verificada y marca aceptada</span><span class="v" style="color:var(--green);">Aceptada</span></div>
     </div>
+    <div class="card">
+      <div class="card-title">Factor talla en la tasacion</div>
+      <div class="row-data"><span class="n">XS / 34 / 36</span><span class="v" style="color:var(--amber);">x0.85 — poca demanda</span></div>
+      <div class="row-data"><span class="n">S / 38</span><span class="v" style="color:var(--amber);">x0.95 — demanda media</span></div>
+      <div class="row-data"><span class="n">M / 40 / 42</span><span class="v" style="color:var(--green);">x1.10 — maxima demanda</span></div>
+      <div class="row-data"><span class="n">L / 44</span><span class="v" style="color:var(--green);">x1.05 — alta demanda</span></div>
+      <div class="row-data"><span class="n">XL / 46</span><span class="v" style="color:var(--amber);">x0.90 — demanda media</span></div>
+      <div class="row-data"><span class="n">XXL / 48 o mas</span><span class="v" style="color:var(--red);">x0.80 — poca demanda</span></div>
+      <div class="row-data"><span class="n">Talla unica / no visible</span><span class="v">x1.0 — sin ajuste</span></div>
+    </div>
   </div>
 
   <div id="panel-export" style="display:none;">
     <div class="card">
-      <div class="card-title">Exportar lote completo a Excel</div>
+      <div class="card-title">Exportar lote a Excel</div>
       <button style="width:100%;padding:10px;" id="btn-excel">Descargar Excel (.xlsx)</button>
     </div>
     <div class="card">
@@ -251,6 +305,7 @@ var imgs=[], hist=[], lote=[], ultima=null, marcas=new Set();
 var DM=['Nike','Adidas','Tommy Hilfiger','Ralph Lauren','Stone Island','Moncler','Canada Goose','The North Face','Carhartt','Supreme','Palace','Off-White','Balenciaga','Gucci','Prada','Zara','Mango','H&M','Massimo Dutti','Cos','Arket','Uniqlo','New Balance','Puma','Reebok','Converse','Vans','Jordan','Lacoste','Boss','Calvin Klein','Diesel','Versace','Burberry','Acne Studios'];
 var TF={'S':1.4,'A':1.2,'B':1.0,'C':0.75,'Sin marca':0.5};
 var CF={'camiseta':1.0,'sudadera':1.1,'chaqueta':1.2,'pantalon':1.15,'vestido':1.05,'zapatillas':1.3,'bolso':1.25,'basico':0.9};
+var TALLA_F={'xs':0.85,'34':0.85,'36':0.85,'s':0.95,'38':0.95,'m':1.10,'40':1.10,'42':1.10,'l':1.05,'44':1.05,'xl':0.90,'46':0.90,'xxl':0.80,'48':0.80,'unica':1.0,'one size':1.0};
 
 try{hist=JSON.parse(localStorage.getItem('b2s_h')||'[]');}catch(e){hist=[];}
 try{var sm=JSON.parse(localStorage.getItem('b2s_m'));if(sm){marcas=new Set(sm);}else{DM.forEach(function(m){marcas.add(m);});}}catch(e){DM.forEach(function(m){marcas.add(m);});}
@@ -334,13 +389,46 @@ function addBrand(){
 function f(n){ return n.toFixed(2).replace('.',',')+' euros'; }
 function p(n){ return Math.round(n)+'%'; }
 
+function getTallaFactor(talla){
+  if(!talla) return 1.0;
+  var t=talla.toLowerCase().trim();
+  if(TALLA_F[t] !== undefined) return TALLA_F[t];
+  var num=parseInt(t);
+  if(!isNaN(num)){
+    if(num<=36) return 0.85;
+    if(num<=38) return 0.95;
+    if(num<=42) return 1.10;
+    if(num<=44) return 1.05;
+    if(num<=46) return 0.90;
+    return 0.80;
+  }
+  return 1.0;
+}
+
+function calcPotencial(r, n){
+  var score=0;
+  var tF=getTallaFactor(r.talla);
+  if(r.tier_marca==='S'||r.tier_marca==='A') score+=30;
+  else if(r.tier_marca==='B') score+=15;
+  if(r.demanda==='alta') score+=30;
+  else if(r.demanda==='media') score+=15;
+  if(tF>=1.05) score+=20;
+  else if(tF>=0.95) score+=10;
+  else score+=0;
+  if(r.factor_estado>=0.85) score+=20;
+  else if(r.factor_estado>=0.70) score+=10;
+  if(n.p>=65) score+=10;
+  return Math.min(score,100);
+}
+
 function calc(r,log){
   var tF=TF[r.tier_marca]||1;
   var cF=CF[(r.categoria||'').toLowerCase()]||1;
+  var tallaF=getTallaFactor(r.talla);
   var m=r.precio_mercado_estimado||20;
-  var t=m*(r.factor_estado||0.7)*tF*cF;
+  var t=m*(r.factor_estado||0.7)*tF*cF*tallaF;
   var o=t*0.35,v=m*0.90,c=v*0.05,b=v-o-log-c;
-  return{m:m,t:t,o:o,v:v,c:c,b:b,p:(b/v)*100};
+  return{m:m,t:t,o:o,v:v,c:c,b:b,p:(b/v)*100,tallaF:tallaF};
 }
 
 function tasar(){
@@ -355,11 +443,11 @@ function tasar(){
   var content=imgs.map(function(d){
     return{type:'image',source:{type:'base64',media_type:'image/jpeg',data:d.split(',')[1]}};
   });
-  content.push({type:'text',text:'Eres el tasador IA de Back2Street. Solo aceptamos ropa de marca original. Marcas aceptadas: '+ml+'.\nDevuelve SOLO JSON sin texto extra:\n{"categoria":"camiseta/sudadera/chaqueta/pantalon/vestido/zapatillas/bolso/basico","marca":"nombre o Sin marca","marca_en_lista":true,"tier_marca":"S/A/B/C/Sin marca","es_original":true,"motivo_rechazo":"","estado":"nuevo con etiqueta/como nuevo/muy buen estado/buen estado/estado aceptable","factor_estado":0.0,"color":"color","descripcion":"descripcion breve","precio_mercado_estimado":'+(pm>0?pm:0)+',"confianza":"alta/media/baja","observaciones":"notas"}\nFactores: nuevo=1.0,como nuevo=0.85,muy buen=0.70,buen=0.55,aceptable=0.40.'+(pm>0?' Precio: '+pm+' euros.':' Estima precio en Vinted.')+'\nSi ves costuras irregulares, logos deformados o etiquetas mal impresas: es_original=false.'});
+  content.push({type:'text',text:'Eres el tasador IA de Back2Street. Solo aceptamos ropa de marca original. Marcas aceptadas: '+ml+'.\nDevuelve SOLO JSON sin texto extra:\n{"categoria":"camiseta/sudadera/chaqueta/pantalon/vestido/zapatillas/bolso/basico","marca":"nombre o Sin marca","marca_en_lista":true,"tier_marca":"S/A/B/C/Sin marca","es_original":true,"motivo_rechazo":"","estado":"nuevo con etiqueta/como nuevo/muy buen estado/buen estado/estado aceptable","factor_estado":0.0,"talla":"talla visible en etiqueta o desconocida","demanda":"alta/media/baja (estimacion de demanda en Vinted para esta prenda)","color":"color","descripcion":"descripcion breve","precio_mercado_estimado":'+(pm>0?pm:0)+',"confianza":"alta/media/baja","observaciones":"notas"}\nFactores estado: nuevo=1.0,como nuevo=0.85,muy buen=0.70,buen=0.55,aceptable=0.40.'+(pm>0?' Precio: '+pm+' euros.':' Estima precio en Vinted.')+'\nSi ves costuras irregulares, logos deformados o etiquetas mal impresas: es_original=false.\nPara la talla lee la etiqueta con cuidado. Para la demanda considera la marca, categoria, talla y estado.'});
   fetch('/api/tasar',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:900,messages:[{role:'user',content:content}]})
+    body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1000,messages:[{role:'user',content:content}]})
   }).then(function(res){ return res.json(); }).then(function(data){
     document.getElementById('loading').style.display='none';
     document.getElementById('btn-tasar-ia').disabled=false;
@@ -380,6 +468,7 @@ function showErr(msg){
   document.getElementById('metrics').innerHTML='';
   document.getElementById('verdict').innerHTML='';
   document.getElementById('breakdown').innerHTML='';
+  document.getElementById('potencial-venta').innerHTML='';
 }
 
 function process(r,log){
@@ -399,15 +488,61 @@ function renderRes(r,log){
   document.getElementById('resultado').style.display='block';
   var n=calc(r,log);
   ultima={r:r,n:n,log:log,imgs:imgs.slice(),ref:document.getElementById('ref').value,notas:document.getElementById('notas').value,thumb:imgs[0]||null,fecha:new Date().toLocaleDateString('es-ES'),hora:new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}),id:Date.now()};
+
   var cC=r.confianza==='alta'?'p-green':r.confianza==='media'?'p-amber':'p-red';
-  document.getElementById('analisis').innerHTML='<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;"><span class="tag">'+(r.categoria||'-')+'</span><span class="tag" style="font-weight:600;">'+(r.marca||'-')+'</span><span class="tag">Tier '+(r.tier_marca||'-')+'</span><span class="tag">'+(r.estado||'-')+'</span><span class="tag">'+(r.color||'-')+'</span><span class="pill '+cC+'">Confianza: '+r.confianza+'</span><span class="pill p-green">Original</span></div><div style="font-size:13px;margin-bottom:4px;">'+(r.descripcion||'')+'</div>'+(r.observaciones?'<div style="font-size:11px;color:var(--muted);">'+r.observaciones+'</div>':'');
-  document.getElementById('metrics').innerHTML='<div class="metric"><div class="metric-label">Precio mercado</div><div class="metric-val">'+f(n.m)+'</div><div class="metric-sub">ref Vinted</div></div><div class="metric"><div class="metric-label">Precio tasado</div><div class="metric-val">'+f(n.t)+'</div><div class="metric-sub">factores IA</div></div><div class="metric"><div class="metric-label">Oferta cliente</div><div class="metric-val">'+f(n.o)+'</div><div class="metric-sub">pagas tu</div></div><div class="metric"><div class="metric-label">Beneficio neto</div><div class="metric-val">'+f(n.b)+'</div><div class="metric-sub">'+p(n.p)+' margen</div></div>';
+  var tallaLabel=r.talla||'No detectada';
+  var tallaColor=n.tallaF>=1.05?'var(--green)':n.tallaF>=0.95?'var(--amber)':'var(--red)';
+
+  document.getElementById('analisis').innerHTML=
+    '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">'+
+    '<span class="tag">'+(r.categoria||'-')+'</span>'+
+    '<span class="tag" style="font-weight:600;">'+(r.marca||'-')+'</span>'+
+    '<span class="tag">Tier '+(r.tier_marca||'-')+'</span>'+
+    '<span class="tag">'+(r.estado||'-')+'</span>'+
+    '<span class="tag">'+(r.color||'-')+'</span>'+
+    '<span class="tag" style="color:'+tallaColor+';font-weight:600;">Talla: '+tallaLabel+'</span>'+
+    '<span class="pill '+cC+'">Confianza: '+r.confianza+'</span>'+
+    '<span class="pill p-green">Original</span>'+
+    '</div>'+
+    '<div style="font-size:13px;margin-bottom:4px;">'+(r.descripcion||'')+'</div>'+
+    (r.observaciones?'<div style="font-size:11px;color:var(--muted);">'+r.observaciones+'</div>':'');
+
+  var tallaTexto=n.tallaF>=1.05?'Talla muy demandada en Vinted':n.tallaF>=0.95?'Talla con demanda normal':n.tallaF>=0.85?'Talla con poca demanda':'Talla muy poco demandada';
+
+  document.getElementById('metrics').innerHTML=
+    '<div class="metric"><div class="metric-label">Precio mercado</div><div class="metric-val">'+f(n.m)+'</div><div class="metric-sub">ref Vinted</div></div>'+
+    '<div class="metric"><div class="metric-label">Precio tasado</div><div class="metric-val">'+f(n.t)+'</div><div class="metric-sub">con factor talla</div></div>'+
+    '<div class="metric"><div class="metric-label">Oferta cliente</div><div class="metric-val">'+f(n.o)+'</div><div class="metric-sub">pagas tu</div></div>'+
+    '<div class="metric"><div class="metric-label">Beneficio neto</div><div class="metric-val">'+f(n.b)+'</div><div class="metric-sub">'+p(n.p)+' margen</div></div>';
+
   var vc,vt,vm,vtxt,vmsg;
   if(n.p>=65){vc='result-ok';vt='rt rt-ok';vm='rb rb-ok';vtxt='Operacion rentable';vmsg='Margen '+p(n.p)+' supera el 65%. Oferta al cliente: '+f(n.o)+'.';}
   else if(n.p>=50){vc='result-warn';vt='rt rt-warn';vm='rb rb-warn';vtxt='Por debajo del objetivo';vmsg='Margen '+p(n.p)+'. Considera ofrecer '+f(n.o*0.85)+' para alcanzar el 65%.';}
   else{vc='result-bad';vt='rt rt-bad';vm='rb rb-bad';vtxt='No rentable rechazar';vmsg='Margen '+p(n.p)+'. Precio demasiado bajo.';}
   document.getElementById('verdict').innerHTML='<div class="'+vc+'"><div class="'+vt+'">'+vtxt+'</div><div class="'+vm+'">'+vmsg+'</div></div>';
-  document.getElementById('breakdown').innerHTML=[['Precio mercado',f(n.m)],['Precio tasado',f(n.t)],['Oferta al cliente',f(n.o)],['Precio venta Vinted -10%',f(n.v)],['Comision Vinted 5%','- '+f(n.c)],['Coste logistico','- '+f(log)],['Beneficio neto',f(n.b)+' ('+p(n.p)+')']].map(function(x){ return '<div class="row-data"><span class="n">'+x[0]+'</span><span class="v">'+x[1]+'</span></div>'; }).join('');
+
+  document.getElementById('breakdown').innerHTML=[
+    ['Precio mercado',f(n.m)],
+    ['Factor talla ('+tallaLabel+')',n.tallaF>=1.0?'+'+Math.round((n.tallaF-1)*100)+'%':Math.round((n.tallaF-1)*100)+'%'],
+    ['Precio tasado',f(n.t)],
+    ['Oferta al cliente',f(n.o)],
+    ['Precio venta Vinted -10%',f(n.v)],
+    ['Comision Vinted 5%','- '+f(n.c)],
+    ['Coste logistico','- '+f(log)],
+    ['Beneficio neto',f(n.b)+' ('+p(n.p)+')']
+  ].map(function(x){ return '<div class="row-data"><span class="n">'+x[0]+'</span><span class="v">'+x[1]+'</span></div>'; }).join('');
+
+  var score=calcPotencial(r,n);
+  var pClass=score>=70?'potencial-alto':score>=40?'potencial-medio':'potencial-bajo';
+  var pLabel=score>=70?'Potencial de venta ALTO':score>=40?'Potencial de venta MEDIO':'Potencial de venta BAJO';
+  var pEmoji=score>=70?'🚀':score>=40?'📦':'⚠️';
+  var pDesc=score>=70?'Se vendera rapido en Vinted. Marca solicitada, talla demandada y buen estado.':score>=40?'Venta posible pero puede tardar. Revisa el precio para acelerar la rotacion.':'Dificil de vender. Talla poco demandada, marca con poca salida o estado deficiente.';
+  document.getElementById('potencial-venta').innerHTML=
+    '<div class="potencial '+pClass+'">'+
+    '<div class="potencial-titulo">'+pEmoji+' '+pLabel+'</div>'+
+    '<div class="potencial-barra"><div class="potencial-fill" style="width:'+score+'%"></div></div>'+
+    '<div class="potencial-desc">'+pDesc+' (Puntuacion: '+score+'/100)</div>'+
+    '</div>';
 }
 
 function save(){
@@ -439,22 +574,40 @@ function renderLote(){
     '<div style="background:#1a1a1a;border-radius:8px;padding:8px 12px;"><div style="font-size:10px;color:#666;">Beneficio esperado</div><div style="font-size:18px;font-weight:600;color:#CCFF00;">'+f(tb)+'</div></div>';
   document.getElementById('lote-lista').innerHTML=lote.map(function(h,i){
     var col=h.n.p>=65?'#CCFF00':h.n.p>=50?'#EF9F27':'#F09595';
-    return '<div class="lote-item"><span style="color:#F0EDE6;">'+(i+1)+'. '+(h.r.descripcion||h.r.categoria||'Prenda')+'</span><span style="color:#888;">'+(h.r.marca||'-')+'</span><span style="color:'+col+';font-weight:600;">'+f(h.n.o)+'</span></div>';
+    return '<div class="lote-item">'+
+      '<span style="color:#F0EDE6;flex:1;">'+(i+1)+'. '+(h.r.descripcion||h.r.categoria||'Prenda')+'</span>'+
+      '<span style="color:#888;margin:0 6px;">'+(h.r.marca||'-')+'</span>'+
+      '<span style="color:#aaa;margin:0 6px;">'+(h.r.talla||'-')+'</span>'+
+      '<span style="color:'+col+';font-weight:600;">'+f(h.n.o)+'</span>'+
+      '<button class="lote-del" data-idx="'+i+'" title="Eliminar del lote">✕</button>'+
+      '</div>';
   }).join('');
+  document.querySelectorAll('.lote-del').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var i=parseInt(this.getAttribute('data-idx'));
+      var id=lote[i].id;
+      lote.splice(i,1);
+      hist=hist.filter(function(h){ return h.id!==id; });
+      try{localStorage.setItem('b2s_h',JSON.stringify(hist));}catch(e){}
+      updateCount();
+      renderLote();
+    });
+  });
 }
 
 function cerrarLote(){
   if(!lote.length){ alert('El lote esta vacio.'); return; }
   if(!confirm('Cerrar el lote y exportar a Excel?')) return;
-  var hd=[['Num','Descripcion','Marca','Estado','Precio mercado','Oferta cliente','Precio venta','Beneficio','Margen %']];
-  var tp=0,to=0,tv=0,tb=0;
+  var hd=[['Num','Descripcion','Marca','Talla','Estado','Precio mercado','Oferta cliente','Precio venta','Beneficio','Margen %','Potencial']];
+  var to=0,tv=0,tb=0;
   lote.forEach(function(h,i){
     to+=h.n.o; tv+=h.n.v; tb+=h.n.b;
-    hd.push([i+1,h.r.descripcion||h.r.categoria||'Prenda',h.r.marca||'-',h.r.estado||'-',+h.n.m.toFixed(2),+h.n.o.toFixed(2),+h.n.v.toFixed(2),+h.n.b.toFixed(2),+h.n.p.toFixed(1)]);
+    var score=calcPotencial(h.r,h.n);
+    hd.push([i+1,h.r.descripcion||h.r.categoria||'Prenda',h.r.marca||'-',h.r.talla||'-',h.r.estado||'-',+h.n.m.toFixed(2),+h.n.o.toFixed(2),+h.n.v.toFixed(2),+h.n.b.toFixed(2),+h.n.p.toFixed(1),score>=70?'Alto':score>=40?'Medio':'Bajo']);
   });
-  hd.push(['','','','TOTALES','',+to.toFixed(2),+tv.toFixed(2),+tb.toFixed(2),'']);
+  hd.push(['','','','','TOTALES','',+to.toFixed(2),+tv.toFixed(2),+tb.toFixed(2),'','']);
   var wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(hd);
-  ws['!cols']=[{wch:5},{wch:30},{wch:15},{wch:20},{wch:14},{wch:14},{wch:14},{wch:14},{wch:10}];
+  ws['!cols']=[{wch:5},{wch:28},{wch:14},{wch:8},{wch:18},{wch:14},{wch:14},{wch:14},{wch:12},{wch:10},{wch:8}];
   XLSX.utils.book_append_sheet(wb,ws,'Lote');
   XLSX.writeFile(wb,'Back2Street_Lote_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.xlsx');
   lote=[];
@@ -465,7 +618,7 @@ function renderHist(){
   updateCount();
   if(!hist.length){
     document.getElementById('summary').innerHTML='';
-    document.getElementById('hist-list').innerHTML='<div class="empty-hist">Sin prendas tasadas aun.</div>';
+    document.getElementById('hist-list').innerHTML='<div class="empty-hist">Sin prendas en el lote aun.</div>';
     return;
   }
   var tp=0,tv=0,tb=0;
@@ -477,16 +630,52 @@ function renderHist(){
     '<div class="summary-card"><div class="sc-label">Beneficio esperado</div><div class="sc-val">'+f(tb)+'</div></div>';
   document.getElementById('hist-list').innerHTML=hist.map(function(h,i){
     var pc=h.n.p>=65?'p-green':h.n.p>=50?'p-amber':'p-red';
-    return '<div class="hist-item" data-idx="'+i+'">'+(h.thumb?'<img class="hist-thumb" src="'+h.thumb+'">':'<div class="hist-thumb">👕</div>')+'<div class="hist-info"><div class="hist-name">'+(h.r.descripcion||h.r.categoria||'Prenda')+'</div><div class="hist-meta">'+h.fecha+' '+h.hora+(h.ref?' - '+h.ref:'')+'</div><div style="margin-top:2px;"><span class="pill '+pc+'">'+p(h.n.p)+'</span>'+(h.r.marca?' <span class="tag">'+h.r.marca+'</span>':'')+'<span class="pill p-green" style="margin-left:2px;">Original</span></div></div><div style="text-align:right;flex-shrink:0;"><div style="font-size:14px;font-weight:600;">'+f(h.n.o)+'</div><div style="font-size:10px;color:var(--muted);">al cliente</div><div style="display:flex;gap:4px;margin-top:5px;"><button class="btn-hist-pdf" data-idx="'+i+'" style="font-size:10px;padding:3px 8px;">PDF</button><button class="btn-hist-email" data-idx="'+i+'" style="font-size:10px;padding:3px 8px;">Email</button></div></div></div>';
+    var score=calcPotencial(h.r,h.n);
+    var pe=score>=70?'🚀':score>=40?'📦':'⚠️';
+    return '<div class="hist-item" data-idx="'+i+'">'+
+      (h.thumb?'<img class="hist-thumb" src="'+h.thumb+'">':'<div class="hist-thumb">👕</div>')+
+      '<div class="hist-info" data-idx="'+i+'">'+
+        '<div class="hist-name">'+(h.r.descripcion||h.r.categoria||'Prenda')+'</div>'+
+        '<div class="hist-meta">'+h.fecha+' '+h.hora+(h.ref?' - '+h.ref:'')+'</div>'+
+        '<div style="margin-top:2px;">'+
+          '<span class="pill '+pc+'">'+p(h.n.p)+'</span>'+
+          (h.r.marca?' <span class="tag">'+h.r.marca+'</span>':'')+
+          (h.r.talla?' <span class="tag">'+h.r.talla+'</span>':'')+
+          '<span class="pill p-green" style="margin-left:2px;">Original</span>'+
+          '<span style="margin-left:4px;font-size:12px;" title="Potencial de venta">'+pe+'</span>'+
+        '</div>'+
+      '</div>'+
+      '<div style="text-align:right;flex-shrink:0;">'+
+        '<div style="font-size:14px;font-weight:600;">'+f(h.n.o)+'</div>'+
+        '<div style="font-size:10px;color:var(--muted);">al cliente</div>'+
+        '<div style="display:flex;gap:4px;margin-top:5px;">'+
+          '<button class="btn-hist-pdf" data-idx="'+i+'" style="font-size:10px;padding:3px 8px;">PDF</button>'+
+          '<button class="btn-hist-email" data-idx="'+i+'" style="font-size:10px;padding:3px 8px;">Email</button>'+
+          '<button class="btn-hist-del" data-idx="'+i+'" style="font-size:10px;padding:3px 8px;color:var(--red);border-color:var(--red-bg);">✕</button>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
   }).join('');
-  document.querySelectorAll('.hist-item').forEach(function(el){
-    el.addEventListener('click',function(e){ if(e.target.tagName==='BUTTON') return; detail(parseInt(this.getAttribute('data-idx'))); });
+  document.querySelectorAll('.hist-info').forEach(function(el){
+    el.addEventListener('click',function(){ detail(parseInt(this.getAttribute('data-idx'))); });
   });
   document.querySelectorAll('.btn-hist-pdf').forEach(function(btn){
     btn.addEventListener('click',function(e){ e.stopPropagation(); genPDF(hist[parseInt(this.getAttribute('data-idx'))]); });
   });
   document.querySelectorAll('.btn-hist-email').forEach(function(btn){
     btn.addEventListener('click',function(e){ e.stopPropagation(); ultima=hist[parseInt(this.getAttribute('data-idx'))]; openEmail(); });
+  });
+  document.querySelectorAll('.btn-hist-del').forEach(function(btn){
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var i=parseInt(this.getAttribute('data-idx'));
+      if(!confirm('Eliminar esta prenda del lote?')) return;
+      var id=hist[i].id;
+      hist.splice(i,1);
+      lote=lote.filter(function(h){ return h.id!==id; });
+      try{localStorage.setItem('b2s_h',JSON.stringify(hist));}catch(e){}
+      updateCount(); renderHist(); renderLote();
+    });
   });
 }
 
@@ -516,15 +705,20 @@ function genPDF(h){
   }
   doc.setTextColor(30,30,30); doc.setFontSize(10); doc.setFont('helvetica','bold'); doc.text('DATOS DE LA TASACION',m,y);
   doc.setDrawColor(204,255,0); doc.setLineWidth(0.5); doc.line(m,y+2,W-m,y+2); y+=10;
-  [['Fecha',h.fecha+' '+h.hora],['Referencia',h.ref||'-'],['Descripcion',h.r.descripcion||'-'],['Marca',(h.r.marca||'-')+' Tier '+(h.r.tier_marca||'-')+' Original'],['Estado',h.r.estado||'-'],['Categoria',h.r.categoria||'-'],['Color',h.r.color||'-'],['Confianza IA',h.r.confianza||'-'],['Observaciones',h.r.observaciones||'-'],['Notas',h.notas||'-']].forEach(function(x){
+  var score=calcPotencial(h.r,h.n);
+  var pLabel=score>=70?'ALTO':score>=40?'MEDIO':'BAJO';
+  [['Fecha',h.fecha+' '+h.hora],['Referencia',h.ref||'-'],['Descripcion',h.r.descripcion||'-'],['Marca',(h.r.marca||'-')+' Tier '+(h.r.tier_marca||'-')+' Original'],['Estado',h.r.estado||'-'],['Talla',h.r.talla||'No detectada'],['Categoria',h.r.categoria||'-'],['Color',h.r.color||'-'],['Potencial de venta',pLabel+' ('+score+'/100)'],['Confianza IA',h.r.confianza||'-'],['Observaciones',h.r.observaciones||'-'],['Notas',h.notas||'-']].forEach(function(x){
     doc.setFontSize(9); doc.setFont('helvetica','bold'); doc.setTextColor(80,80,80); doc.text(x[0]+':',m,y);
     doc.setFont('helvetica','normal'); doc.setTextColor(30,30,30);
     var val=String(x[1]); if(val.length>60) val=val.substring(0,60)+'...';
-    doc.text(val,m+38,y); y+=7;
+    doc.text(val,m+42,y); y+=7;
   });
   y+=4; doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.text('DESGLOSE ECONOMICO',m,y);
   doc.setDrawColor(200,200,200); doc.line(m,y+2,W-m,y+2); y+=10;
-  [['Precio de mercado',f(h.n.m)],['Precio tasado',f(h.n.t)],['Oferta al cliente',f(h.n.o)],['Precio venta Vinted',f(h.n.v)],['Comision Vinted','- '+f(h.n.c)],['Coste logistico','- '+f(h.n.log||3)]].forEach(function(x){
+  var tallaLabel=h.r.talla||'No detectada';
+  var tallaF=h.n.tallaF||1;
+  var tallaAjuste=tallaF>=1.0?'+'+Math.round((tallaF-1)*100)+'%':Math.round((tallaF-1)*100)+'%';
+  [['Precio de mercado',f(h.n.m)],['Factor talla ('+tallaLabel+')',tallaAjuste],['Precio tasado',f(h.n.t)],['Oferta al cliente',f(h.n.o)],['Precio venta Vinted',f(h.n.v)],['Comision Vinted','- '+f(h.n.c)],['Coste logistico','- '+f(h.n.log||3)]].forEach(function(x){
     doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(80,80,80); doc.text(x[0],m,y);
     doc.setTextColor(30,30,30); doc.text(x[1],W-m,y,{align:'right'}); y+=7;
   });
@@ -558,27 +752,33 @@ function genPDFLote(){
   doc.setFontSize(9);
   [['Total prendas:',String(hist.length)],['Total a pagar al cliente:',f(tp)],['Ingresos esperados:',f(tv)],['Beneficio esperado:',f(tb)]].forEach(function(x){
     doc.setFont('helvetica','normal'); doc.setTextColor(80,80,80); doc.text(x[0],m,y);
-    doc.setFont('helvetica','bold'); doc.setTextColor(x[0].indexOf('Beneficio')>=0?39:30,x[0].indexOf('Beneficio')>=0?80:30,x[0].indexOf('Beneficio')>=0?10:30);
+    doc.setFont('helvetica','bold');
+    if(x[0].indexOf('Beneficio')>=0){ doc.setTextColor(39,80,10); }else{ doc.setTextColor(30,30,30); }
     doc.text(x[1],m+65,y); y+=7;
   });
   y+=8;
   doc.setTextColor(30,30,30); doc.setFontSize(11); doc.setFont('helvetica','bold'); doc.text('DETALLE DE PRENDAS',m,y);
   doc.setDrawColor(200,200,200); doc.line(m,y+2,W-m,y+2); y+=10;
-  doc.setFontSize(8); doc.setFont('helvetica','bold'); doc.setTextColor(80,80,80);
-  doc.text('Num',m,y); doc.text('Prenda',m+12,y); doc.text('Marca',m+75,y); doc.text('Estado',m+110,y); doc.text('Oferta cliente',m+145,y); doc.text('Margen',W-m,y,{align:'right'});
+  doc.setFontSize(7.5); doc.setFont('helvetica','bold'); doc.setTextColor(80,80,80);
+  doc.text('Num',m,y); doc.text('Prenda',m+10,y); doc.text('Marca',m+70,y); doc.text('Talla',m+100,y); doc.text('Estado',m+115,y); doc.text('Oferta',m+150,y); doc.text('Margen',m+168,y); doc.text('Potencial',W-m,y,{align:'right'});
   y+=5; doc.setLineWidth(0.3); doc.line(m,y,W-m,y); y+=5;
   hist.forEach(function(h,i){
     if(y>270){ doc.addPage(); y=20; }
     var col=h.n.p>=65?[39,80,10]:h.n.p>=50?[99,56,6]:[121,31,31];
-    doc.setFontSize(8); doc.setFont('helvetica','normal'); doc.setTextColor(30,30,30);
+    var score=calcPotencial(h.r,h.n);
+    var pLabel=score>=70?'Alto':score>=40?'Medio':'Bajo';
+    doc.setFontSize(7.5); doc.setFont('helvetica','normal'); doc.setTextColor(30,30,30);
     doc.text(String(i+1),m,y);
-    var nombre=(h.r.descripcion||h.r.categoria||'Prenda'); if(nombre.length>32) nombre=nombre.substring(0,32)+'...';
-    doc.text(nombre,m+12,y);
-    doc.text(h.r.marca||'-',m+75,y);
-    var estado=(h.r.estado||'-'); if(estado.length>18) estado=estado.substring(0,18)+'...';
-    doc.text(estado,m+110,y);
-    doc.setFont('helvetica','bold'); doc.text(f(h.n.o),m+145,y);
-    doc.setTextColor(col[0],col[1],col[2]); doc.text(p(h.n.p),W-m,y,{align:'right'});
+    var nombre=(h.r.descripcion||h.r.categoria||'Prenda'); if(nombre.length>28) nombre=nombre.substring(0,28)+'...';
+    doc.text(nombre,m+10,y);
+    doc.text(h.r.marca||'-',m+70,y);
+    doc.text(h.r.talla||'-',m+100,y);
+    var estado=(h.r.estado||'-'); if(estado.length>14) estado=estado.substring(0,14)+'...';
+    doc.text(estado,m+115,y);
+    doc.setFont('helvetica','bold'); doc.text(f(h.n.o),m+150,y);
+    doc.setTextColor(col[0],col[1],col[2]); doc.text(p(h.n.p),m+168,y);
+    var pCol=score>=70?[39,80,10]:score>=40?[99,56,6]:[121,31,31];
+    doc.setTextColor(pCol[0],pCol[1],pCol[2]); doc.text(pLabel,W-m,y,{align:'right'});
     y+=7; doc.setDrawColor(240,240,240); doc.setLineWidth(0.2); doc.line(m,y-2,W-m,y-2);
   });
   y+=6;
@@ -595,18 +795,21 @@ function genPDFLote(){
 
 function toExcel(){
   if(!hist.length){ alert('Lote vacio.'); return; }
-  var hd=[['Fecha','Hora','Referencia','Descripcion','Categoria','Marca','Tier','Estado','Original','Confianza','Precio mercado','Oferta cliente','Precio venta','Beneficio neto','Margen %','Veredicto']];
+  var hd=[['Fecha','Hora','Referencia','Descripcion','Categoria','Marca','Tier','Talla','Estado','Confianza','Precio mercado','Oferta cliente','Precio venta','Beneficio neto','Margen %','Potencial','Veredicto']];
   hist.forEach(function(h){
-    hd.push([h.fecha,h.hora,h.ref||'',h.r.descripcion||'',h.r.categoria||'',h.r.marca||'',h.r.tier_marca||'',h.r.estado||'','Si',h.r.confianza||'',+h.n.m.toFixed(2),+h.n.o.toFixed(2),+h.n.v.toFixed(2),+h.n.b.toFixed(2),+h.n.p.toFixed(1),h.n.p>=65?'Rentable':h.n.p>=50?'Revisar':'No rentable']);
+    var score=calcPotencial(h.r,h.n);
+    hd.push([h.fecha,h.hora,h.ref||'',h.r.descripcion||'',h.r.categoria||'',h.r.marca||'',h.r.tier_marca||'',h.r.talla||'-',h.r.estado||'',h.r.confianza||'',+h.n.m.toFixed(2),+h.n.o.toFixed(2),+h.n.v.toFixed(2),+h.n.b.toFixed(2),+h.n.p.toFixed(1),score>=70?'Alto':score>=40?'Medio':'Bajo',h.n.p>=65?'Rentable':h.n.p>=50?'Revisar':'No rentable']);
   });
   var wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(hd);
-  ws['!cols']=hd[0].map(function(_,i){ return{wch:i<2?10:i<4?28:12}; });
+  ws['!cols']=hd[0].map(function(_,i){ return{wch:i<2?10:i<4?24:12}; });
   XLSX.utils.book_append_sheet(wb,ws,'Lote');
   XLSX.writeFile(wb,'Back2Street_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.xlsx');
 }
 
 function buildBody(h){
-  return 'Informe Back2Street\n\nFecha: '+h.fecha+' '+h.hora+'\nReferencia: '+(h.ref||'-')+'\nDescripcion: '+(h.r.descripcion||'-')+'\nMarca: '+(h.r.marca||'-')+' Tier '+(h.r.tier_marca||'-')+' ORIGINAL\nEstado: '+(h.r.estado||'-')+'\n\nPrecio mercado: '+f(h.n.m)+'\nOferta cliente: '+f(h.n.o)+'\nPrecio venta Vinted: '+f(h.n.v)+'\nBeneficio neto: '+f(h.n.b)+' ('+p(h.n.p)+')\n'+(h.r.observaciones?'\nObs: '+h.r.observaciones:'')+'\n\n- Back2Street - Circular - Pre-Loved - Unisex -';
+  var score=calcPotencial(h.r,h.n);
+  var pLabel=score>=70?'ALTO':score>=40?'MEDIO':'BAJO';
+  return 'Informe Back2Street\n\nFecha: '+h.fecha+' '+h.hora+'\nReferencia: '+(h.ref||'-')+'\nDescripcion: '+(h.r.descripcion||'-')+'\nMarca: '+(h.r.marca||'-')+' Tier '+(h.r.tier_marca||'-')+' ORIGINAL\nEstado: '+(h.r.estado||'-')+'\nTalla: '+(h.r.talla||'No detectada')+'\nPotencial de venta: '+pLabel+' ('+score+'/100)\n\nPrecio mercado: '+f(h.n.m)+'\nOferta cliente: '+f(h.n.o)+'\nPrecio venta Vinted: '+f(h.n.v)+'\nBeneficio neto: '+f(h.n.b)+' ('+p(h.n.p)+')\n'+(h.r.observaciones?'\nObs: '+h.r.observaciones:'')+'\n\n- Back2Street - Circular - Pre-Loved - Unisex -';
 }
 
 function openEmail(){
@@ -633,7 +836,8 @@ function sendSummary(){
   hist.forEach(function(h){ tp+=h.n.o; tv+=h.n.v; tb+=h.n.b; });
   var body='Back2Street - Resumen del lote\n'+new Date().toLocaleDateString('es-ES')+'\n\nPrendas: '+hist.length+'\nTotal a pagar al cliente: '+f(tp)+'\nIngresos esperados: '+f(tv)+'\nBeneficio esperado: '+f(tb)+'\n\nDETALLE\n';
   hist.forEach(function(h,i){
-    body+='\n'+(i+1)+'. '+(h.r.descripcion||h.r.categoria)+' - '+(h.r.marca||'-')+'\n   Oferta: '+f(h.n.o)+' Venta: '+f(h.n.v)+' Beneficio: '+f(h.n.b)+' ('+p(h.n.p)+')\n';
+    var score=calcPotencial(h.r,h.n);
+    body+='\n'+(i+1)+'. '+(h.r.descripcion||h.r.categoria)+' - '+(h.r.marca||'-')+' Talla: '+(h.r.talla||'-')+'\n   Oferta: '+f(h.n.o)+' Venta: '+f(h.n.v)+' Beneficio: '+f(h.n.b)+' ('+p(h.n.p)+') Potencial: '+(score>=70?'Alto':score>=40?'Medio':'Bajo')+'\n';
   });
   body+='\nTOTAL A PAGAR AL CLIENTE: '+f(tp)+'\nBENEFICIO TOTAL: '+f(tb);
   body+='\n\n'+(msg?msg+'\n':'')+'\n- Back2Street - Solo marcas originales -';
