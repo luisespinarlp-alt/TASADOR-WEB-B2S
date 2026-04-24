@@ -266,12 +266,16 @@ function getTallaFactor(talla){
 }
 
 function calcOferta(r){
+  var tallaF=getTallaFactor(r.talla);
   var tF=TF[r.tier_marca]||1.0;
   var cF=CF[(r.categoria||'').toLowerCase()]||1.0;
-  var tallaF=getTallaFactor(r.talla);
   var m=r.precio_mercado_estimado||20;
-  var tasado=m*(r.factor_estado||0.7)*tF*cF*tallaF;
-  return Math.round(tasado*0.35*100)/100;
+  var venta=m*0.90;
+  var costesOp=3;
+  var oferta=venta*(1-0.65)-costesOp;
+  if(oferta<1) oferta=1;
+  oferta=oferta*(r.factor_estado||0.7)*tallaF;
+  return Math.round(oferta*100)/100;
 }
 
 function f(n){ return n.toFixed(2).replace('.',',')+' euros'; }
