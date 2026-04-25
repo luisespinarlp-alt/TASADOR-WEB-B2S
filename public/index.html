@@ -399,7 +399,8 @@ function calc(r,log){
   var m=r.precio_mercado_estimado||20;
   var v=m*0.90;
   var c=v*0.05;
-  var ofertaBase=(v*0.35)-log;
+  var COSTE_OP=3;
+  var ofertaBase=(v*0.35)-COSTE_OP;
   if(ofertaBase<1) ofertaBase=1;
   var o=ofertaBase*estadoF*tallaF;
   if(o<1) o=1;
@@ -407,7 +408,6 @@ function calc(r,log){
   var b=v-o-log-c;
   return{m:m,t:v*0.35,o:o,v:v,c:c,b:b,p:(b/v)*100,tallaF:tallaF};
 }
-
 function calcPotencial(r,n){
   var score=0;
   var tF=getTallaFactor(r.talla);
