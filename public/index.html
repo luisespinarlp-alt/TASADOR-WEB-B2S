@@ -403,8 +403,9 @@ function calc(r,log){
   if(ofertaBase<1) ofertaBase=1;
   var o=ofertaBase*estadoF*tallaF;
   if(o<1) o=1;
+  o=Math.round(o*100)/100;
   var b=v-o-log-c;
-  return{m:m,t:o/0.35,o:o,v:v,c:c,b:b,p:(b/v)*100,tallaF:tallaF};
+  return{m:m,t:v*0.35,o:o,v:v,c:c,b:b,p:(b/v)*100,tallaF:tallaF};
 }
 
 function calcPotencial(r,n){
