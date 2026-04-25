@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Back2Street — Tasador IA</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -142,7 +145,6 @@
   </div>
 
   <div id="panel-tasar">
-
     <div class="lote-box" id="lote-activo">
       <div class="lote-title">
         <span>LOTE ACTIVO</span>
@@ -399,7 +401,6 @@ function calc(r,log){
   var m=r.precio_mercado_estimado||20;
   var v=m*0.90;
   var c=v*0.05;
-  var COSTE_OP=3;
   var ofertaBase=(v*0.35)-COSTE_OP;
   if(ofertaBase<1) ofertaBase=1;
   var o=ofertaBase*estadoF*tallaF;
@@ -408,6 +409,7 @@ function calc(r,log){
   var b=v-o-log-c;
   return{m:m,t:v*0.35,o:o,v:v,c:c,b:b,p:(b/v)*100,tallaF:tallaF};
 }
+
 function calcPotencial(r,n){
   var score=0;
   var tF=getTallaFactor(r.talla);
@@ -498,7 +500,7 @@ function renderRes(r,log){
     (r.observaciones?'<div style="font-size:11px;color:var(--muted);">'+r.observaciones+'</div>':'');
   document.getElementById('metrics').innerHTML=
     '<div class="metric"><div class="metric-label">Precio mercado</div><div class="metric-val">'+f(n.m)+'</div><div class="metric-sub">ref Vinted</div></div>'+
-    '<div class="metric"><div class="metric-label">Precio tasado</div><div class="metric-val">'+f(n.t)+'</div><div class="metric-sub">con factor talla</div></div>'+
+    '<div class="metric"><div class="metric-label">Precio tasado</div><div class="metric-val">'+f(n.t)+'</div><div class="metric-sub">base calculo</div></div>'+
     '<div class="metric"><div class="metric-label">Oferta cliente</div><div class="metric-val">'+f(n.o)+'</div><div class="metric-sub">pagas tu</div></div>'+
     '<div class="metric"><div class="metric-label">Beneficio neto</div><div class="metric-val">'+f(n.b)+'</div><div class="metric-sub">'+p(n.p)+' margen</div></div>';
   var vc,vt,vm,vtxt,vmsg;
@@ -506,14 +508,14 @@ function renderRes(r,log){
   else if(n.p>=50){vc='result-warn';vt='rt rt-warn';vm='rb rb-warn';vtxt='Por debajo del objetivo';vmsg='Margen '+p(n.p)+'. Considera ajustar la oferta.';}
   else{vc='result-bad';vt='rt rt-bad';vm='rb rb-bad';vtxt='No rentable rechazar';vmsg='Margen '+p(n.p)+'. Precio demasiado bajo.';}
   document.getElementById('verdict').innerHTML='<div class="'+vc+'"><div class="'+vt+'">'+vtxt+'</div><div class="'+vm+'">'+vmsg+'</div></div>';
-  var tallaTexto=n.tallaF>=1.05?'Talla muy demandada':n.tallaF>=0.95?'Talla con demanda normal':n.tallaF>=0.85?'Talla con poca demanda':'Talla muy poco demandada';
+  var tallaTexto=n.tallaF>=1.05?'Talla muy demandada':n.tallaF>=0.95?'Talla demanda normal':n.tallaF>=0.85?'Talla poca demanda':'Talla muy poca demanda';
   var tallaAjuste=n.tallaF>=1.0?'+'+Math.round((n.tallaF-1)*100)+'%':Math.round((n.tallaF-1)*100)+'%';
   document.getElementById('breakdown').innerHTML=[
     ['Precio mercado',f(n.m)],
-    ['Factor talla ('+tallaLabel+') '+tallaTexto,tallaAjuste],
     ['Precio venta Vinted -10%',f(n.v)],
-    ['Oferta al cliente (35% venta - logistica)',f(n.o)],
-    ['Comision Vinted ~5%','- '+f(n.c)],
+    ['Factor talla ('+tallaLabel+') '+tallaTexto,tallaAjuste],
+    ['Oferta al cliente = (venta×35% - 3€)×estado×talla',f(n.o)],
+    ['Comision Vinted 5%','- '+f(n.c)],
     ['Coste logistico','- '+f(log)],
     ['Beneficio neto',f(n.b)+' ('+p(n.p)+')']
   ].map(function(x){ return '<div class="row-data"><span class="n">'+x[0]+'</span><span class="v">'+x[1]+'</span></div>'; }).join('');
@@ -695,7 +697,7 @@ function genPDF(h){
   var tallaLabel=h.r.talla||'No detectada';
   var tallaF=h.n.tallaF||1;
   var tallaAjuste=tallaF>=1.0?'+'+Math.round((tallaF-1)*100)+'%':Math.round((tallaF-1)*100)+'%';
-  [['Precio de mercado',f(h.n.m)],['Factor talla ('+tallaLabel+')',tallaAjuste],['Precio venta Vinted -10%',f(h.n.v)],['Oferta al cliente',f(h.n.o)],['Comision Vinted','- '+f(h.n.c)],['Coste logistico','- '+f(h.n.log||3)]].forEach(function(x){
+  [['Precio de mercado',f(h.n.m)],['Precio venta Vinted -10%',f(h.n.v)],['Factor talla ('+tallaLabel+')',tallaAjuste],['Oferta al cliente',f(h.n.o)],['Comision Vinted','- '+f(h.n.c)],['Coste logistico','- '+f(h.n.log||3)]].forEach(function(x){
     doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(80,80,80); doc.text(x[0],m,y);
     doc.setTextColor(30,30,30); doc.text(x[1],W-m,y,{align:'right'}); y+=7;
   });
