@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<title>Back2Street — Vende tu ropa desde casa | Ciudad Real</title>
+<meta name="description" content="Tasamos tu ropa de segunda mano, te la recogemos a domicilio en Ciudad Real y te pagamos al instante. Ropa de marca original.">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0c0c0c; --card: #111; --border: rgba(255,255,255,0.08);
+    --text: #F0EDE6; --muted: #888; --light: #444;
+    --neon: #CCFF00; --dark: #0c0c0c;
+    --green: #1D9E75; --radius: 16px; --radius-sm: 10px;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); }
+  .container { max-width: 680px; margin: 0 auto; padding: 0 1rem; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(12,12,12,0.95); backdrop-filter: blur(10px); border-bottom: 0.5px solid var(--border); padding: 0.75rem 0; }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+  .nav-brand { font-size: 16px; font-weight: 700; color: var(--text); letter-spacing: 3px; text-decoration: none; }
+  .nav-brand span { color: var(--neon); }
+  .nav-cta { background: var(--neon); color: var(--dark); border: none; border-radius: 20px; padding: 6px 16px; font-size: 12px; font-weight: 700; cursor: pointer; letter-spacing: 0.5px; }
+
+  /* HERO */
+  .hero { padding: 4rem 0 3rem; text-align: center; }
+  .hero-badge { display: inline-block; background: #1a1a00; border: 0.5px solid var(--neon); border-radius: 20px; padding: 4px 14px; font-size: 11px; color: var(--neon); font-weight: 600; letter-spacing: 1px; margin-bottom: 1.5rem; }
+  .hero h1 { font-size: clamp(28px,6vw,48px); font-weight: 800; line-height: 1.15; margin-bottom: 1rem; letter-spacing: -0.5px; }
+  .hero h1 span { color: var(--neon); }
+  .hero-sub { font-size: 16px; color: var(--muted); line-height: 1.6; margin-bottom: 2rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+  .hero-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; }
+  .btn-hero { padding: 14px 28px; font-size: 15px; font-weight: 700; border-radius: 30px; cursor: pointer; border: none; transition: all 0.15s; letter-spacing: 0.5px; }
+  .btn-hero-primary { background: var(--neon); color: var(--dark); }
+  .btn-hero-primary:hover { background: #d4ff1a; transform: translateY(-1px); }
+  .btn-hero-sec { background: transparent; color: var(--text); border: 0.5px solid #333; }
+  .btn-hero-sec:hover { border-color: #666; }
+  .hero-stats { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+  .hero-stat { text-align: center; }
+  .hero-stat-num { font-size: 24px; font-weight: 700; color: var(--neon); }
+  .hero-stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* SECCION */
+  section { padding: 3rem 0; }
+  .section-label { font-size: 10px; font-weight: 600; color: var(--neon); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+  .section-title { font-size: clamp(22px,4vw,32px); font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
+  .section-sub { font-size: 15px; color: var(--muted); line-height: 1.6; margin-bottom: 2rem; }
+  .divider { height: 0.5px; background: var(--border); margin: 0; }
+
+  /* BENEFICIOS */
+  .beneficios-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 12px; margin-top: 1.5rem; }
+  .beneficio-card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 1.5rem; transition: border-color 0.2s; }
+  .beneficio-card:hover { border-color: #333; }
+  .beneficio-icon { font-size: 32px; margin-bottom: 12px; }
+  .beneficio-titulo { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .beneficio-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* PASOS */
+  .pasos { margin-top: 1.5rem; }
+  .paso { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 1.5rem; }
+  .paso-num { width: 36px; height: 36px; border-radius: 50%; background: var(--neon); color: var(--dark); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; flex-shrink: 0; margin-top: 2px; }
+  .paso-content {}
+  .paso-titulo { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .paso-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* TASADOR */
+  .tasador-wrap { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-top: 1.5rem; }
+  .tasador-header { background: #0a0a0a; padding: 1rem 1.5rem; border-bottom: 0.5px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .tasador-header-title { font-size: 13px; font-weight: 600; color: var(--text); }
+  .tasador-header-sub { font-size: 11px; color: var(--muted); }
+  .tasador-body { padding: 1.25rem 1.5rem; }
+  .foto-guia { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin-bottom: 14px; }
+  .foto-guia-item { background: #0a0a0a; border-radius: var(--radius-sm); padding: 10px 4px; text-align: center; border: 0.5px solid var(--border); }
+  .foto-guia-icon { font-size: 20px; margin-bottom: 4px; }
+  .foto-guia-label { font-size: 9px; color: var(--muted); font-weight: 500; }
+  .aviso { background: #1a1500; border-left: 3px solid var(--neon); padding: 8px 12px; font-size: 11px; color: #aaa; margin-bottom: 12px; border-radius: 0 6px 6px 0; }
+  .aviso strong { color: var(--neon); }
+  .upload-zone { border: 1.5px dashed #333; border-radius: var(--radius); padding: 1.5rem 1rem; text-align: center; cursor: pointer; transition: all 0.2s; }
+  .upload-zone:hover, .upload-zone.drag { border-color: var(--neon); background: #0a0a0a; }
+  .upload-icon { font-size: 28px; margin-bottom: 8px; }
+  .upload-text { font-size: 13px; color: var(--text); font-weight: 500; }
+  .upload-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  input[type=file] { display: none; }
+  .preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(75px,1fr)); gap: 8px; margin-top: 10px; }
+  .preview-img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; border: 0.5px solid var(--border); }
+  .preview-wrap { position: relative; }
+  .preview-del { position: absolute; top: 3px; right: 3px; width: 16px; height: 16px; background: rgba(0,0,0,0.7); border-radius: 50%; border: none; color: #fff; font-size: 9px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 5px; font-weight: 500; }
+  .field input, .field select, .field textarea { width: 100%; padding: 10px 12px; font-size: 14px; border: 0.5px solid var(--border); border-radius: var(--radius-sm); background: #0a0a0a; color: var(--text); }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: #444; }
+  .field textarea { resize: vertical; min-height: 80px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .btn-tasar { width: 100%; padding: 14px; font-size: 15px; font-weight: 700; border: none; border-radius: var(--radius); background: var(--neon); color: var(--dark); cursor: pointer; transition: all 0.15s; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .btn-tasar:hover:not(:disabled) { background: #d4ff1a; }
+  .btn-tasar:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-sec { width: 100%; padding: 12px; font-size: 13px; font-weight: 600; border: 0.5px solid var(--border); border-radius: var(--radius); background: transparent; color: var(--text); cursor: pointer; margin-bottom: 8px; transition: all 0.15s; }
+  .btn-sec:hover { background: #1a1a1a; }
+  .loading { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 1.5rem; color: var(--muted); font-size: 13px; }
+  .spinner { width: 20px; height: 20px; border: 2px solid #333; border-top-color: var(--neon); border-radius: 50%; animation: spin 0.7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .prenda-result-card { background: #0a0a0a; border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border: 0.5px solid #2a2a2a; }
+  .prenda-result-info { flex: 1; }
+  .prenda-result-nombre { font-size: 13px; font-weight: 500; color: var(--text); }
+  .prenda-result-detalle { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .prenda-result-precio { font-size: 22px; font-weight: 700; color: var(--neon); flex-shrink: 0; margin-left: 12px; }
+  .acumulado-box { background: #0a0a0a; border-radius: var(--radius-sm); padding: 1rem 1.25rem; margin-bottom: 10px; border: 0.5px solid #2a2a2a; }
+  .acumulado-title { font-size: 10px; color: var(--neon); font-weight: 600; letter-spacing: 2px; margin-bottom: 8px; display: flex; justify-content: space-between; }
+  .prenda-acum { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 0.5px solid #1a1a1a; font-size: 12px; gap: 6px; }
+  .prenda-acum:last-child { border-bottom: none; }
+  .prenda-acum-nombre { flex: 1; color: var(--text); }
+  .prenda-acum-precio { color: var(--neon); font-weight: 600; }
+  .prenda-acum-del { background: transparent; border: none; color: #F09595; font-size: 13px; cursor: pointer; padding: 0 4px; }
+  .total-mini { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; margin-top: 6px; border-top: 0.5px solid #2a2a2a; }
+  .total-mini-label { font-size: 11px; color: var(--muted); }
+  .total-mini-valor { font-size: 20px; font-weight: 700; color: var(--neon); }
+  .total-box { background: #0a1a00; border: 0.5px solid var(--neon); border-radius: var(--radius); padding: 1.25rem; margin: 1rem 0; text-align: center; }
+  .total-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
+  .total-valor { font-size: 40px; font-weight: 700; color: var(--neon); }
+  .total-sub { font-size: 12px; color: #666; margin-top: 4px; }
+  .rechazo-box { background: #1a0505; border: 0.5px solid #F09595; border-radius: var(--radius); padding: 1.5rem; text-align: center; margin-bottom: 1rem; }
+  .confirmacion-box { background: #0a1a00; border: 0.5px solid var(--neon); border-radius: var(--radius); padding: 2rem; text-align: center; }
+  .condiciones { background: #0a0a0a; border-radius: var(--radius-sm); padding: 10px 14px; margin-top: 8px; font-size: 11px; color: var(--muted); line-height: 1.6; border: 0.5px solid var(--border); }
+
+  /* FOOTER */
+  footer { background: #080808; border-top: 0.5px solid var(--border); padding: 2rem 0; margin-top: 2rem; }
+  .footer-brand { font-size: 16px; font-weight: 700; color: var(--text); letter-spacing: 3px; margin-bottom: 6px; }
+  .footer-brand span { color: var(--neon); }
+  .footer-sub { font-size: 11px; color: var(--muted); margin-bottom: 1rem; }
+  .footer-info { font-size: 12px; color: var(--muted); line-height: 1.8; }
+  .footer-bottom { margin-top: 1.5rem; padding-top: 1rem; border-top: 0.5px solid var(--border); font-size: 11px; color: var(--light); text-align: center; }
+
+  @media (max-width: 480px) {
+    .foto-guia { grid-template-columns: repeat(2,1fr); }
+    .grid2 { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; }
+    .beneficios-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-brand">BACK<span>2</span>STREET</a>
+      <button class="nav-cta" onclick="document.getElementById('tasador-section').scrollIntoView({behavior:'smooth'})">Tasar mi ropa</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">📍 Ciudad Real · Recogida a domicilio</div>
+    <h1>Convierte tu ropa<br>en <span>dinero al instante</span></h1>
+    <p class="hero-sub">Tasamos tu ropa de marca desde casa, pasamos a recogerla y te pagamos en el momento. Sin complicaciones.</p>
+    <div class="hero-btns">
+      <button class="btn-hero btn-hero-primary" onclick="document.getElementById('tasador-section').scrollIntoView({behavior:'smooth'})">Tasar mi ropa gratis</button>
+      <button class="btn-hero btn-hero-sec" onclick="document.getElementById('como-funciona').scrollIntoView({behavior:'smooth'})">Como funciona</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num">48h</div><div class="hero-stat-label">Recogida en menos de</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">0€</div><div class="hero-stat-label">Coste para el cliente</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">100%</div><div class="hero-stat-label">Pago al instante</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BENEFICIOS -->
+<section id="beneficios">
+  <div class="container">
+    <div class="section-label">Por que elegirnos</div>
+    <h2 class="section-title">Tu ropa vale dinero.<br>Nosotros te lo damos.</h2>
+    <p class="section-sub">Ropa que lleva años en tu armario sin usarse puede convertirse en dinero hoy mismo.</p>
+    <div class="beneficios-grid">
+      <div class="beneficio-card">
+        <div class="beneficio-icon">🏠</div>
+        <div class="beneficio-titulo">Recogida a domicilio</div>
+        <div class="beneficio-desc">No tienes que moverte de casa. Pasamos a recoger tu ropa en Ciudad Real de lunes a viernes en el horario que mas te convenga.</div>
+      </div>
+      <div class="beneficio-card">
+        <div class="beneficio-icon">💸</div>
+        <div class="beneficio-titulo">Pago inmediato</div>
+        <div class="beneficio-desc">Cobrас en el momento en que recogemos la ropa. Sin esperar a que se venda, sin comisiones, sin sorpresas.</div>
+      </div>
+      <div class="beneficio-card">
+        <div class="beneficio-icon">🌱</div>
+        <div class="beneficio-titulo">Economia circular</div>
+        <div class="beneficio-desc">Tu ropa tiene una segunda vida. Contribuyes a reducir el impacto ambiental de la industria textil y a proteger el medio ambiente.</div>
+      </div>
+      <div class="beneficio-card">
+        <div class="beneficio-icon">📱</div>
+        <div class="beneficio-titulo">100% online</div>
+        <div class="beneficio-desc">Tasa tu ropa desde el movil en menos de 2 minutos. Nuestra IA analiza las fotos y te da el precio al momento.</div>
+      </div>
+      <div class="beneficio-card">
+        <div class="beneficio-icon">👕</div>
+        <div class="beneficio-titulo">Vaciamos tu armario</div>
+        <div class="beneficio-desc">Ropa que no usas desde hace años, ropa que ya no te queda, prendas de temporadas pasadas. Todo tiene valor.</div>
+      </div>
+      <div class="beneficio-card">
+        <div class="beneficio-icon">🔒</div>
+        <div class="beneficio-titulo">Sin riesgo</div>
+        <div class="beneficio-desc">Conoces el precio antes de que pasemos a recoger. Si no te convence, no hay ninguna obligacion. Sin letra pequena.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona">
+  <div class="container">
+    <div class="section-label">El proceso</div>
+    <h2 class="section-title">Tan facil como<br>4 pasos</h2>
+    <div class="pasos">
+      <div class="paso">
+        <div class="paso-num">1</div>
+        <div class="paso-content">
+          <div class="paso-titulo">Tasa tu ropa online</div>
+          <div class="paso-desc">Sube fotos de tus prendas desde el movil. Nuestra IA analiza la marca, el estado y la talla y te da el precio que te ofrecemos en segundos.</div>
+        </div>
+      </div>
+      <div class="paso">
+        <div class="paso-num">2</div>
+        <div class="paso-content">
+          <div class="paso-titulo">Elige cuando te recogemos</div>
+          <div class="paso-desc">Selecciona el dia y la hora que mejor te venga. Recogemos de lunes a viernes de 10:00 a 20:00 en Ciudad Real.</div>
+        </div>
+      </div>
+      <div class="paso">
+        <div class="paso-num">3</div>
+        <div class="paso-content">
+          <div class="paso-titulo">Te lo recogemos en casa</div>
+          <div class="paso-desc">Pasamos por tu direccion a la hora acordada. Revisamos las prendas in situ para confirmar el estado.</div>
+        </div>
+      </div>
+      <div class="paso">
+        <div class="paso-num">4</div>
+        <div class="paso-content">
+          <div class="paso-titulo">Cobras al instante</div>
+          <div class="paso-desc">Recibes el pago en el momento de la recogida. Efectivo o transferencia, como prefieras.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TASADOR -->
+<section id="tasador-section">
+  <div class="container">
+    <div class="section-label">Empieza ahora</div>
+    <h2 class="section-title">Tasa tu ropa gratis</h2>
+    <p class="section-sub">Sube fotos de tus prendas y descubre cuanto te ofrecemos. Solo trabajamos con ropa de marca original.</p>
+
+    <div class="tasador-wrap">
+      <div class="tasador-header">
+        <div>
+          <div class="tasador-header-title">Tasador IA Back2Street</div>
+          <div class="tasador-header-sub">Analisis automatico por inteligencia artificial</div>
+        </div>
+        <span style="font-size:20px;">🤖</span>
+      </div>
+      <div class="tasador-body">
+
+        <!-- PASO 1: DATOS -->
+        <div id="panel-datos">
+          <div class="field"><label>Tu nombre</label><input type="text" id="nombre-cliente" placeholder="Ej: Maria Garcia"></div>
+          <div class="grid2">
+            <div class="field"><label>Tu email</label><input type="text" id="email-cliente" placeholder="tucorreo@email.com"></div>
+            <div class="field"><label>Tu telefono</label><input type="text" id="tel-cliente" placeholder="600 000 000"></div>
+          </div>
+          <button class="btn-tasar" id="btn-empezar">Empezar a tasar mis prendas →</button>
+        </div>
+
+        <!-- PASO 2: TASAR -->
+        <div id="panel-tasar" style="display:none;">
+          <div class="acumulado-box" id="acumulado-box" style="display:none;">
+            <div class="acumulado-title"><span>PRENDAS TASADAS</span><span id="acum-count"></span></div>
+            <div id="acum-lista"></div>
+            <div class="total-mini">
+              <span class="total-mini-label">Total acumulado</span>
+              <span class="total-mini-valor" id="acum-total">0,00 euros</span>
+            </div>
+          </div>
+
+          <div style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;" id="prenda-titulo">Prenda 1 — Sube las fotos</div>
+
+          <div class="foto-guia">
+            <div class="foto-guia-item"><div class="foto-guia-icon">👕</div><div class="foto-guia-label">DELANTERA</div></div>
+            <div class="foto-guia-item"><div class="foto-guia-icon">🔄</div><div class="foto-guia-label">TRASERA</div></div>
+            <div class="foto-guia-item"><div class="foto-guia-icon">🏷️</div><div class="foto-guia-label">ETIQUETA MARCA</div></div>
+            <div class="foto-guia-item"><div class="foto-guia-icon">🔍</div><div class="foto-guia-label">DETALLES</div></div>
+          </div>
+          <div class="aviso"><strong>Importante:</strong> incluye siempre una foto clara de la etiqueta con la marca y la talla.</div>
+          <div class="upload-zone" id="zona-subida">
+            <div class="upload-icon">📸</div>
+            <div class="upload-text">Pulsa aqui para subir fotos</div>
+            <div class="upload-sub">JPG o PNG · Maximo 8 fotos</div>
+          </div>
+          <input type="file" id="input-fotos" accept="image/*" multiple>
+          <div class="preview-grid" id="pg"></div>
+          <br>
+          <button class="btn-tasar" id="btn-tasar-prenda" disabled>Sube fotos para tasar</button>
+
+          <div id="loading-prenda" style="display:none;">
+            <div class="loading"><div class="spinner"></div><span>Analizando tu prenda...</span></div>
+          </div>
+
+          <div id="resultado-prenda" style="display:none;">
+            <div style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Resultado</div>
+            <div id="prenda-resultado-contenido"></div>
+            <button class="btn-tasar" id="btn-anadir">Añadir y tasar otra prenda</button>
+            <button class="btn-sec" id="btn-ver-total">Ver total y reservar recogida</button>
+          </div>
+
+          <div id="rechazo-prenda" style="display:none;">
+            <div class="rechazo-box">
+              <div style="font-size:32px;margin-bottom:8px;">😔</div>
+              <div style="font-size:15px;font-weight:700;color:#F09595;margin-bottom:6px;" id="rechazo-tit"></div>
+              <div style="font-size:13px;color:#aaa;" id="rechazo-mot"></div>
+            </div>
+            <button class="btn-tasar" id="btn-otra-rechazo">Tasar otra prenda</button>
+            <button class="btn-sec" id="btn-total-rechazo" style="display:none;">Ver total y reservar</button>
+          </div>
+        </div>
+
+        <!-- PASO 3: RESUMEN + RESERVA -->
+        <div id="panel-reserva" style="display:none;">
+          <div style="text-align:center;padding:0.5rem 0 1.25rem;">
+            <div style="font-size:32px;margin-bottom:6px;">🎉</div>
+            <div style="font-size:16px;font-weight:700;" id="reserva-saludo"></div>
+          </div>
+          <div id="reserva-lista"></div>
+          <div class="total-box">
+            <div class="total-label">Total que recibiras</div>
+            <div class="total-valor" id="reserva-total"></div>
+            <div class="total-sub">Pago inmediato en la recogida</div>
+          </div>
+
+          <div style="font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin:1.5rem 0 1rem;">Reserva tu recogida</div>
+
+          <div class="field"><label>Direccion de recogida en Ciudad Real</label><input type="text" id="direccion" placeholder="Calle, numero, piso, puerta..."></div>
+          <div class="grid2">
+            <div class="field">
+              <label>Fecha de recogida</label>
+              <input type="date" id="fecha-recogida" min="">
+            </div>
+            <div class="field">
+              <label>Hora de recogida</label>
+              <select id="hora-recogida">
+                <option value="">Selecciona hora</option>
+                <option>10:00</option><option>10:30</option>
+                <option>11:00</option><option>11:30</option>
+                <option>12:00</option><option>12:30</option>
+                <option>13:00</option><option>13:30</option>
+                <option>16:00</option><option>16:30</option>
+                <option>17:00</option><option>17:30</option>
+                <option>18:00</option><option>18:30</option>
+                <option>19:00</option><option>19:30</option>
+                <option>20:00</option>
+              </select>
+            </div>
+          </div>
+          <div class="field"><label>Notas adicionales (opcional)</label><input type="text" id="notas-recogida" placeholder="Ej: Llamar al timbre, 2o izquierda..."></div>
+
+          <div class="condiciones">
+            Esta oferta es orientativa y esta sujeta a verificacion presencial. El pago se realiza en el momento de la recogida. Solo trabajamos con ropa de marca original en buen estado.
+          </div>
+          <br>
+          <button class="btn-tasar" id="btn-confirmar">Confirmar reserva de recogida</button>
+          <button class="btn-sec" id="btn-mas-prendas">Añadir mas prendas</button>
+        </div>
+
+        <!-- CONFIRMACION -->
+        <div id="panel-confirmacion" style="display:none;">
+          <div class="confirmacion-box">
+            <div style="font-size:48px;margin-bottom:12px;">✅</div>
+            <div style="font-size:20px;font-weight:700;color:var(--neon);margin-bottom:8px;">Recogida confirmada</div>
+            <div style="font-size:14px;color:var(--muted);line-height:1.6;" id="confirmacion-detalle"></div>
+            <div style="margin-top:1.5rem;padding:1rem;background:#0c0c0c;border-radius:var(--radius-sm);font-size:12px;color:var(--muted);">
+              Te contactaremos en las proximas horas para confirmar los detalles de la recogida.
+            </div>
+          </div>
+          <br>
+          <button class="btn-sec" id="btn-nueva-tasacion">Hacer otra tasacion</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-brand">BACK<span>2</span>STREET</div>
+    <div class="footer-sub">CIRCULAR · PRE-LOVED · UNISEX</div>
+    <div class="footer-info">
+      📍 Ciudad Real<br>
+      📅 Recogidas de lunes a viernes · 10:00 a 20:00<br>
+      📧 hola@back2street.com<br>
+      📱 Solo trabajamos con ropa de marca original
+    </div>
+    <div class="footer-bottom">© 2026 Back2Street · Todos los derechos reservados</div>
+  </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+var imgs=[], prendas=[], clienteData={}, ultimaPrenda=null;
+var COSTE_OP=3;
+var TALLA_F={'xs':0.85,'34':0.85,'36':0.85,'s':0.95,'38':0.95,'m':1.10,'40':1.10,'42':1.10,'l':1.05,'44':1.05,'xl':0.90,'46':0.90,'xxl':0.80,'48':0.80,'unica':1.0,'one size':1.0};
+
+// Fecha minima: lunes siguiente o manana si es entre semana
+document.addEventListener('DOMContentLoaded',function(){
+  var hoy=new Date();
+  var minFecha=new Date(hoy);
+  minFecha.setDate(hoy.getDate()+1);
+  while(minFecha.getDay()===0||minFecha.getDay()===6){ minFecha.setDate(minFecha.getDate()+1); }
+  var yyyy=minFecha.getFullYear();
+  var mm=String(minFecha.getMonth()+1).padStart(2,'0');
+  var dd=String(minFecha.getDate()).padStart(2,'0');
+  var inputFecha=document.getElementById('fecha-recogida');
+  if(inputFecha){ inputFecha.min=yyyy+'-'+mm+'-'+dd; inputFecha.value=yyyy+'-'+mm+'-'+dd; }
+
+  document.getElementById('btn-empezar').addEventListener('click',empezar);
+  document.getElementById('zona-subida').addEventListener('click',function(){ document.getElementById('input-fotos').click(); });
+  document.getElementById('zona-subida').addEventListener('dragover',function(e){ e.preventDefault(); this.classList.add('drag'); });
+  document.getElementById('zona-subida').addEventListener('dragleave',function(){ this.classList.remove('drag'); });
+  document.getElementById('zona-subida').addEventListener('drop',function(e){ e.preventDefault(); this.classList.remove('drag'); cargarFotos(e.dataTransfer.files); });
+  document.getElementById('input-fotos').addEventListener('change',function(){ cargarFotos(this.files); this.value=''; });
+  document.getElementById('btn-tasar-prenda').addEventListener('click',tasarPrenda);
+  document.getElementById('btn-anadir').addEventListener('click',anadirYSeguir);
+  document.getElementById('btn-ver-total').addEventListener('click',verTotal);
+  document.getElementById('btn-otra-rechazo').addEventListener('click',prepararNuevaPrenda);
+  document.getElementById('btn-total-rechazo').addEventListener('click',verTotal);
+  document.getElementById('btn-confirmar').addEventListener('click',confirmarRecogida);
+  document.getElementById('btn-mas-prendas').addEventListener('click',volverATasar);
+  document.getElementById('btn-nueva-tasacion').addEventListener('click',reset);
+
+  // Bloquear fines de semana en el datepicker
+  document.getElementById('fecha-recogida').addEventListener('change',function(){
+    var d=new Date(this.value+'T12:00:00');
+    if(d.getDay()===0||d.getDay()===6){
+      alert('Solo hacemos recogidas de lunes a viernes. Por favor elige otro dia.');
+      this.value='';
+    }
+  });
+});
+
+function empezar(){
+  clienteData={
+    nombre:document.getElementById('nombre-cliente').value.trim(),
+    email:document.getElementById('email-cliente').value.trim(),
+    tel:document.getElementById('tel-cliente').value.trim()
+  };
+  if(!clienteData.nombre){ alert('Por favor introduce tu nombre.'); return; }
+  if(!clienteData.tel){ alert('Por favor introduce tu telefono.'); return; }
+  document.getElementById('panel-datos').style.display='none';
+  document.getElementById('panel-tasar').style.display='block';
+  actualizarTitulo();
+}
+
+function actualizarTitulo(){
+  document.getElementById('prenda-titulo').textContent='Prenda '+(prendas.length+1)+' — Sube las fotos';
+}
+
+function cargarFotos(files){
+  Array.from(files).forEach(function(f){
+    if(imgs.length>=8) return;
+    var reader=new FileReader();
+    reader.onload=function(e){ imgs.push(e.target.result); renderPrev(); };
+    reader.readAsDataURL(f);
+  });
+}
+
+function renderPrev(){
+  document.getElementById('pg').innerHTML=imgs.map(function(d,i){
+    return '<div class="preview-wrap"><img class="preview-img" src="'+d+'"><button class="preview-del" data-idx="'+i+'">×</button></div>';
+  }).join('');
+  document.querySelectorAll('.preview-del').forEach(function(btn){
+    btn.addEventListener('click',function(){ imgs.splice(parseInt(this.getAttribute('data-idx')),1); renderPrev(); });
+  });
+  var b=document.getElementById('btn-tasar-prenda');
+  b.disabled=imgs.length===0;
+  b.textContent=imgs.length>0?'Tasar esta prenda ('+imgs.length+' foto'+(imgs.length>1?'s':'')+')':'Sube fotos para tasar';
+}
+
+function getTallaFactor(talla){
+  if(!talla) return 1.0;
+  var t=talla.toLowerCase().trim();
+  if(TALLA_F[t]!==undefined) return TALLA_F[t];
+  var num=parseInt(t);
+  if(!isNaN(num)){
+    if(num<=36) return 0.85; if(num<=38) return 0.95;
+    if(num<=42) return 1.10; if(num<=44) return 1.05;
+    if(num<=46) return 0.90; return 0.80;
+  }
+  return 1.0;
+}
+
+function calcOferta(m,estadoF,tallaF){
+  var v=m*0.90;
+  var base=(v*0.35)-COSTE_OP;
+  if(base<1) base=1;
+  var o=base*estadoF*tallaF;
+  if(o<1) o=1;
+  return Math.round(o*100)/100;
+}
+
+function f(n){ return n.toFixed(2).replace('.',',')+' euros'; }
+
+async function tasarPrenda(){
+  if(!imgs.length) return;
+  document.getElementById('btn-tasar-prenda').disabled=true;
+  document.getElementById('loading-prenda').style.display='block';
+  document.getElementById('resultado-prenda').style.display='none';
+  document.getElementById('rechazo-prenda').style.display='none';
+
+  var content=imgs.map(function(d){
+    return{type:'image',source:{type:'base64',media_type:'image/jpeg',data:d.split(',')[1]}};
+  });
+  content.push({type:'text',text:'Eres el tasador IA de Back2Street. Analiza la prenda en las fotos.\nDevuelve SOLO un objeto JSON sin texto extra:\n{"categoria":"camiseta/sudadera/chaqueta/pantalon/vestido/zapatillas/bolso/basico","marca":"nombre o Sin marca","tier_marca":"S/A/B/C/Sin marca","es_original":true,"estado":"nuevo con etiqueta/como nuevo/muy buen estado/buen estado/estado aceptable","factor_estado":0.0,"talla":"talla visible o desconocida","descripcion":"descripcion muy breve","precio_mercado_estimado":0,"confianza":"alta/media/baja"}\nFactores estado: nuevo=1.0,como nuevo=0.85,muy buen=0.70,buen=0.55,aceptable=0.40.\nEstima el precio de mercado en Vinted. Si no es marca reconocible o parece falsificacion pon tier_marca C o Sin marca y es_original false.'});
+
+  try{
+    var res=await fetch('/api/tasar',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:800,messages:[{role:'user',content:content}]})
+    });
+    var data=await res.json();
+    document.getElementById('loading-prenda').style.display='none';
+    document.getElementById('btn-tasar-prenda').disabled=false;
+    if(data.error){ mostrarRechazo('No hemos podido analizar esta prenda','Por favor intentalo de nuevo.'); return; }
+    var raw=data.content?data.content.map(function(b){ return b.text||''; }).join(''):'{}';
+    var r=JSON.parse(raw.replace(/```json|```/g,'').trim());
+    procesarPrenda(r);
+  }catch(err){
+    document.getElementById('loading-prenda').style.display='none';
+    document.getElementById('btn-tasar-prenda').disabled=false;
+    mostrarRechazo('Error de conexion','Por favor intentalo de nuevo.');
+  }
+}
+
+function procesarPrenda(r){
+  var mala=!r.es_original||r.tier_marca==='Sin marca'||r.tier_marca==='C';
+  if(mala){
+    mostrarRechazo(
+      'No podemos hacer una oferta por esta prenda',
+      'Solo trabajamos con ropa de marca original en buen estado. Si crees que es un error sube una foto mas clara de la etiqueta.'
+    );
+    return;
+  }
+  var tallaF=getTallaFactor(r.talla);
+  var estadoF=r.factor_estado||0.7;
+  var oferta=calcOferta(r.precio_mercado_estimado||20,estadoF,tallaF);
+  ultimaPrenda={r:r,oferta:oferta,imgs:imgs.slice()};
+  document.getElementById('prenda-resultado-contenido').innerHTML=
+    '<div class="prenda-result-card">'+
+      '<div class="prenda-result-info">'+
+        '<div class="prenda-result-nombre">'+(r.descripcion||r.categoria||'Prenda')+'</div>'+
+        '<div class="prenda-result-detalle">'+(r.marca||'-')+' · Talla '+(r.talla||'-')+' · '+(r.estado||'-')+'</div>'+
+      '</div>'+
+      '<div class="prenda-result-precio">'+f(oferta)+'</div>'+
+    '</div>';
+  document.getElementById('resultado-prenda').style.display='block';
+  document.getElementById('btn-ver-total').textContent=prendas.length>0?'Ver total ('+(prendas.length+1)+' prendas) y reservar':'Reservar recogida';
+}
+
+function mostrarRechazo(tit,mot){
+  document.getElementById('rechazo-tit').textContent=tit;
+  document.getElementById('rechazo-mot').textContent=mot;
+  document.getElementById('rechazo-prenda').style.display='block';
+  var btn=document.getElementById('btn-total-rechazo');
+  if(prendas.length>0){ btn.style.display='block'; btn.textContent='Ver total ('+prendas.length+' prenda'+(prendas.length>1?'s':'')+') y reservar'; }
+  else { btn.style.display='none'; }
+}
+
+function anadirYSeguir(){
+  if(!ultimaPrenda) return;
+  prendas.push(ultimaPrenda); ultimaPrenda=null;
+  renderAcumulado(); prepararNuevaPrenda();
+}
+
+function prepararNuevaPrenda(){
+  imgs=[]; renderPrev();
+  document.getElementById('resultado-prenda').style.display='none';
+  document.getElementById('rechazo-prenda').style.display='none';
+  document.getElementById('loading-prenda').style.display='none';
+  actualizarTitulo();
+  document.getElementById('tasador-section').scrollIntoView({behavior:'smooth'});
+}
+
+function renderAcumulado(){
+  if(!prendas.length){ document.getElementById('acumulado-box').style.display='none'; return; }
+  document.getElementById('acumulado-box').style.display='block';
+  var total=0; prendas.forEach(function(p){ total+=p.oferta; });
+  document.getElementById('acum-count').textContent=prendas.length+' prenda'+(prendas.length>1?'s':'');
+  document.getElementById('acum-lista').innerHTML=prendas.map(function(p,i){
+    return '<div class="prenda-acum">'+
+      '<span class="prenda-acum-nombre">'+(i+1)+'. '+(p.r.descripcion||p.r.categoria||'Prenda')+'</span>'+
+      '<span style="color:var(--muted);margin:0 6px;font-size:11px;">'+(p.r.marca||'-')+'</span>'+
+      '<span class="prenda-acum-precio">'+f(p.oferta)+'</span>'+
+      '<button class="prenda-acum-del" data-idx="'+i+'">✕</button>'+
+    '</div>';
+  }).join('');
+  document.getElementById('acum-total').textContent=f(total);
+  document.querySelectorAll('.prenda-acum-del').forEach(function(btn){
+    btn.addEventListener('click',function(){ prendas.splice(parseInt(this.getAttribute('data-idx')),1); renderAcumulado(); });
+  });
+}
+
+function verTotal(){
+  if(ultimaPrenda) prendas.push(ultimaPrenda);
+  ultimaPrenda=null;
+  if(!prendas.length){ alert('No hay prendas tasadas aun.'); return; }
+  document.getElementById('panel-tasar').style.display='none';
+  document.getElementById('panel-reserva').style.display='block';
+  renderReserva();
+  document.getElementById('tasador-section').scrollIntoView({behavior:'smooth'});
+}
+
+function renderReserva(){
+  var total=0; prendas.forEach(function(p){ total+=p.oferta; });
+  var nombre=clienteData.nombre||'';
+  document.getElementById('reserva-saludo').textContent=nombre?'Hola '+nombre+', aqui tienes tu oferta':'Aqui tienes tu oferta';
+  document.getElementById('reserva-lista').innerHTML=prendas.map(function(p,i){
+    return '<div class="prenda-result-card">'+
+      '<div class="prenda-result-info">'+
+        '<div class="prenda-result-nombre">'+(i+1)+'. '+(p.r.descripcion||p.r.categoria||'Prenda')+'</div>'+
+        '<div class="prenda-result-detalle">'+(p.r.marca||'-')+' · Talla '+(p.r.talla||'-')+' · '+(p.r.estado||'-')+'</div>'+
+      '</div>'+
+      '<div class="prenda-result-precio">'+f(p.oferta)+'</div>'+
+    '</div>';
+  }).join('');
+  document.getElementById('reserva-total').textContent=f(total);
+}
+
+function volverATasar(){
+  document.getElementById('panel-reserva').style.display='none';
+  document.getElementById('panel-tasar').style.display='block';
+  imgs=[]; renderPrev(); ultimaPrenda=null;
+  document.getElementById('resultado-prenda').style.display='none';
+  document.getElementById('rechazo-prenda').style.display='none';
+  renderAcumulado(); actualizarTitulo();
+  document.getElementById('tasador-section').scrollIntoView({behavior:'smooth'});
+}
+
+function confirmarRecogida(){
+  var dir=document.getElementById('direccion').value.trim();
+  var fecha=document.getElementById('fecha-recogida').value;
+  var hora=document.getElementById('hora-recogida').value;
+  if(!dir){ alert('Por favor introduce tu direccion de recogida.'); return; }
+  if(!fecha){ alert('Por favor selecciona una fecha.'); return; }
+  if(!hora){ alert('Por favor selecciona una hora.'); return; }
+  var d=new Date(fecha+'T12:00:00');
+  if(d.getDay()===0||d.getDay()===6){ alert('Solo recogemos de lunes a viernes.'); return; }
+  var diasSemana=['domingo','lunes','martes','miercoles','jueves','viernes','sabado'];
+  var diaNombre=diasSemana[d.getDay()];
+  var fechaFormateada=d.getDate()+'/'+(d.getMonth()+1)+'/'+d.getFullYear();
+  var total=0; prendas.forEach(function(p){ total+=p.oferta; });
+  var notas=document.getElementById('notas-recogida').value.trim();
+  document.getElementById('panel-reserva').style.display='none';
+  document.getElementById('panel-confirmacion').style.display='block';
+  document.getElementById('confirmacion-detalle').innerHTML=
+    '<strong style="color:var(--neon);">'+clienteData.nombre+'</strong>, tu recogida esta confirmada.<br><br>'+
+    '📅 <strong>'+diaNombre.charAt(0).toUpperCase()+diaNombre.slice(1)+' '+fechaFormateada+'</strong> a las <strong>'+hora+'</strong><br>'+
+    '📍 <strong>'+dir+'</strong><br>'+
+    '📱 <strong>'+clienteData.tel+'</strong><br>'+
+    (notas?'📝 '+notas+'<br>':'')+
+    '<br>💰 Oferta total: <strong style="color:var(--neon);">'+f(total)+'</strong>';
+  document.getElementById('tasador-section').scrollIntoView({behavior:'smooth'});
+  enviarConfirmacionEmail(dir,fechaFormateada,hora,total,notas);
+}
+
+function enviarConfirmacionEmail(dir,fecha,hora,total,notas){
+  var total2=total;
+  var asunto=encodeURIComponent('Back2Street - Nueva reserva de recogida - '+clienteData.nombre);
+  var body='Nueva reserva de recogida en Back2Street\n\n';
+  body+='CLIENTE\n';
+  body+='Nombre: '+clienteData.nombre+'\n';
+  body+='Telefono: '+clienteData.tel+'\n';
+  body+='Email: '+(clienteData.email||'-')+'\n\n';
+  body+='RECOGIDA\n';
+  body+='Fecha: '+fecha+'\n';
+  body+='Hora: '+hora+'\n';
+  body+='Direccion: '+dir+'\n';
+  if(notas) body+='Notas: '+notas+'\n';
+  body+='\nPRENDAS\n';
+  prendas.forEach(function(p,i){
+    body+=(i+1)+'. '+(p.r.descripcion||p.r.categoria)+' - '+(p.r.marca||'-')+' - Talla '+(p.r.talla||'-')+' - '+f(p.oferta)+'\n';
+  });
+  body+='\nTOTAL: '+f(total2)+'\n\n- Back2Street -';
+  window.location.href='mailto:hola@back2street.com?subject='+asunto+'&body='+encodeURIComponent(body);
+}
+
+function reset(){
+  imgs=[]; prendas=[]; clienteData={}; ultimaPrenda=null;
+  ['nombre-cliente','email-cliente','tel-cliente','direccion','notas-recogida'].forEach(function(id){ document.getElementById(id).value=''; });
+  document.getElementById('hora-recogida').value='';
+  document.getElementById('pg').innerHTML='';
+  document.getElementById('btn-tasar-prenda').disabled=true;
+  document.getElementById('btn-tasar-prenda').textContent='Sube fotos para tasar';
+  document.getElementById('acumulado-box').style.display='none';
+  ['resultado-prenda','rechazo-prenda','loading-prenda'].forEach(function(id){ document.getElementById(id).style.display='none'; });
+  document.getElementById('panel-datos').style.display='block';
+  document.getElementById('panel-tasar').style.display='none';
+  document.getElementById('panel-reserva').style.display='none';
+  document.getElementById('panel-confirmacion').style.display='none';
+  document.getElementById('tasador-section').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
