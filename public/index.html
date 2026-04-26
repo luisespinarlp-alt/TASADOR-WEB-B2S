@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Back2Street — Tasador IA</title>
+<title>Back2Street — Tasador IA v3</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -177,7 +177,7 @@
       <div class="card-title">Datos opcionales</div>
       <div class="grid2">
         <div class="field"><label>Referencia / cliente</label><input type="text" id="ref" placeholder="Ej: Maria Garcia lote 1"></div>
-        <div class="field"><label>Precio Vinted (euros) 0 = estima IA</label><input type="number" id="pm" value="0" min="0"></div>
+        <div class="field"><label>Precio Vinted (euros) — 0 = estima IA</label><input type="number" id="pm" value="0" min="0"></div>
       </div>
       <div class="grid2">
         <div class="field"><label>Coste logistico (euros)</label><input type="number" id="lg" value="3" min="0" step="0.5"></div>
@@ -292,11 +292,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 var imgs=[], hist=[], lote=[], ultima=null, marcas=new Set();
-var DM=['Nike','Adidas','Tommy Hilfiger','Ralph Lauren','Stone Island','Moncler','Canada Goose','The North Face','Carhartt','Supreme','Palace','Off-White','Balenciaga','Gucci','Prada','Zara','Mango','H&M','Massimo Dutti','Cos','Arket','Uniqlo','New Balance','Puma','Reebok','Converse','Vans','Jordan','Lacoste','Boss','Calvin Klein','Diesel','Versace','Burberry','Acne Studios'];
-var TF={'S':1.4,'A':1.2,'B':1.0,'C':0.75,'Sin marca':0.5};
-var CF={'camiseta':1.0,'sudadera':1.1,'chaqueta':1.2,'pantalon':1.15,'vestido':1.05,'zapatillas':1.3,'bolso':1.25,'basico':0.9};
-var TALLA_F={'xs':0.85,'34':0.85,'36':0.85,'s':0.95,'38':0.95,'m':1.10,'40':1.10,'42':1.10,'l':1.05,'44':1.05,'xl':0.90,'46':0.90,'xxl':0.80,'48':0.80,'unica':1.0,'one size':1.0};
 var COSTE_OP=3;
+var DM=['Nike','Adidas','Tommy Hilfiger','Ralph Lauren','Stone Island','Moncler','Canada Goose','The North Face','Carhartt','Supreme','Palace','Off-White','Balenciaga','Gucci','Prada','Zara','Mango','H&M','Massimo Dutti','Cos','Arket','Uniqlo','New Balance','Puma','Reebok','Converse','Vans','Jordan','Lacoste','Boss','Calvin Klein','Diesel','Versace','Burberry','Acne Studios'];
+var TALLA_F={'xs':0.85,'34':0.85,'36':0.85,'s':0.95,'38':0.95,'m':1.10,'40':1.10,'42':1.10,'l':1.05,'44':1.05,'xl':0.90,'46':0.90,'xxl':0.80,'48':0.80,'unica':1.0,'one size':1.0};
 
 try{hist=JSON.parse(localStorage.getItem('b2s_h')||'[]');}catch(e){hist=[];}
 try{var sm=JSON.parse(localStorage.getItem('b2s_m'));if(sm){marcas=new Set(sm);}else{DM.forEach(function(m){marcas.add(m);});}}catch(e){DM.forEach(function(m){marcas.add(m);});}
@@ -395,19 +393,25 @@ function getTallaFactor(talla){
 function f(n){ return n.toFixed(2).replace('.',',')+' euros'; }
 function p(n){ return Math.round(n)+'%'; }
 
+/* FORMULA UNICA — igual que cliente.html */
+function calcOferta(m, estadoF, tallaF){
+  var v=m*0.90;
+  var base=(v*0.35)-COSTE_OP;
+  if(base<1) base=1;
+  var o=base*estadoF*tallaF;
+  if(o<1) o=1;
+  return Math.round(o*100)/100;
+}
+
 function calc(r,log){
   var tallaF=getTallaFactor(r.talla);
   var estadoF=r.factor_estado||0.7;
   var m=r.precio_mercado_estimado||20;
   var v=m*0.90;
   var c=v*0.05;
-  var ofertaBase=(v*0.35)-COSTE_OP;
-  if(ofertaBase<1) ofertaBase=1;
-  var o=ofertaBase*estadoF*tallaF;
-  if(o<1) o=1;
-  o=Math.round(o*100)/100;
+  var o=calcOferta(m,estadoF,tallaF);
   var b=v-o-log-c;
-  return{m:m,t:v*0.35,o:o,v:v,c:c,b:b,p:(b/v)*100,tallaF:tallaF};
+  return{m:m,o:o,v:v,c:c,b:b,p:(b/v)*100,tallaF:tallaF};
 }
 
 function calcPotencial(r,n){
@@ -500,21 +504,21 @@ function renderRes(r,log){
     (r.observaciones?'<div style="font-size:11px;color:var(--muted);">'+r.observaciones+'</div>':'');
   document.getElementById('metrics').innerHTML=
     '<div class="metric"><div class="metric-label">Precio mercado</div><div class="metric-val">'+f(n.m)+'</div><div class="metric-sub">ref Vinted</div></div>'+
-    '<div class="metric"><div class="metric-label">Precio tasado</div><div class="metric-val">'+f(n.t)+'</div><div class="metric-sub">base calculo</div></div>'+
-    '<div class="metric"><div class="metric-label">Oferta cliente</div><div class="metric-val">'+f(n.o)+'</div><div class="metric-sub">pagas tu</div></div>'+
+    '<div class="metric"><div class="metric-label">Precio venta</div><div class="metric-val">'+f(n.v)+'</div><div class="metric-sub">Vinted -10%</div></div>'+
+    '<div class="metric"><div class="metric-label">Oferta cliente</div><div class="metric-val" style="color:var(--green);">'+f(n.o)+'</div><div class="metric-sub">pagas tu</div></div>'+
     '<div class="metric"><div class="metric-label">Beneficio neto</div><div class="metric-val">'+f(n.b)+'</div><div class="metric-sub">'+p(n.p)+' margen</div></div>';
   var vc,vt,vm,vtxt,vmsg;
   if(n.p>=65){vc='result-ok';vt='rt rt-ok';vm='rb rb-ok';vtxt='Operacion rentable';vmsg='Margen '+p(n.p)+'. Oferta al cliente: '+f(n.o)+'.';}
   else if(n.p>=50){vc='result-warn';vt='rt rt-warn';vm='rb rb-warn';vtxt='Por debajo del objetivo';vmsg='Margen '+p(n.p)+'. Considera ajustar la oferta.';}
   else{vc='result-bad';vt='rt rt-bad';vm='rb rb-bad';vtxt='No rentable rechazar';vmsg='Margen '+p(n.p)+'. Precio demasiado bajo.';}
   document.getElementById('verdict').innerHTML='<div class="'+vc+'"><div class="'+vt+'">'+vtxt+'</div><div class="'+vm+'">'+vmsg+'</div></div>';
-  var tallaTexto=n.tallaF>=1.05?'Talla muy demandada':n.tallaF>=0.95?'Talla demanda normal':n.tallaF>=0.85?'Talla poca demanda':'Talla muy poca demanda';
+  var tallaTexto=n.tallaF>=1.05?'muy demandada':n.tallaF>=0.95?'demanda normal':n.tallaF>=0.85?'poca demanda':'muy poca demanda';
   var tallaAjuste=n.tallaF>=1.0?'+'+Math.round((n.tallaF-1)*100)+'%':Math.round((n.tallaF-1)*100)+'%';
   document.getElementById('breakdown').innerHTML=[
-    ['Precio mercado',f(n.m)],
+    ['Precio mercado Vinted',f(n.m)],
     ['Precio venta Vinted -10%',f(n.v)],
-    ['Factor talla ('+tallaLabel+') '+tallaTexto,tallaAjuste],
-    ['Oferta al cliente = (venta×35% - 3€)×estado×talla',f(n.o)],
+    ['Factor talla ('+tallaLabel+') - '+tallaTexto,tallaAjuste],
+    ['Oferta cliente = (venta×35% - '+COSTE_OP+'€)×estado×talla',f(n.o)],
     ['Comision Vinted 5%','- '+f(n.c)],
     ['Coste logistico','- '+f(log)],
     ['Beneficio neto',f(n.b)+' ('+p(n.p)+')']
@@ -621,8 +625,7 @@ function renderHist(){
           '<span class="pill '+pc+'">'+p(h.n.p)+'</span>'+
           (h.r.marca?' <span class="tag">'+h.r.marca+'</span>':'')+
           (h.r.talla?' <span class="tag">'+h.r.talla+'</span>':'')+
-          '<span class="pill p-green" style="margin-left:2px;">Original</span>'+
-          ' '+pe+
+          '<span class="pill p-green" style="margin-left:2px;">Original</span> '+pe+
         '</div>'+
       '</div>'+
       '<div style="text-align:right;flex-shrink:0;">'+
@@ -787,7 +790,7 @@ function toExcel(){
 
 function buildBody(h){
   var score=calcPotencial(h.r,h.n);
-  return 'Informe Back2Street\n\nFecha: '+h.fecha+' '+h.hora+'\nReferencia: '+(h.ref||'-')+'\nDescripcion: '+(h.r.descripcion||'-')+'\nMarca: '+(h.r.marca||'-')+' Tier '+(h.r.tier_marca||'-')+'\nEstado: '+(h.r.estado||'-')+'\nTalla: '+(h.r.talla||'-')+'\nPotencial: '+(score>=70?'ALTO':score>=40?'MEDIO':'BAJO')+'\n\nOferta cliente: '+f(h.n.o)+'\nPrecio venta Vinted: '+f(h.n.v)+'\nBeneficio neto: '+f(h.n.b)+' ('+p(h.n.p)+')\n\n- Back2Street - Circular - Pre-Loved - Unisex -';
+  return 'Informe Back2Street\n\nFecha: '+h.fecha+' '+h.hora+'\nReferencia: '+(h.ref||'-')+'\nDescripcion: '+(h.r.descripcion||'-')+'\nMarca: '+(h.r.marca||'-')+'\nEstado: '+(h.r.estado||'-')+'\nTalla: '+(h.r.talla||'-')+'\nPotencial: '+(score>=70?'ALTO':score>=40?'MEDIO':'BAJO')+'\n\nOferta cliente: '+f(h.n.o)+'\nPrecio venta Vinted: '+f(h.n.v)+'\nBeneficio neto: '+f(h.n.b)+' ('+p(h.n.p)+')\n\n- Back2Street - Circular - Pre-Loved - Unisex -';
 }
 
 function openEmail(){
