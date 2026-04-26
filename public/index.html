@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Back2Street — Tasador IA v3</title>
+<title>Back2Street — Tasador Empresa v4</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -60,6 +60,8 @@
   .metric-label { font-size: 10px; color: var(--muted); margin-bottom: 2px; }
   .metric-val { font-size: 20px; font-weight: 600; color: var(--text); }
   .metric-sub { font-size: 10px; color: var(--light); }
+  .metric-highlight { background: #EAF3DE; }
+  .metric-highlight .metric-val { color: var(--green); }
   .result-ok { background: var(--green-bg); border-radius: var(--radius-sm); padding: 12px 16px; }
   .result-warn { background: var(--amber-bg); border-radius: var(--radius-sm); padding: 12px 16px; }
   .result-bad { background: var(--red-bg); border-radius: var(--radius-sm); padding: 12px 16px; }
@@ -69,23 +71,30 @@
   .rt-ok, .rb-ok { color: var(--green); }
   .rt-warn, .rb-warn { color: var(--amber); }
   .rt-bad, .rb-bad { color: var(--red); }
-  .potencial { border-radius: var(--radius-sm); padding: 12px 16px; margin-top: 10px; }
-  .potencial-alto { background: var(--green-bg); }
-  .potencial-medio { background: var(--amber-bg); }
-  .potencial-bajo { background: var(--red-bg); }
-  .potencial-titulo { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
-  .potencial-alto .potencial-titulo { color: var(--green); }
-  .potencial-medio .potencial-titulo { color: var(--amber); }
-  .potencial-bajo .potencial-titulo { color: var(--red); }
-  .potencial-barra { height: 6px; background: rgba(0,0,0,0.1); border-radius: 3px; overflow: hidden; margin: 6px 0; }
-  .potencial-fill { height: 100%; border-radius: 3px; transition: width 0.4s; }
-  .potencial-alto .potencial-fill { background: var(--green); }
-  .potencial-medio .potencial-fill { background: var(--amber); }
-  .potencial-bajo .potencial-fill { background: var(--red); }
-  .potencial-desc { font-size: 11px; }
-  .potencial-alto .potencial-desc { color: var(--green); }
-  .potencial-medio .potencial-desc { color: var(--amber); }
-  .potencial-bajo .potencial-desc { color: var(--red); }
+  .velocidad { border-radius: var(--radius-sm); padding: 12px 16px; margin-top: 10px; }
+  .velocidad-rapido { background: var(--green-bg); }
+  .velocidad-normal { background: var(--amber-bg); }
+  .velocidad-lento { background: var(--red-bg); }
+  .velocidad-titulo { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .velocidad-rapido .velocidad-titulo { color: var(--green); }
+  .velocidad-normal .velocidad-titulo { color: var(--amber); }
+  .velocidad-lento .velocidad-titulo { color: var(--red); }
+  .velocidad-barra { height: 8px; background: rgba(0,0,0,0.1); border-radius: 4px; overflow: hidden; margin: 6px 0; }
+  .velocidad-fill { height: 100%; border-radius: 4px; transition: width 0.5s; }
+  .velocidad-rapido .velocidad-fill { background: var(--green); }
+  .velocidad-normal .velocidad-fill { background: var(--amber); }
+  .velocidad-lento .velocidad-fill { background: var(--red); }
+  .velocidad-desc { font-size: 11px; }
+  .velocidad-rapido .velocidad-desc { color: var(--green); }
+  .velocidad-normal .velocidad-desc { color: var(--amber); }
+  .velocidad-lento .velocidad-desc { color: var(--red); }
+  .beneficio-box { background: var(--dark); border-radius: var(--radius); padding: 1rem 1.5rem; margin-top: 10px; }
+  .beneficio-titulo { font-size: 10px; font-weight: 600; color: var(--neon); letter-spacing: 2px; margin-bottom: 10px; }
+  .beneficio-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+  .beneficio-item { background: #1a1a1a; border-radius: var(--radius-sm); padding: 8px 10px; text-align: center; }
+  .beneficio-label { font-size: 9px; color: #666; margin-bottom: 4px; }
+  .beneficio-val { font-size: 16px; font-weight: 700; color: #F0EDE6; }
+  .beneficio-val.verde { color: var(--neon); }
   .row-data { display: flex; justify-content: space-between; font-size: 12px; padding: 5px 0; border-bottom: 1px solid #f0ede6; }
   .row-data:last-child { border-bottom: none; }
   .row-data .n { color: var(--muted); }
@@ -121,6 +130,7 @@
   @media (max-width: 480px) {
     .grid2, .grid3 { grid-template-columns: 1fr; }
     .grid4 { grid-template-columns: 1fr 1fr; }
+    .beneficio-grid { grid-template-columns: 1fr 1fr; }
     .tabs { flex-wrap: wrap; }
     .tab { flex: none; width: calc(50% - 2px); }
     .foto-guia { grid-template-columns: repeat(2,1fr); }
@@ -132,7 +142,7 @@
   <div class="header">
     <div>
       <div class="brand">BACK<span>2</span>STREET</div>
-      <div class="brand-sub">TASADOR IA · SOLO MARCAS ORIGINALES</div>
+      <div class="brand-sub">TASADOR EMPRESA · USO INTERNO</div>
     </div>
     <div class="obj">Objetivo: <span>65% margen</span></div>
   </div>
@@ -155,7 +165,7 @@
     </div>
 
     <div class="card">
-      <div class="card-title">Fotos necesarias para tasar</div>
+      <div class="card-title">Fotos de la prenda</div>
       <div class="foto-guia">
         <div class="foto-guia-item"><div class="foto-guia-icon">👕</div><div class="foto-guia-label">DELANTERA</div></div>
         <div class="foto-guia-item"><div class="foto-guia-icon">🔄</div><div class="foto-guia-label">TRASERA</div></div>
@@ -163,11 +173,11 @@
         <div class="foto-guia-item"><div class="foto-guia-icon">🔍</div><div class="foto-guia-label">DETALLES</div></div>
       </div>
       <div style="background:#FFF8E1;border-radius:var(--radius-sm);padding:8px 12px;margin-bottom:12px;font-size:11px;color:#633806;border-left:3px solid #EF9F27;">
-        La etiqueta con la marca y la talla es imprescindible para una tasacion precisa
+        Incluye siempre foto de la etiqueta con marca y talla visibles
       </div>
       <div class="upload-zone" id="zona-subida">
         <div class="upload-text">Pulsa aqui o arrastra las fotos</div>
-        <div class="upload-sub">Minimo 2 fotos · Maximo 8 fotos · JPG o PNG</div>
+        <div class="upload-sub">Maximo 8 fotos · JPG o PNG</div>
       </div>
       <input type="file" id="input-fotos" accept="image/*" multiple style="display:none">
       <div class="preview-grid" id="pg"></div>
@@ -186,7 +196,7 @@
     </div>
 
     <button class="btn-primary" id="btn-tasar-ia" style="margin-bottom:1rem;">Sube fotos para activar</button>
-    <div id="loading" style="display:none;"><div class="loading"><div class="spinner"></div>Analizando marca, talla y potencial de venta...</div></div>
+    <div id="loading" style="display:none;"><div class="loading"><div class="spinner"></div>Analizando prenda, marca, talla y velocidad de venta...</div></div>
 
     <div id="rechazo" style="display:none;">
       <div class="result-block">
@@ -201,16 +211,28 @@
         <div class="card-title"><span>Analisis IA</span><span class="pill p-green">Original verificada</span></div>
         <div id="analisis"></div>
       </div>
+
       <div class="card">
-        <div class="card-title">Tasacion</div>
+        <div class="card-title">Precios y oferta</div>
         <div class="grid4" id="metrics" style="margin-bottom:12px;"></div>
         <div id="verdict"></div>
-        <div id="potencial-venta" style="margin-top:10px;"></div>
       </div>
+
+      <div class="card">
+        <div class="card-title">Velocidad de venta estimada en Vinted</div>
+        <div id="velocidad-venta"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Beneficio estimado de esta prenda</div>
+        <div id="beneficio-prenda"></div>
+      </div>
+
       <div class="card">
         <div class="card-title">Desglose economico</div>
         <div id="breakdown"></div>
       </div>
+
       <div class="grid3" style="margin-bottom:1rem;gap:8px;">
         <button class="btn-neon" id="btn-guardar">Añadir al lote</button>
         <button id="btn-pdf">Descargar PDF</button>
@@ -225,7 +247,7 @@
       <div class="grid4" id="summary"></div>
     </div>
     <div class="card">
-      <div class="card-title"><span>Prendas del lote</span><button id="btn-pdf-lote" style="font-size:11px;padding:3px 10px;">Descargar PDF del lote</button></div>
+      <div class="card-title"><span>Prendas del lote</span><button id="btn-pdf-lote" style="font-size:11px;padding:3px 10px;">PDF del lote</button></div>
       <div id="hist-list"></div>
     </div>
   </div>
@@ -241,22 +263,13 @@
       </div>
     </div>
     <div class="card">
-      <div class="card-title">Criterios de rechazo</div>
-      <div class="row-data"><span class="n">Sin marca reconocible</span><span class="v" style="color:var(--red);">Rechazada</span></div>
-      <div class="row-data"><span class="n">Marca no en tu lista</span><span class="v" style="color:var(--red);">Rechazada</span></div>
-      <div class="row-data"><span class="n">Posible falsificacion detectada</span><span class="v" style="color:var(--red);">Rechazada</span></div>
-      <div class="row-data"><span class="n">Confianza IA baja</span><span class="v" style="color:var(--amber);">Alerta revisar</span></div>
-      <div class="row-data"><span class="n">Original verificada y marca aceptada</span><span class="v" style="color:var(--green);">Aceptada</span></div>
-    </div>
-    <div class="card">
-      <div class="card-title">Factor talla en la tasacion</div>
+      <div class="card-title">Factor talla</div>
       <div class="row-data"><span class="n">XS / 34 / 36</span><span class="v" style="color:var(--amber);">x0.85 — poca demanda</span></div>
       <div class="row-data"><span class="n">S / 38</span><span class="v" style="color:var(--amber);">x0.95 — demanda media</span></div>
       <div class="row-data"><span class="n">M / 40 / 42</span><span class="v" style="color:var(--green);">x1.10 — maxima demanda</span></div>
       <div class="row-data"><span class="n">L / 44</span><span class="v" style="color:var(--green);">x1.05 — alta demanda</span></div>
       <div class="row-data"><span class="n">XL / 46</span><span class="v" style="color:var(--amber);">x0.90 — demanda media</span></div>
-      <div class="row-data"><span class="n">XXL / 48 o mas</span><span class="v" style="color:var(--red);">x0.80 — poca demanda</span></div>
-      <div class="row-data"><span class="n">Talla unica / no visible</span><span class="v">x1.0 — sin ajuste</span></div>
+      <div class="row-data"><span class="n">XXL / 48+</span><span class="v" style="color:var(--red);">x0.80 — poca demanda</span></div>
     </div>
   </div>
 
@@ -268,7 +281,7 @@
     <div class="card">
       <div class="card-title">Email resumen</div>
       <div class="field"><label>Destinatario</label><input type="text" id="ed" placeholder="email@correo.com"></div>
-      <div class="field"><label>Asunto</label><input type="text" id="ea" value="Back2Street Resumen de tasaciones"></div>
+      <div class="field"><label>Asunto</label><input type="text" id="ea" value="Back2Street Resumen tasaciones"></div>
       <div class="field"><label>Mensaje adicional</label><input type="text" id="em" placeholder="Opcional"></div>
       <button style="width:100%;padding:10px;" id="btn-send-summary">Enviar resumen</button>
       <div id="ef" style="margin-top:8px;font-size:12px;color:var(--muted);"></div>
@@ -393,7 +406,6 @@ function getTallaFactor(talla){
 function f(n){ return n.toFixed(2).replace('.',',')+' euros'; }
 function p(n){ return Math.round(n)+'%'; }
 
-/* FORMULA UNICA — igual que cliente.html */
 function calcOferta(m, estadoF, tallaF){
   var v=m*0.90;
   var base=(v*0.35)-COSTE_OP;
@@ -411,21 +423,24 @@ function calc(r,log){
   var c=v*0.05;
   var o=calcOferta(m,estadoF,tallaF);
   var b=v-o-log-c;
-  return{m:m,o:o,v:v,c:c,b:b,p:(b/v)*100,tallaF:tallaF};
+  return{m:m,o:o,v:v,c:c,b:b,p:(b/v)*100,tallaF:tallaF,estadoF:estadoF};
 }
 
-function calcPotencial(r,n){
+function calcVelocidad(r,n){
   var score=0;
   var tF=getTallaFactor(r.talla);
-  if(r.tier_marca==='S'||r.tier_marca==='A') score+=30;
+  if(r.tier_marca==='S') score+=35;
+  else if(r.tier_marca==='A') score+=25;
   else if(r.tier_marca==='B') score+=15;
-  if(r.demanda==='alta') score+=30;
-  else if(r.demanda==='media') score+=15;
+  if(r.demanda==='alta') score+=35;
+  else if(r.demanda==='media') score+=20;
+  else score+=5;
   if(tF>=1.05) score+=20;
   else if(tF>=0.95) score+=10;
-  if(r.factor_estado>=0.85) score+=20;
-  else if(r.factor_estado>=0.70) score+=10;
-  if(n.p>=65) score+=10;
+  else score+=3;
+  if(r.factor_estado>=0.85) score+=10;
+  else if(r.factor_estado>=0.70) score+=6;
+  else score+=2;
   return Math.min(score,100);
 }
 
@@ -441,7 +456,7 @@ function tasar(){
   var content=imgs.map(function(d){
     return{type:'image',source:{type:'base64',media_type:'image/jpeg',data:d.split(',')[1]}};
   });
-  content.push({type:'text',text:'Eres el tasador IA de Back2Street. Solo aceptamos ropa de marca original. Marcas aceptadas: '+ml+'.\nDevuelve SOLO JSON sin texto extra:\n{"categoria":"camiseta/sudadera/chaqueta/pantalon/vestido/zapatillas/bolso/basico","marca":"nombre o Sin marca","marca_en_lista":true,"tier_marca":"S/A/B/C/Sin marca","es_original":true,"motivo_rechazo":"","estado":"nuevo con etiqueta/como nuevo/muy buen estado/buen estado/estado aceptable","factor_estado":0.0,"talla":"talla visible o desconocida","demanda":"alta/media/baja","color":"color","descripcion":"descripcion breve","precio_mercado_estimado":'+(pm>0?pm:0)+',"confianza":"alta/media/baja","observaciones":"notas"}\nFactores: nuevo=1.0,como nuevo=0.85,muy buen=0.70,buen=0.55,aceptable=0.40.'+(pm>0?' Precio: '+pm+' euros.':' Estima precio en Vinted.')+'\nSi ves costuras irregulares, logos deformados o etiquetas mal impresas: es_original=false.'});
+  content.push({type:'text',text:'Eres el tasador IA de Back2Street. Solo aceptamos ropa de marca original. Marcas aceptadas: '+ml+'.\nDevuelve SOLO JSON sin texto extra:\n{"categoria":"camiseta/sudadera/chaqueta/pantalon/vestido/zapatillas/bolso/basico","marca":"nombre o Sin marca","marca_en_lista":true,"tier_marca":"S/A/B/C/Sin marca","es_original":true,"motivo_rechazo":"","estado":"nuevo con etiqueta/como nuevo/muy buen estado/buen estado/estado aceptable","factor_estado":0.0,"talla":"talla visible o desconocida","demanda":"alta/media/baja","color":"color","descripcion":"descripcion breve","precio_mercado_estimado":'+(pm>0?pm:0)+',"confianza":"alta/media/baja","observaciones":"notas","dias_venta_estimados":7}\nFactores: nuevo=1.0,como nuevo=0.85,muy buen=0.70,buen=0.55,aceptable=0.40.'+(pm>0?' Precio: '+pm+' euros.':' Estima precio en Vinted.')+'\nPara dias_venta_estimados: estima cuantos dias tardara en venderse en Vinted (1-3 rapido, 4-14 normal, 15-60 lento).\nSi ves costuras irregulares, logos deformados o etiquetas mal impresas: es_original=false.'});
   fetch('/api/tasar',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
@@ -466,14 +481,15 @@ function showErr(msg){
   document.getElementById('metrics').innerHTML='';
   document.getElementById('verdict').innerHTML='';
   document.getElementById('breakdown').innerHTML='';
-  document.getElementById('potencial-venta').innerHTML='';
+  document.getElementById('velocidad-venta').innerHTML='';
+  document.getElementById('beneficio-prenda').innerHTML='';
 }
 
 function process(r,log){
   var bad=!r.es_original||!r.marca_en_lista||r.tier_marca==='Sin marca'||r.tier_marca==='C';
   if(bad){
     document.getElementById('rechazo').style.display='block';
-    var tit=!r.es_original?'Prenda rechazada posible falsificacion':'Prenda rechazada "'+(r.marca||'Sin marca')+'" no aceptada';
+    var tit=!r.es_original?'Prenda rechazada — posible falsificacion':'Prenda rechazada — "'+(r.marca||'Sin marca')+'" no aceptada';
     var mot=!r.es_original?'La IA detecto indicios de que esta prenda no es original. '+(r.observaciones||''):'Esta marca no esta en tu lista. '+(r.motivo_rechazo||'');
     document.getElementById('r-tit').textContent=tit;
     document.getElementById('r-mot').textContent=mot;
@@ -486,9 +502,11 @@ function renderRes(r,log){
   document.getElementById('resultado').style.display='block';
   var n=calc(r,log);
   ultima={r:r,n:n,log:log,imgs:imgs.slice(),ref:document.getElementById('ref').value,notas:document.getElementById('notas').value,thumb:imgs[0]||null,fecha:new Date().toLocaleDateString('es-ES'),hora:new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}),id:Date.now()};
+
   var cC=r.confianza==='alta'?'p-green':r.confianza==='media'?'p-amber':'p-red';
   var tallaLabel=r.talla||'No detectada';
   var tallaColor=n.tallaF>=1.05?'var(--green)':n.tallaF>=0.95?'var(--amber)':'var(--red)';
+
   document.getElementById('analisis').innerHTML=
     '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">'+
     '<span class="tag">'+(r.categoria||'-')+'</span>'+
@@ -502,38 +520,64 @@ function renderRes(r,log){
     '</div>'+
     '<div style="font-size:13px;margin-bottom:4px;">'+(r.descripcion||'')+'</div>'+
     (r.observaciones?'<div style="font-size:11px;color:var(--muted);">'+r.observaciones+'</div>':'');
+
   document.getElementById('metrics').innerHTML=
     '<div class="metric"><div class="metric-label">Precio mercado</div><div class="metric-val">'+f(n.m)+'</div><div class="metric-sub">ref Vinted</div></div>'+
     '<div class="metric"><div class="metric-label">Precio venta</div><div class="metric-val">'+f(n.v)+'</div><div class="metric-sub">Vinted -10%</div></div>'+
-    '<div class="metric"><div class="metric-label">Oferta cliente</div><div class="metric-val" style="color:var(--green);">'+f(n.o)+'</div><div class="metric-sub">pagas tu</div></div>'+
+    '<div class="metric metric-highlight"><div class="metric-label">Oferta al cliente</div><div class="metric-val">'+f(n.o)+'</div><div class="metric-sub">lo que pagas tu</div></div>'+
     '<div class="metric"><div class="metric-label">Beneficio neto</div><div class="metric-val">'+f(n.b)+'</div><div class="metric-sub">'+p(n.p)+' margen</div></div>';
+
   var vc,vt,vm,vtxt,vmsg;
   if(n.p>=65){vc='result-ok';vt='rt rt-ok';vm='rb rb-ok';vtxt='Operacion rentable';vmsg='Margen '+p(n.p)+'. Oferta al cliente: '+f(n.o)+'.';}
   else if(n.p>=50){vc='result-warn';vt='rt rt-warn';vm='rb rb-warn';vtxt='Por debajo del objetivo';vmsg='Margen '+p(n.p)+'. Considera ajustar la oferta.';}
-  else{vc='result-bad';vt='rt rt-bad';vm='rb rb-bad';vtxt='No rentable rechazar';vmsg='Margen '+p(n.p)+'. Precio demasiado bajo.';}
+  else{vc='result-bad';vt='rt rt-bad';vm='rb rb-bad';vtxt='No rentable — rechazar';vmsg='Margen '+p(n.p)+'. Precio demasiado bajo.';}
   document.getElementById('verdict').innerHTML='<div class="'+vc+'"><div class="'+vt+'">'+vtxt+'</div><div class="'+vm+'">'+vmsg+'</div></div>';
-  var tallaTexto=n.tallaF>=1.05?'muy demandada':n.tallaF>=0.95?'demanda normal':n.tallaF>=0.85?'poca demanda':'muy poca demanda';
+
+  var score=calcVelocidad(r,n);
+  var dias=r.dias_venta_estimados||14;
+  var vClass,vLabel,vEmoji,vDesc;
+  if(score>=70||dias<=3){
+    vClass='velocidad-rapido'; vLabel='VENTA RAPIDA'; vEmoji='🚀';
+    vDesc='Se vendera en menos de 3 dias. Marca muy solicitada, talla demandada y buen estado.';
+  } else if(score>=40||dias<=14){
+    vClass='velocidad-normal'; vLabel='VENTA NORMAL'; vEmoji='📦';
+    vDesc='Se vendera en unos '+(dias<=14?dias:14)+' dias aproximadamente. Demanda media en Vinted.';
+  } else {
+    vClass='velocidad-lento'; vLabel='VENTA LENTA'; vEmoji='⚠️';
+    vDesc='Puede tardar mas de '+(dias||30)+' dias en venderse. Talla poco demandada o marca con poca salida.';
+  }
+  document.getElementById('velocidad-venta').innerHTML=
+    '<div class="velocidad '+vClass+'">'+
+    '<div class="velocidad-titulo">'+vEmoji+' '+vLabel+'</div>'+
+    '<div class="velocidad-barra"><div class="velocidad-fill" style="width:'+score+'%"></div></div>'+
+    '<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:6px;"><span>Lento</span><span>Puntuacion: '+score+'/100</span><span>Rapido</span></div>'+
+    '<div class="velocidad-desc">'+vDesc+'</div>'+
+    '</div>';
+
+  var roi=n.m>0?Math.round((n.b/n.m)*100):0;
+  document.getElementById('beneficio-prenda').innerHTML=
+    '<div class="beneficio-box">'+
+    '<div class="beneficio-titulo">DESGLOSE DE RENTABILIDAD</div>'+
+    '<div class="beneficio-grid">'+
+    '<div class="beneficio-item"><div class="beneficio-label">Ingreso venta</div><div class="beneficio-val verde">'+f(n.v)+'</div></div>'+
+    '<div class="beneficio-item"><div class="beneficio-label">Beneficio neto</div><div class="beneficio-val verde">'+f(n.b)+'</div></div>'+
+    '<div class="beneficio-item"><div class="beneficio-label">Margen s/venta</div><div class="beneficio-val verde">'+p(n.p)+'</div></div>'+
+    '<div class="beneficio-item"><div class="beneficio-label">Pagas al cliente</div><div class="beneficio-val">'+f(n.o)+'</div></div>'+
+    '<div class="beneficio-item"><div class="beneficio-label">Comision Vinted</div><div class="beneficio-val">'+f(n.c)+'</div></div>'+
+    '<div class="beneficio-item"><div class="beneficio-label">ROI sobre compra</div><div class="beneficio-val verde">'+roi+'%</div></div>'+
+    '</div>'+
+    '</div>';
+
   var tallaAjuste=n.tallaF>=1.0?'+'+Math.round((n.tallaF-1)*100)+'%':Math.round((n.tallaF-1)*100)+'%';
   document.getElementById('breakdown').innerHTML=[
     ['Precio mercado Vinted',f(n.m)],
     ['Precio venta Vinted -10%',f(n.v)],
-    ['Factor talla ('+tallaLabel+') - '+tallaTexto,tallaAjuste],
+    ['Factor talla ('+tallaLabel+')',tallaAjuste],
     ['Oferta cliente = (venta×35% - '+COSTE_OP+'€)×estado×talla',f(n.o)],
     ['Comision Vinted 5%','- '+f(n.c)],
     ['Coste logistico','- '+f(log)],
     ['Beneficio neto',f(n.b)+' ('+p(n.p)+')']
   ].map(function(x){ return '<div class="row-data"><span class="n">'+x[0]+'</span><span class="v">'+x[1]+'</span></div>'; }).join('');
-  var score=calcPotencial(r,n);
-  var pClass=score>=70?'potencial-alto':score>=40?'potencial-medio':'potencial-bajo';
-  var pLabel=score>=70?'Potencial de venta ALTO':score>=40?'Potencial de venta MEDIO':'Potencial de venta BAJO';
-  var pEmoji=score>=70?'🚀':score>=40?'📦':'⚠️';
-  var pDesc=score>=70?'Se vendera rapido en Vinted.':score>=40?'Venta posible pero puede tardar.':'Dificil de vender.';
-  document.getElementById('potencial-venta').innerHTML=
-    '<div class="potencial '+pClass+'">'+
-    '<div class="potencial-titulo">'+pEmoji+' '+pLabel+'</div>'+
-    '<div class="potencial-barra"><div class="potencial-fill" style="width:'+score+'%"></div></div>'+
-    '<div class="potencial-desc">'+pDesc+' ('+score+'/100)</div>'+
-    '</div>';
 }
 
 function save(){
@@ -560,10 +604,13 @@ function renderLote(){
     '<div style="background:#1a1a1a;border-radius:8px;padding:8px 12px;"><div style="font-size:10px;color:#666;">Beneficio esperado</div><div style="font-size:18px;font-weight:600;color:#CCFF00;">'+f(tb)+'</div></div>';
   document.getElementById('lote-lista').innerHTML=lote.map(function(h,i){
     var col=h.n.p>=65?'#CCFF00':h.n.p>=50?'#EF9F27':'#F09595';
+    var score=calcVelocidad(h.r,h.n);
+    var ve=score>=70?'🚀':score>=40?'📦':'⚠️';
     return '<div class="lote-item">'+
       '<span style="color:#F0EDE6;flex:1;">'+(i+1)+'. '+(h.r.descripcion||h.r.categoria||'Prenda')+'</span>'+
-      '<span style="color:#888;margin:0 6px;">'+(h.r.marca||'-')+'</span>'+
-      '<span style="color:#aaa;margin:0 6px;">'+(h.r.talla||'-')+'</span>'+
+      '<span style="color:#888;margin:0 4px;">'+(h.r.marca||'-')+'</span>'+
+      '<span style="color:#aaa;margin:0 4px;">'+(h.r.talla||'-')+'</span>'+
+      '<span style="margin:0 4px;">'+ve+'</span>'+
       '<span style="color:'+col+';font-weight:600;">'+f(h.n.o)+'</span>'+
       '<button class="lote-del" data-idx="'+i+'" title="Eliminar">✕</button>'+
     '</div>';
@@ -583,16 +630,17 @@ function renderLote(){
 function cerrarLote(){
   if(!lote.length){ alert('El lote esta vacio.'); return; }
   if(!confirm('Cerrar el lote y exportar a Excel?')) return;
-  var hd=[['Num','Descripcion','Marca','Talla','Estado','Precio mercado','Oferta cliente','Precio venta','Beneficio','Margen %','Potencial']];
+  var hd=[['Num','Descripcion','Marca','Talla','Estado','Precio mercado','Oferta cliente','Precio venta','Beneficio','Margen %','ROI %','Velocidad venta']];
   var to=0,tv=0,tb=0;
   lote.forEach(function(h,i){
     to+=h.n.o; tv+=h.n.v; tb+=h.n.b;
-    var score=calcPotencial(h.r,h.n);
-    hd.push([i+1,h.r.descripcion||h.r.categoria||'Prenda',h.r.marca||'-',h.r.talla||'-',h.r.estado||'-',+h.n.m.toFixed(2),+h.n.o.toFixed(2),+h.n.v.toFixed(2),+h.n.b.toFixed(2),+h.n.p.toFixed(1),score>=70?'Alto':score>=40?'Medio':'Bajo']);
+    var score=calcVelocidad(h.r,h.n);
+    var roi=h.n.m>0?Math.round((h.n.b/h.n.m)*100):0;
+    hd.push([i+1,h.r.descripcion||h.r.categoria||'Prenda',h.r.marca||'-',h.r.talla||'-',h.r.estado||'-',+h.n.m.toFixed(2),+h.n.o.toFixed(2),+h.n.v.toFixed(2),+h.n.b.toFixed(2),+h.n.p.toFixed(1),roi,score>=70?'Rapido':score>=40?'Normal':'Lento']);
   });
-  hd.push(['','','','','TOTALES','',+to.toFixed(2),+tv.toFixed(2),+tb.toFixed(2),'','']);
+  hd.push(['','','','','TOTALES','',+to.toFixed(2),+tv.toFixed(2),+tb.toFixed(2),'','','']);
   var wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(hd);
-  ws['!cols']=[{wch:5},{wch:28},{wch:14},{wch:8},{wch:18},{wch:14},{wch:14},{wch:14},{wch:12},{wch:10},{wch:8}];
+  ws['!cols']=[{wch:5},{wch:28},{wch:14},{wch:8},{wch:18},{wch:14},{wch:14},{wch:14},{wch:12},{wch:10},{wch:8},{wch:10}];
   XLSX.utils.book_append_sheet(wb,ws,'Lote');
   XLSX.writeFile(wb,'Back2Street_Lote_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.xlsx');
   lote=[]; renderLote();
@@ -614,8 +662,9 @@ function renderHist(){
     '<div class="summary-card"><div class="sc-label">Beneficio esperado</div><div class="sc-val">'+f(tb)+'</div></div>';
   document.getElementById('hist-list').innerHTML=hist.map(function(h,i){
     var pc=h.n.p>=65?'p-green':h.n.p>=50?'p-amber':'p-red';
-    var score=calcPotencial(h.r,h.n);
-    var pe=score>=70?'🚀':score>=40?'📦':'⚠️';
+    var score=calcVelocidad(h.r,h.n);
+    var ve=score>=70?'🚀':score>=40?'📦':'⚠️';
+    var roi=h.n.m>0?Math.round((h.n.b/h.n.m)*100):0;
     return '<div class="hist-item" data-idx="'+i+'">'+
       (h.thumb?'<img class="hist-thumb" src="'+h.thumb+'">':'<div class="hist-thumb">👕</div>')+
       '<div class="hist-info" data-idx="'+i+'">'+
@@ -625,16 +674,18 @@ function renderHist(){
           '<span class="pill '+pc+'">'+p(h.n.p)+'</span>'+
           (h.r.marca?' <span class="tag">'+h.r.marca+'</span>':'')+
           (h.r.talla?' <span class="tag">'+h.r.talla+'</span>':'')+
-          '<span class="pill p-green" style="margin-left:2px;">Original</span> '+pe+
+          ' '+ve+
+          ' <span style="font-size:10px;color:var(--muted);">ROI '+roi+'%</span>'+
         '</div>'+
       '</div>'+
       '<div style="text-align:right;flex-shrink:0;">'+
         '<div style="font-size:14px;font-weight:600;">'+f(h.n.o)+'</div>'+
         '<div style="font-size:10px;color:var(--muted);">al cliente</div>'+
-        '<div style="display:flex;gap:4px;margin-top:5px;">'+
+        '<div style="font-size:11px;color:var(--green);font-weight:600;">+'+f(h.n.b)+' beneficio</div>'+
+        '<div style="display:flex;gap:4px;margin-top:4px;">'+
           '<button class="btn-hist-pdf" data-idx="'+i+'" style="font-size:10px;padding:3px 8px;">PDF</button>'+
           '<button class="btn-hist-email" data-idx="'+i+'" style="font-size:10px;padding:3px 8px;">Email</button>'+
-          '<button class="btn-hist-del" data-idx="'+i+'" style="font-size:10px;padding:3px 8px;color:var(--red);border-color:var(--red-bg);">✕</button>'+
+          '<button class="btn-hist-del" data-idx="'+i+'" style="font-size:10px;padding:3px 8px;color:var(--red);">✕</button>'+
         '</div>'+
       '</div>'+
     '</div>';
@@ -677,45 +728,47 @@ function genPDF(h){
   var W=210,m=20,y=42;
   doc.setFillColor(12,12,12); doc.rect(0,0,W,30,'F');
   doc.setTextColor(240,237,230); doc.setFontSize(18); doc.setFont('helvetica','bold'); doc.text('BACK2STREET',m,18);
-  doc.setFontSize(7); doc.setFont('helvetica','normal'); doc.setTextColor(68,68,68); doc.text('TASADOR IA - SOLO MARCAS ORIGINALES',m,24);
-  doc.setTextColor(204,255,0); doc.text('Objetivo: 65% margen',W-m,18,{align:'right'});
-  doc.setFillColor(234,243,222); doc.rect(m,26,70,8,'F');
-  doc.setTextColor(39,80,10); doc.setFontSize(7); doc.setFont('helvetica','bold'); doc.text('PRENDA ORIGINAL VERIFICADA',m+2,31);
+  doc.setFontSize(7); doc.setFont('helvetica','normal'); doc.setTextColor(68,68,68); doc.text('TASADOR EMPRESA - USO INTERNO',m,24);
+  doc.setTextColor(204,255,0); doc.text('Confidencial',W-m,18,{align:'right'});
   if(h.imgs&&h.imgs.length>0){
     var fx=m,maxF=Math.min(h.imgs.length,4);
     for(var i=0;i<maxF;i++){ try{ doc.addImage(h.imgs[i],'JPEG',fx,y,38,38); fx+=40; }catch(e){} }
     y+=44;
   }
-  doc.setTextColor(30,30,30); doc.setFontSize(10); doc.setFont('helvetica','bold'); doc.text('DATOS DE LA TASACION',m,y);
+  doc.setTextColor(30,30,30); doc.setFontSize(10); doc.setFont('helvetica','bold'); doc.text('DATOS DE LA PRENDA',m,y);
   doc.setDrawColor(204,255,0); doc.setLineWidth(0.5); doc.line(m,y+2,W-m,y+2); y+=10;
-  var score=calcPotencial(h.r,h.n);
-  [['Fecha',h.fecha+' '+h.hora],['Referencia',h.ref||'-'],['Descripcion',h.r.descripcion||'-'],['Marca',(h.r.marca||'-')+' Tier '+(h.r.tier_marca||'-')],['Estado',h.r.estado||'-'],['Talla',h.r.talla||'No detectada'],['Potencial de venta',(score>=70?'ALTO':score>=40?'MEDIO':'BAJO')+' ('+score+'/100)'],['Confianza IA',h.r.confianza||'-'],['Notas',h.notas||'-']].forEach(function(x){
+  var score=calcVelocidad(h.r,h.n);
+  var vLabel=score>=70?'RAPIDA':score>=40?'NORMAL':'LENTA';
+  var roi=h.n.m>0?Math.round((h.n.b/h.n.m)*100):0;
+  [['Fecha',h.fecha+' '+h.hora],['Referencia',h.ref||'-'],['Descripcion',h.r.descripcion||'-'],['Marca',(h.r.marca||'-')+' Tier '+(h.r.tier_marca||'-')],['Estado',h.r.estado||'-'],['Talla',h.r.talla||'No detectada'],['Velocidad de venta',vLabel+' ('+score+'/100)'],['Confianza IA',h.r.confianza||'-'],['Notas',h.notas||'-']].forEach(function(x){
     doc.setFontSize(9); doc.setFont('helvetica','bold'); doc.setTextColor(80,80,80); doc.text(x[0]+':',m,y);
     doc.setFont('helvetica','normal'); doc.setTextColor(30,30,30);
     var val=String(x[1]); if(val.length>60) val=val.substring(0,60)+'...';
     doc.text(val,m+42,y); y+=7;
   });
-  y+=4; doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.text('DESGLOSE ECONOMICO',m,y);
+  y+=4; doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.text('ANALISIS ECONOMICO',m,y);
   doc.setDrawColor(200,200,200); doc.line(m,y+2,W-m,y+2); y+=10;
-  var tallaLabel=h.r.talla||'No detectada';
   var tallaF=h.n.tallaF||1;
   var tallaAjuste=tallaF>=1.0?'+'+Math.round((tallaF-1)*100)+'%':Math.round((tallaF-1)*100)+'%';
-  [['Precio de mercado',f(h.n.m)],['Precio venta Vinted -10%',f(h.n.v)],['Factor talla ('+tallaLabel+')',tallaAjuste],['Oferta al cliente',f(h.n.o)],['Comision Vinted','- '+f(h.n.c)],['Coste logistico','- '+f(h.n.log||3)]].forEach(function(x){
+  [['Precio de mercado Vinted',f(h.n.m)],['Precio venta Vinted -10%',f(h.n.v)],['Factor talla ('+( h.r.talla||'-')+')',tallaAjuste],['Oferta al cliente',f(h.n.o)],['Comision Vinted 5%','- '+f(h.n.c)],['Coste logistico','- '+f(h.n.log||3)]].forEach(function(x){
     doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(80,80,80); doc.text(x[0],m,y);
     doc.setTextColor(30,30,30); doc.text(x[1],W-m,y,{align:'right'}); y+=7;
   });
   doc.setLineWidth(0.3); doc.line(m,y,W-m,y); y+=6;
-  doc.setFont('helvetica','bold'); doc.setFontSize(11); doc.text('Beneficio neto',m,y);
+  doc.setFont('helvetica','bold'); doc.setFontSize(10);
+  doc.setTextColor(30,30,30); doc.text('Beneficio neto:',m,y);
   var col=h.n.p>=65?[39,80,10]:h.n.p>=50?[99,56,6]:[121,31,31];
-  doc.setTextColor(col[0],col[1],col[2]); doc.text(f(h.n.b)+' ('+p(h.n.p)+')',W-m,y,{align:'right'});
+  doc.setTextColor(col[0],col[1],col[2]); doc.text(f(h.n.b)+' ('+p(h.n.p)+')',W-m,y,{align:'right'}); y+=7;
+  doc.setTextColor(30,30,30); doc.text('ROI sobre compra:',m,y);
+  doc.setTextColor(col[0],col[1],col[2]); doc.text(roi+'%',W-m,y,{align:'right'});
   y+=10;
   var bg=h.n.p>=65?[234,243,222]:h.n.p>=50?[250,238,218]:[252,235,235];
   var vt=h.n.p>=65?'OPERACION RENTABLE':h.n.p>=50?'REVISAR OFERTA':'NO RENTABLE';
   doc.setFillColor(bg[0],bg[1],bg[2]); doc.rect(m,y-5,W-2*m,11,'F');
   doc.setFontSize(9); doc.setTextColor(col[0],col[1],col[2]); doc.text(vt,W/2,y+1,{align:'center'});
   y+=18; doc.setFontSize(7); doc.setTextColor(160,160,160);
-  doc.text('Back2Street - Circular - Pre-Loved - Unisex',W/2,y,{align:'center'});
-  doc.save('Back2Street_'+(h.ref||'prenda').replace(/[^a-z0-9]/gi,'_')+'_'+(h.fecha||'').replace(/\//g,'-')+'.pdf');
+  doc.text('Back2Street - Documento interno - Confidencial',W/2,y,{align:'center'});
+  doc.save('Back2Street_Empresa_'+(h.ref||'prenda').replace(/[^a-z0-9]/gi,'_')+'_'+(h.fecha||'').replace(/\//g,'-')+'.pdf');
 }
 
 function genPDFLote(){
@@ -725,78 +778,83 @@ function genPDFLote(){
   var W=210,m=20,y=42;
   doc.setFillColor(12,12,12); doc.rect(0,0,W,30,'F');
   doc.setTextColor(240,237,230); doc.setFontSize(18); doc.setFont('helvetica','bold'); doc.text('BACK2STREET',m,18);
-  doc.setFontSize(7); doc.setFont('helvetica','normal'); doc.setTextColor(68,68,68); doc.text('INFORME DE LOTE - TASADOR IA',m,24);
+  doc.setFontSize(7); doc.setFont('helvetica','normal'); doc.setTextColor(68,68,68); doc.text('INFORME DE LOTE - USO INTERNO',m,24);
   doc.setTextColor(204,255,0); doc.text(new Date().toLocaleDateString('es-ES'),W-m,18,{align:'right'});
   doc.setTextColor(30,30,30); doc.setFontSize(12); doc.setFont('helvetica','bold'); doc.text('RESUMEN DEL LOTE',m,y);
   doc.setDrawColor(204,255,0); doc.setLineWidth(0.5); doc.line(m,y+2,W-m,y+2); y+=12;
   var tp=0,tv=0,tb=0;
   hist.forEach(function(h){ tp+=h.n.o; tv+=h.n.v; tb+=h.n.b; });
+  var roiLote=tp>0?Math.round((tb/tp)*100):0;
   doc.setFontSize(9);
-  [['Total prendas:',String(hist.length)],['Total a pagar al cliente:',f(tp)],['Ingresos esperados:',f(tv)],['Beneficio esperado:',f(tb)]].forEach(function(x){
+  [['Total prendas:',String(hist.length)],['Total pagado a clientes:',f(tp)],['Ingresos esperados Vinted:',f(tv)],['Beneficio esperado:',f(tb)],['ROI medio del lote:',roiLote+'%']].forEach(function(x){
     doc.setFont('helvetica','normal'); doc.setTextColor(80,80,80); doc.text(x[0],m,y);
     doc.setFont('helvetica','bold');
-    if(x[0].indexOf('Beneficio')>=0){ doc.setTextColor(39,80,10); }else{ doc.setTextColor(30,30,30); }
+    if(x[0].indexOf('Beneficio')>=0||x[0].indexOf('ROI')>=0){ doc.setTextColor(39,80,10); }else{ doc.setTextColor(30,30,30); }
     doc.text(x[1],m+65,y); y+=7;
   });
   y+=8;
-  doc.setTextColor(30,30,30); doc.setFontSize(11); doc.setFont('helvetica','bold'); doc.text('DETALLE DE PRENDAS',m,y);
+  doc.setTextColor(30,30,30); doc.setFontSize(10); doc.setFont('helvetica','bold'); doc.text('DETALLE DE PRENDAS',m,y);
   doc.setDrawColor(200,200,200); doc.line(m,y+2,W-m,y+2); y+=10;
-  doc.setFontSize(7.5); doc.setFont('helvetica','bold'); doc.setTextColor(80,80,80);
-  doc.text('Num',m,y); doc.text('Prenda',m+10,y); doc.text('Marca',m+70,y); doc.text('Talla',m+100,y); doc.text('Estado',m+115,y); doc.text('Oferta',m+150,y); doc.text('Margen',m+168,y); doc.text('Potencial',W-m,y,{align:'right'});
+  doc.setFontSize(7); doc.setFont('helvetica','bold'); doc.setTextColor(80,80,80);
+  doc.text('N',m,y); doc.text('Prenda',m+8,y); doc.text('Marca',m+65,y); doc.text('Talla',m+95,y); doc.text('Oferta',m+110,y); doc.text('Venta',m+128,y); doc.text('Benef.',m+146,y); doc.text('Margen',m+162,y); doc.text('Vel.',W-m,y,{align:'right'});
   y+=5; doc.setLineWidth(0.3); doc.line(m,y,W-m,y); y+=5;
   hist.forEach(function(h,i){
     if(y>270){ doc.addPage(); y=20; }
     var col=h.n.p>=65?[39,80,10]:h.n.p>=50?[99,56,6]:[121,31,31];
-    var score=calcPotencial(h.r,h.n);
-    var pLabel=score>=70?'Alto':score>=40?'Medio':'Bajo';
-    doc.setFontSize(7.5); doc.setFont('helvetica','normal'); doc.setTextColor(30,30,30);
+    var score=calcVelocidad(h.r,h.n);
+    var vLabel=score>=70?'Rap':score>=40?'Nor':'Len';
+    doc.setFontSize(7); doc.setFont('helvetica','normal'); doc.setTextColor(30,30,30);
     doc.text(String(i+1),m,y);
-    var nombre=(h.r.descripcion||h.r.categoria||'Prenda'); if(nombre.length>28) nombre=nombre.substring(0,28)+'...';
-    doc.text(nombre,m+10,y);
-    doc.text(h.r.marca||'-',m+70,y);
-    doc.text(h.r.talla||'-',m+100,y);
-    var estado=(h.r.estado||'-'); if(estado.length>14) estado=estado.substring(0,14)+'...';
-    doc.text(estado,m+115,y);
-    doc.setFont('helvetica','bold'); doc.text(f(h.n.o),m+150,y);
-    doc.setTextColor(col[0],col[1],col[2]); doc.text(p(h.n.p),m+168,y);
-    var pCol=score>=70?[39,80,10]:score>=40?[99,56,6]:[121,31,31];
-    doc.setTextColor(pCol[0],pCol[1],pCol[2]); doc.text(pLabel,W-m,y,{align:'right'});
-    y+=7; doc.setDrawColor(240,240,240); doc.setLineWidth(0.2); doc.line(m,y-2,W-m,y-2);
+    var nombre=(h.r.descripcion||h.r.categoria||'Prenda'); if(nombre.length>24) nombre=nombre.substring(0,24)+'...';
+    doc.text(nombre,m+8,y);
+    doc.text(h.r.marca||'-',m+65,y);
+    doc.text(h.r.talla||'-',m+95,y);
+    doc.text(f(h.n.o),m+110,y);
+    doc.text(f(h.n.v),m+128,y);
+    doc.setTextColor(col[0],col[1],col[2]);
+    doc.text(f(h.n.b),m+146,y);
+    doc.text(p(h.n.p),m+162,y);
+    doc.text(vLabel,W-m,y,{align:'right'});
+    doc.setTextColor(30,30,30);
+    y+=6; doc.setDrawColor(240,240,240); doc.setLineWidth(0.2); doc.line(m,y-1,W-m,y-1);
   });
   y+=6;
   doc.setLineWidth(0.8); doc.setDrawColor(204,255,0); doc.line(m,y,W-m,y); y+=8;
-  doc.setFontSize(11); doc.setFont('helvetica','bold');
-  doc.setTextColor(30,30,30); doc.text('TOTAL A PAGAR AL CLIENTE',m,y);
-  doc.setTextColor(39,80,10); doc.text(f(tp),W-m,y,{align:'right'}); y+=9;
-  doc.setTextColor(30,30,30); doc.text('BENEFICIO TOTAL ESPERADO',m,y);
-  doc.setTextColor(39,80,10); doc.text(f(tb),W-m,y,{align:'right'});
+  doc.setFontSize(10); doc.setFont('helvetica','bold');
+  doc.setTextColor(30,30,30); doc.text('TOTAL PAGADO A CLIENTES',m,y); doc.setTextColor(121,31,31); doc.text(f(tp),W-m,y,{align:'right'}); y+=8;
+  doc.setTextColor(30,30,30); doc.text('INGRESOS ESPERADOS VINTED',m,y); doc.setTextColor(30,30,30); doc.text(f(tv),W-m,y,{align:'right'}); y+=8;
+  doc.setTextColor(30,30,30); doc.text('BENEFICIO TOTAL ESPERADO',m,y); doc.setTextColor(39,80,10); doc.text(f(tb),W-m,y,{align:'right'}); y+=8;
+  doc.setTextColor(30,30,30); doc.text('ROI MEDIO DEL LOTE',m,y); doc.setTextColor(39,80,10); doc.text(roiLote+'%',W-m,y,{align:'right'});
   y+=16; doc.setFontSize(7); doc.setTextColor(160,160,160);
-  doc.text('Back2Street - Circular - Pre-Loved - Unisex - Solo marcas originales',W/2,y,{align:'center'});
-  doc.save('Back2Street_Lote_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.pdf');
+  doc.text('Back2Street - Documento interno - Confidencial',W/2,y,{align:'center'});
+  doc.save('Back2Street_Lote_Empresa_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.pdf');
 }
 
 function toExcel(){
   if(!hist.length){ alert('Lote vacio.'); return; }
-  var hd=[['Fecha','Hora','Referencia','Descripcion','Categoria','Marca','Tier','Talla','Estado','Confianza','Precio mercado','Oferta cliente','Precio venta','Beneficio neto','Margen %','Potencial','Veredicto']];
+  var hd=[['Fecha','Hora','Referencia','Descripcion','Categoria','Marca','Tier','Talla','Estado','Confianza','Precio mercado','Oferta cliente','Precio venta','Beneficio neto','Margen %','ROI %','Velocidad venta','Veredicto']];
   hist.forEach(function(h){
-    var score=calcPotencial(h.r,h.n);
-    hd.push([h.fecha,h.hora,h.ref||'',h.r.descripcion||'',h.r.categoria||'',h.r.marca||'',h.r.tier_marca||'',h.r.talla||'-',h.r.estado||'',h.r.confianza||'',+h.n.m.toFixed(2),+h.n.o.toFixed(2),+h.n.v.toFixed(2),+h.n.b.toFixed(2),+h.n.p.toFixed(1),score>=70?'Alto':score>=40?'Medio':'Bajo',h.n.p>=65?'Rentable':h.n.p>=50?'Revisar':'No rentable']);
+    var score=calcVelocidad(h.r,h.n);
+    var roi=h.n.m>0?Math.round((h.n.b/h.n.m)*100):0;
+    hd.push([h.fecha,h.hora,h.ref||'',h.r.descripcion||'',h.r.categoria||'',h.r.marca||'',h.r.tier_marca||'',h.r.talla||'-',h.r.estado||'',h.r.confianza||'',+h.n.m.toFixed(2),+h.n.o.toFixed(2),+h.n.v.toFixed(2),+h.n.b.toFixed(2),+h.n.p.toFixed(1),roi,score>=70?'Rapido':score>=40?'Normal':'Lento',h.n.p>=65?'Rentable':h.n.p>=50?'Revisar':'No rentable']);
   });
   var wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(hd);
   ws['!cols']=hd[0].map(function(_,i){ return{wch:i<2?10:i<4?24:12}; });
   XLSX.utils.book_append_sheet(wb,ws,'Lote');
-  XLSX.writeFile(wb,'Back2Street_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.xlsx');
+  XLSX.writeFile(wb,'Back2Street_Empresa_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.xlsx');
 }
 
 function buildBody(h){
-  var score=calcPotencial(h.r,h.n);
-  return 'Informe Back2Street\n\nFecha: '+h.fecha+' '+h.hora+'\nReferencia: '+(h.ref||'-')+'\nDescripcion: '+(h.r.descripcion||'-')+'\nMarca: '+(h.r.marca||'-')+'\nEstado: '+(h.r.estado||'-')+'\nTalla: '+(h.r.talla||'-')+'\nPotencial: '+(score>=70?'ALTO':score>=40?'MEDIO':'BAJO')+'\n\nOferta cliente: '+f(h.n.o)+'\nPrecio venta Vinted: '+f(h.n.v)+'\nBeneficio neto: '+f(h.n.b)+' ('+p(h.n.p)+')\n\n- Back2Street - Circular - Pre-Loved - Unisex -';
+  var score=calcVelocidad(h.r,h.n);
+  var vLabel=score>=70?'RAPIDA':score>=40?'NORMAL':'LENTA';
+  var roi=h.n.m>0?Math.round((h.n.b/h.n.m)*100):0;
+  return 'Informe Back2Street - USO INTERNO\n\nFecha: '+h.fecha+' '+h.hora+'\nReferencia: '+(h.ref||'-')+'\nDescripcion: '+(h.r.descripcion||'-')+'\nMarca: '+(h.r.marca||'-')+' Tier '+(h.r.tier_marca||'-')+'\nEstado: '+(h.r.estado||'-')+'\nTalla: '+(h.r.talla||'-')+'\nVelocidad de venta: '+vLabel+'\n\nOferta cliente: '+f(h.n.o)+'\nPrecio venta Vinted: '+f(h.n.v)+'\nBeneficio neto: '+f(h.n.b)+' ('+p(h.n.p)+')\nROI sobre compra: '+roi+'%\n\n- Back2Street - Documento interno -';
 }
 
 function openEmail(){
   document.getElementById('modal-email').classList.add('show');
   document.getElementById('me-d').value='';
-  if(ultima) document.getElementById('me-a').value='Back2Street '+(ultima.r.descripcion||ultima.r.categoria||'prenda');
+  if(ultima) document.getElementById('me-a').value='Back2Street Empresa '+(ultima.r.descripcion||ultima.r.categoria||'prenda');
 }
 
 function sendEmail(){
@@ -815,12 +873,13 @@ function sendSummary(){
   var msg=document.getElementById('em').value;
   var tp=0,tv=0,tb=0;
   hist.forEach(function(h){ tp+=h.n.o; tv+=h.n.v; tb+=h.n.b; });
-  var body='Back2Street - Resumen del lote\n'+new Date().toLocaleDateString('es-ES')+'\n\nPrendas: '+hist.length+'\nTotal a pagar al cliente: '+f(tp)+'\nIngresos esperados: '+f(tv)+'\nBeneficio esperado: '+f(tb)+'\n\nDETALLE\n';
+  var body='Back2Street - Resumen del lote\n'+new Date().toLocaleDateString('es-ES')+'\n\nPrendas: '+hist.length+'\nPagado a clientes: '+f(tp)+'\nIngresos esperados: '+f(tv)+'\nBeneficio esperado: '+f(tb)+'\n\nDETALLE\n';
   hist.forEach(function(h,i){
-    body+='\n'+(i+1)+'. '+(h.r.descripcion||h.r.categoria)+' - '+(h.r.marca||'-')+' Talla: '+(h.r.talla||'-')+'\n   Oferta: '+f(h.n.o)+' Venta: '+f(h.n.v)+' Beneficio: '+f(h.n.b)+' ('+p(h.n.p)+')\n';
+    var score=calcVelocidad(h.r,h.n);
+    var roi=h.n.m>0?Math.round((h.n.b/h.n.m)*100):0;
+    body+='\n'+(i+1)+'. '+(h.r.descripcion||h.r.categoria)+' - '+(h.r.marca||'-')+'\n   Oferta: '+f(h.n.o)+' Beneficio: '+f(h.n.b)+' ('+p(h.n.p)+') ROI: '+roi+'% Vel: '+(score>=70?'Rapido':score>=40?'Normal':'Lento')+'\n';
   });
-  body+='\nTOTAL A PAGAR AL CLIENTE: '+f(tp)+'\nBENEFICIO TOTAL: '+f(tb);
-  body+='\n\n'+(msg?msg+'\n':'')+'\n- Back2Street - Solo marcas originales -';
+  body+='\n'+(msg?msg+'\n':'')+'\n- Back2Street - Uso interno -';
   window.location.href='mailto:'+d+'?subject='+a+'&body='+encodeURIComponent(body);
   document.getElementById('ef').textContent='Abriendo cliente de email...';
 }
