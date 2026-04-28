@@ -83,11 +83,18 @@
   .rt-ok, .rb-ok { color: var(--green); }
   .rt-warn, .rb-warn { color: var(--amber); }
   .rt-bad, .rb-bad { color: var(--red); }
+  .info-empresa { background: var(--verde-oscuro); border-radius: var(--radius); padding: 1rem 1.5rem; margin-top: 10px; }
+  .info-empresa-titulo { font-size: 10px; font-weight: 600; color: var(--verde-medio); letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase; }
+  .info-empresa-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+  .info-empresa-item { background: rgba(255,255,255,0.08); border-radius: var(--radius-sm); padding: 10px 12px; text-align: center; }
+  .info-empresa-label { font-size: 9px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .info-empresa-val { font-size: 18px; font-weight: 700; color: #fff; }
+  .info-empresa-val.verde { color: var(--verde-medio); }
   .velocidad { border-radius: var(--radius-sm); padding: 12px 16px; margin-top: 10px; }
   .velocidad-rapido { background: var(--green-bg); }
   .velocidad-normal { background: var(--amber-bg); }
   .velocidad-lento { background: var(--red-bg); }
-  .velocidad-titulo { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .velocidad-titulo { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
   .velocidad-rapido .velocidad-titulo { color: var(--green); }
   .velocidad-normal .velocidad-titulo { color: var(--amber); }
   .velocidad-lento .velocidad-titulo { color: var(--red); }
@@ -100,22 +107,14 @@
   .velocidad-rapido .velocidad-desc { color: var(--green); }
   .velocidad-normal .velocidad-desc { color: var(--amber); }
   .velocidad-lento .velocidad-desc { color: var(--red); }
-  .beneficio-box { background: var(--verde-oscuro); border-radius: var(--radius); padding: 1rem 1.5rem; margin-top: 10px; }
-  .beneficio-titulo { font-size: 10px; font-weight: 600; color: var(--verde-medio); letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase; }
-  .beneficio-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
-  .beneficio-item { background: rgba(255,255,255,0.08); border-radius: var(--radius-sm); padding: 8px 10px; text-align: center; }
-  .beneficio-label { font-size: 9px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
-  .beneficio-val { font-size: 16px; font-weight: 700; color: #fff; }
-  .beneficio-val.verde { color: var(--verde-medio); }
   .row-data { display: flex; justify-content: space-between; font-size: 12px; padding: 5px 0; border-bottom: 1px solid #f0ede6; }
   .row-data:last-child { border-bottom: none; }
   .row-data .n { color: var(--muted); }
   .row-data .v { font-weight: 600; color: var(--text); }
   .pill { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
-  .p-green { background: var(--green-bg); color: var(--green); }
+  .p-verde { background: var(--verde-claro); color: var(--verde-oscuro); }
   .p-amber { background: var(--amber-bg); color: var(--amber); }
   .p-red { background: var(--red-bg); color: var(--red); }
-  .p-verde { background: var(--verde-claro); color: var(--verde-oscuro); }
   .tag { display: inline-block; font-size: 11px; padding: 2px 7px; border-radius: 4px; margin: 2px; background: #f5f5f2; color: var(--muted); border: 1px solid var(--border); }
   .hist-item { display: flex; align-items: center; gap: 10px; padding: 8px 6px; border-bottom: 1px solid #f0ede6; }
   .hist-item:last-child { border-bottom: none; }
@@ -143,7 +142,7 @@
   @media (max-width: 480px) {
     .grid2, .grid3 { grid-template-columns: 1fr; }
     .grid4 { grid-template-columns: 1fr 1fr; }
-    .beneficio-grid { grid-template-columns: 1fr 1fr; }
+    .info-empresa-grid { grid-template-columns: 1fr 1fr; }
     .tabs { flex-wrap: wrap; }
     .tab { flex: none; width: calc(50% - 2px); }
     .foto-guia { grid-template-columns: repeat(2,1fr); }
@@ -218,7 +217,7 @@
     </div>
 
     <button class="btn-primary" id="btn-tasar-ia" style="margin-bottom:1rem;">Sube fotos para activar</button>
-    <div id="loading" style="display:none;"><div class="loading"><div class="spinner"></div>Analizando prenda, marca, talla y velocidad de venta...</div></div>
+    <div id="loading" style="display:none;"><div class="loading"><div class="spinner"></div>Analizando prenda...</div></div>
 
     <div id="rechazo" style="display:none;">
       <div class="result-block">
@@ -233,23 +232,24 @@
         <div class="card-title"><span>Análisis IA</span><span class="pill p-verde">Original verificada</span></div>
         <div id="analisis"></div>
       </div>
+
       <div class="card">
-        <div class="card-title">Precios y oferta</div>
+        <div class="card-title">Oferta al cliente — igual que tasador cliente</div>
         <div class="grid4" id="metrics" style="margin-bottom:12px;"></div>
         <div id="verdict"></div>
+        <div id="info-empresa-box"></div>
       </div>
+
       <div class="card">
-        <div class="card-title">Velocidad de venta estimada en Vinted</div>
+        <div class="card-title">Estimación de venta en Vinted</div>
         <div id="velocidad-venta"></div>
       </div>
-      <div class="card">
-        <div class="card-title">Beneficio estimado de esta prenda</div>
-        <div id="beneficio-prenda"></div>
-      </div>
+
       <div class="card">
         <div class="card-title">Desglose económico</div>
         <div id="breakdown"></div>
       </div>
+
       <div class="grid3" style="margin-bottom:1rem;gap:8px;">
         <button class="btn-neon" id="btn-guardar">Añadir al lote</button>
         <button id="btn-pdf">Descargar PDF</button>
@@ -326,8 +326,8 @@ var COSTE_OP=3;
 var DM=['Nike','Adidas','Tommy Hilfiger','Ralph Lauren','Stone Island','Moncler','Canada Goose','The North Face','Carhartt','Supreme','Palace','Off-White','Balenciaga','Gucci','Prada','Zara','Mango','H&M','Massimo Dutti','Cos','Arket','Uniqlo','New Balance','Puma','Reebok','Converse','Vans','Jordan','Lacoste','Boss','Calvin Klein','Diesel','Versace','Burberry','Acne Studios'];
 var TALLA_F={'xs':0.85,'34':0.85,'36':0.85,'s':0.95,'38':0.95,'m':1.10,'40':1.10,'42':1.10,'l':1.05,'44':1.05,'xl':0.90,'46':0.90,'xxl':0.80,'48':0.80,'unica':1.0,'one size':1.0};
 
-try{hist=JSON.parse(localStorage.getItem('b2s_h')||'[]');}catch(e){hist=[];}
-try{var sm=JSON.parse(localStorage.getItem('b2s_m'));if(sm){marcas=new Set(sm);}else{DM.forEach(function(m){marcas.add(m);});}}catch(e){DM.forEach(function(m){marcas.add(m);});}
+try{hist=JSON.parse(localStorage.getItem('vnt_h')||'[]');}catch(e){hist=[];}
+try{var sm=JSON.parse(localStorage.getItem('vnt_m'));if(sm){marcas=new Set(sm);}else{DM.forEach(function(m){marcas.add(m);});}}catch(e){DM.forEach(function(m){marcas.add(m);});}
 
 document.addEventListener('DOMContentLoaded',function(){
   updateCount(); renderBrands();
@@ -381,7 +381,7 @@ function go(t){
 }
 
 function updateCount(){ document.getElementById('hcount').textContent=hist.length; }
-function saveMarcas(){ try{localStorage.setItem('b2s_m',JSON.stringify(Array.from(marcas)));}catch(e){} }
+function saveMarcas(){ try{localStorage.setItem('vnt_m',JSON.stringify(Array.from(marcas)));}catch(e){} }
 
 function renderBrands(){
   var all=Array.from(new Set(DM.concat(Array.from(marcas)))).sort();
@@ -423,6 +423,7 @@ function getTallaFactor(talla){
 function f(n){ return n.toFixed(2).replace('.',',')+' €'; }
 function p(n){ return Math.round(n)+'%'; }
 
+/* FORMULA IDENTICA AL TASADOR CLIENTE */
 function calcOferta(m,estadoF,tallaF){
   var v=m*0.90;
   var base=(v*0.35)-COSTE_OP;
@@ -440,10 +441,11 @@ function calc(r,log){
   var c=v*0.05;
   var o=calcOferta(m,estadoF,tallaF);
   var b=v-o-log-c;
-  return{m:m,o:o,v:v,c:c,b:b,p:(b/v)*100,tallaF:tallaF,estadoF:estadoF};
+  var roi=m>0?Math.round((b/m)*100):0;
+  return{m:m,o:o,v:v,c:c,b:b,p:(b/v)*100,tallaF:tallaF,roi:roi};
 }
 
-function calcVelocidad(r,n){
+function calcVelocidad(r){
   var score=0;
   var tF=getTallaFactor(r.talla);
   if(r.tier_marca==='S') score+=35;
@@ -473,7 +475,7 @@ function tasar(){
   var content=imgs.map(function(d){
     return{type:'image',source:{type:'base64',media_type:'image/jpeg',data:d.split(',')[1]}};
   });
-  content.push({type:'text',text:'Eres el tasador IA de vendenosturopa.es. Solo aceptamos ropa de marca original. Marcas aceptadas: '+ml+'.\nDevuelve SOLO JSON sin texto extra:\n{"categoria":"camiseta/sudadera/chaqueta/pantalon/vestido/zapatillas/bolso/basico","marca":"nombre o Sin marca","marca_en_lista":true,"tier_marca":"S/A/B/C/Sin marca","es_original":true,"motivo_rechazo":"","estado":"nuevo con etiqueta/como nuevo/muy buen estado/buen estado/estado aceptable","factor_estado":0.0,"talla":"talla visible o desconocida","demanda":"alta/media/baja","color":"color","descripcion":"descripcion breve","precio_mercado_estimado":'+(pm>0?pm:0)+',"confianza":"alta/media/baja","observaciones":"notas","dias_venta_estimados":7}\nFactores: nuevo=1.0,como nuevo=0.85,muy buen=0.70,buen=0.55,aceptable=0.40.'+(pm>0?' Precio: '+pm+' euros.':' Estima precio en Vinted.')+'\nPara dias_venta_estimados estima cuantos dias tardara en venderse (1-3 rapido, 4-14 normal, 15-60 lento).\nSi ves costuras irregulares, logos deformados o etiquetas mal impresas: es_original=false.'});
+  content.push({type:'text',text:'Eres el tasador IA de vendenosturopa.es. Solo aceptamos ropa de marca original. Marcas aceptadas: '+ml+'.\nDevuelve SOLO JSON sin texto extra:\n{"categoria":"camiseta/sudadera/chaqueta/pantalon/vestido/zapatillas/bolso/basico","marca":"nombre o Sin marca","marca_en_lista":true,"tier_marca":"S/A/B/C/Sin marca","es_original":true,"motivo_rechazo":"","estado":"nuevo con etiqueta/como nuevo/muy buen estado/buen estado/estado aceptable","factor_estado":0.0,"talla":"talla visible o desconocida","demanda":"alta/media/baja","color":"color","descripcion":"descripcion breve","precio_mercado_estimado":'+(pm>0?pm:0)+',"confianza":"alta/media/baja","observaciones":"notas","dias_venta_estimados":7}\nFactores: nuevo=1.0,como nuevo=0.85,muy buen=0.70,buen=0.55,aceptable=0.40.'+(pm>0?' Precio: '+pm+' euros.':' Estima precio medio de venta en Vinted para esta prenda segun marca estado y talla.')+'\nPara dias_venta_estimados estima cuantos dias tardara en venderse (1-3 rapido, 4-14 normal, 15-60 lento).\nSi ves costuras irregulares, logos deformados o etiquetas mal impresas: es_original=false.'});
   fetch('/api/tasar',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
@@ -499,7 +501,7 @@ function showErr(msg){
   document.getElementById('verdict').innerHTML='';
   document.getElementById('breakdown').innerHTML='';
   document.getElementById('velocidad-venta').innerHTML='';
-  document.getElementById('beneficio-prenda').innerHTML='';
+  document.getElementById('info-empresa-box').innerHTML='';
 }
 
 function process(r,log){
@@ -519,9 +521,11 @@ function renderRes(r,log){
   document.getElementById('resultado').style.display='block';
   var n=calc(r,log);
   ultima={r:r,n:n,log:log,imgs:imgs.slice(),ref:document.getElementById('ref').value,notas:document.getElementById('notas').value,thumb:imgs[0]||null,fecha:new Date().toLocaleDateString('es-ES'),hora:new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}),id:Date.now()};
+
   var cC=r.confianza==='alta'?'p-verde':r.confianza==='media'?'p-amber':'p-red';
   var tallaLabel=r.talla||'No detectada';
   var tallaColor=n.tallaF>=1.05?'var(--green)':n.tallaF>=0.95?'var(--amber)':'var(--red)';
+
   document.getElementById('analisis').innerHTML=
     '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">'+
     '<span class="tag">'+(r.categoria||'-')+'</span>'+
@@ -535,22 +539,44 @@ function renderRes(r,log){
     '</div>'+
     '<div style="font-size:13px;margin-bottom:4px;">'+(r.descripcion||'')+'</div>'+
     (r.observaciones?'<div style="font-size:11px;color:var(--muted);">'+r.observaciones+'</div>':'');
+
   document.getElementById('metrics').innerHTML=
-    '<div class="metric"><div class="metric-label">Precio mercado</div><div class="metric-val">'+f(n.m)+'</div><div class="metric-sub">ref Vinted</div></div>'+
+    '<div class="metric"><div class="metric-label">Precio medio Vinted</div><div class="metric-val">'+f(n.m)+'</div><div class="metric-sub">referencia mercado</div></div>'+
     '<div class="metric"><div class="metric-label">Precio venta</div><div class="metric-val">'+f(n.v)+'</div><div class="metric-sub">Vinted -10%</div></div>'+
-    '<div class="metric metric-highlight"><div class="metric-label">Oferta cliente</div><div class="metric-val">'+f(n.o)+'</div><div class="metric-sub">lo que pagas tú</div></div>'+
+    '<div class="metric metric-highlight"><div class="metric-label">Oferta al cliente</div><div class="metric-val">'+f(n.o)+'</div><div class="metric-sub">igual que tasador cliente</div></div>'+
     '<div class="metric"><div class="metric-label">Beneficio neto</div><div class="metric-val">'+f(n.b)+'</div><div class="metric-sub">'+p(n.p)+' margen</div></div>';
+
   var vc,vt,vm,vtxt,vmsg;
   if(n.p>=65){vc='result-ok';vt='rt rt-ok';vm='rb rb-ok';vtxt='Operación rentable';vmsg='Margen '+p(n.p)+'. Oferta al cliente: '+f(n.o)+'.';}
   else if(n.p>=50){vc='result-warn';vt='rt rt-warn';vm='rb rb-warn';vtxt='Por debajo del objetivo';vmsg='Margen '+p(n.p)+'. Considera ajustar la oferta.';}
   else{vc='result-bad';vt='rt rt-bad';vm='rb rb-bad';vtxt='No rentable — rechazar';vmsg='Margen '+p(n.p)+'. Precio demasiado bajo.';}
   document.getElementById('verdict').innerHTML='<div class="'+vc+'"><div class="'+vt+'">'+vtxt+'</div><div class="'+vm+'">'+vmsg+'</div></div>';
-  var score=calcVelocidad(r,n);
+
+  document.getElementById('info-empresa-box').innerHTML=
+    '<div class="info-empresa">'+
+    '<div class="info-empresa-titulo">Información exclusiva empresa</div>'+
+    '<div class="info-empresa-grid">'+
+    '<div class="info-empresa-item"><div class="info-empresa-label">Precio medio Vinted</div><div class="info-empresa-val verde">'+f(n.m)+'</div></div>'+
+    '<div class="info-empresa-item"><div class="info-empresa-label">Margen sobre venta</div><div class="info-empresa-val verde">'+p(n.p)+'</div></div>'+
+    '<div class="info-empresa-item"><div class="info-empresa-label">ROI sobre compra</div><div class="info-empresa-val verde">'+n.roi+'%</div></div>'+
+    '<div class="info-empresa-item"><div class="info-empresa-label">Ingreso esperado</div><div class="info-empresa-val">'+f(n.v)+'</div></div>'+
+    '<div class="info-empresa-item"><div class="info-empresa-label">Beneficio neto</div><div class="info-empresa-val verde">'+f(n.b)+'</div></div>'+
+    '<div class="info-empresa-item"><div class="info-empresa-label">Coste logístico</div><div class="info-empresa-val">'+f(log)+'</div></div>'+
+    '</div></div>';
+
+  var score=calcVelocidad(r);
   var dias=r.dias_venta_estimados||14;
   var vClass,vLabel,vEmoji,vDesc;
-  if(score>=70||dias<=3){ vClass='velocidad-rapido'; vLabel='VENTA RÁPIDA'; vEmoji='🚀'; vDesc='Se venderá en menos de 3 días. Marca muy solicitada, talla demandada y buen estado.'; }
-  else if(score>=40||dias<=14){ vClass='velocidad-normal'; vLabel='VENTA NORMAL'; vEmoji='📦'; vDesc='Se venderá en unos '+(dias<=14?dias:14)+' días aproximadamente.'; }
-  else{ vClass='velocidad-lento'; vLabel='VENTA LENTA'; vEmoji='⚠️'; vDesc='Puede tardar más de '+(dias||30)+' días en venderse.'; }
+  if(score>=70||dias<=3){
+    vClass='velocidad-rapido'; vLabel='VENTA RÁPIDA'; vEmoji='🚀';
+    vDesc='Estimación: menos de 3 días. Marca muy solicitada, talla demandada y buen estado.';
+  } else if(score>=40||dias<=14){
+    vClass='velocidad-normal'; vLabel='VENTA NORMAL'; vEmoji='📦';
+    vDesc='Estimación: unos '+(dias<=14?dias:14)+' días. Demanda media en Vinted.';
+  } else {
+    vClass='velocidad-lento'; vLabel='VENTA LENTA'; vEmoji='⚠️';
+    vDesc='Estimación: más de '+(dias||30)+' días. Talla poco demandada o marca con poca salida.';
+  }
   document.getElementById('velocidad-venta').innerHTML=
     '<div class="velocidad '+vClass+'">'+
     '<div class="velocidad-titulo">'+vEmoji+' '+vLabel+'</div>'+
@@ -558,21 +584,10 @@ function renderRes(r,log){
     '<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:6px;"><span>Lento</span><span>Puntuación: '+score+'/100</span><span>Rápido</span></div>'+
     '<div class="velocidad-desc">'+vDesc+'</div>'+
     '</div>';
-  var roi=n.m>0?Math.round((n.b/n.m)*100):0;
-  document.getElementById('beneficio-prenda').innerHTML=
-    '<div class="beneficio-box">'+
-    '<div class="beneficio-titulo">Desglose de rentabilidad</div>'+
-    '<div class="beneficio-grid">'+
-    '<div class="beneficio-item"><div class="beneficio-label">Ingreso venta</div><div class="beneficio-val verde">'+f(n.v)+'</div></div>'+
-    '<div class="beneficio-item"><div class="beneficio-label">Beneficio neto</div><div class="beneficio-val verde">'+f(n.b)+'</div></div>'+
-    '<div class="beneficio-item"><div class="beneficio-label">Margen s/venta</div><div class="beneficio-val verde">'+p(n.p)+'</div></div>'+
-    '<div class="beneficio-item"><div class="beneficio-label">Pagas al cliente</div><div class="beneficio-val">'+f(n.o)+'</div></div>'+
-    '<div class="beneficio-item"><div class="beneficio-label">Comisión Vinted</div><div class="beneficio-val">'+f(n.c)+'</div></div>'+
-    '<div class="beneficio-item"><div class="beneficio-label">ROI sobre compra</div><div class="beneficio-val verde">'+roi+'%</div></div>'+
-    '</div></div>';
+
   var tallaAjuste=n.tallaF>=1.0?'+'+Math.round((n.tallaF-1)*100)+'%':Math.round((n.tallaF-1)*100)+'%';
   document.getElementById('breakdown').innerHTML=[
-    ['Precio mercado Vinted',f(n.m)],
+    ['Precio medio Vinted',f(n.m)],
     ['Precio venta Vinted -10%',f(n.v)],
     ['Factor talla ('+tallaLabel+')',tallaAjuste],
     ['Oferta cliente = (venta×35% - '+COSTE_OP+'€)×estado×talla',f(n.o)],
@@ -585,7 +600,7 @@ function renderRes(r,log){
 function save(){
   if(!ultima) return;
   hist.unshift(ultima); lote.unshift(ultima);
-  try{localStorage.setItem('b2s_h',JSON.stringify(hist));}catch(e){}
+  try{localStorage.setItem('vnt_h',JSON.stringify(hist));}catch(e){}
   updateCount(); imgs=[]; renderPrev();
   document.getElementById('resultado').style.display='none';
   document.getElementById('rechazo').style.display='none';
@@ -605,7 +620,7 @@ function renderLote(){
     '<div style="background:rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;"><div style="font-size:10px;color:rgba(255,255,255,0.5);">Ingresos esperados</div><div style="font-size:18px;font-weight:600;color:#fff;">'+f(tv)+'</div></div>'+
     '<div style="background:rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;"><div style="font-size:10px;color:rgba(255,255,255,0.5);">Beneficio esperado</div><div style="font-size:18px;font-weight:600;color:var(--verde-medio);">'+f(tb)+'</div></div>';
   document.getElementById('lote-lista').innerHTML=lote.map(function(h,i){
-    var score=calcVelocidad(h.r,h.n);
+    var score=calcVelocidad(h.r);
     var ve=score>=70?'🚀':score>=40?'📦':'⚠️';
     var col=h.n.p>=65?'var(--verde-medio)':h.n.p>=50?'#EF9F27':'#F09595';
     return '<div class="lote-item">'+
@@ -623,7 +638,7 @@ function renderLote(){
       var id=lote[i].id;
       lote.splice(i,1);
       hist=hist.filter(function(h){ return h.id!==id; });
-      try{localStorage.setItem('b2s_h',JSON.stringify(hist));}catch(e){}
+      try{localStorage.setItem('vnt_h',JSON.stringify(hist));}catch(e){}
       updateCount(); renderLote();
     });
   });
@@ -632,13 +647,12 @@ function renderLote(){
 function cerrarLote(){
   if(!lote.length){ alert('El lote está vacío.'); return; }
   if(!confirm('¿Cerrar el lote y exportar a Excel?')) return;
-  var hd=[['Num','Descripcion','Marca','Talla','Estado','Precio mercado','Oferta cliente','Precio venta','Beneficio','Margen %','ROI %','Velocidad']];
+  var hd=[['Num','Descripcion','Marca','Talla','Estado','Precio Vinted','Oferta cliente','Ingreso venta','Beneficio','Margen %','ROI %','Velocidad']];
   var to=0,tv=0,tb=0;
   lote.forEach(function(h,i){
     to+=h.n.o; tv+=h.n.v; tb+=h.n.b;
-    var score=calcVelocidad(h.r,h.n);
-    var roi=h.n.m>0?Math.round((h.n.b/h.n.m)*100):0;
-    hd.push([i+1,h.r.descripcion||h.r.categoria||'Prenda',h.r.marca||'-',h.r.talla||'-',h.r.estado||'-',+h.n.m.toFixed(2),+h.n.o.toFixed(2),+h.n.v.toFixed(2),+h.n.b.toFixed(2),+h.n.p.toFixed(1),roi,score>=70?'Rapido':score>=40?'Normal':'Lento']);
+    var score=calcVelocidad(h.r);
+    hd.push([i+1,h.r.descripcion||h.r.categoria||'Prenda',h.r.marca||'-',h.r.talla||'-',h.r.estado||'-',+h.n.m.toFixed(2),+h.n.o.toFixed(2),+h.n.v.toFixed(2),+h.n.b.toFixed(2),+h.n.p.toFixed(1),h.n.roi||0,score>=70?'Rapido':score>=40?'Normal':'Lento']);
   });
   hd.push(['','','','','TOTALES','',+to.toFixed(2),+tv.toFixed(2),+tb.toFixed(2),'','','']);
   var wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(hd);
@@ -663,9 +677,8 @@ function renderHist(){
     '<div class="summary-card"><div class="sc-label">Beneficio esperado</div><div class="sc-val" style="color:var(--verde-oscuro);">'+f(tb)+'</div></div>';
   document.getElementById('hist-list').innerHTML=hist.map(function(h,i){
     var pc=h.n.p>=65?'p-verde':h.n.p>=50?'p-amber':'p-red';
-    var score=calcVelocidad(h.r,h.n);
+    var score=calcVelocidad(h.r);
     var ve=score>=70?'🚀':score>=40?'📦':'⚠️';
-    var roi=h.n.m>0?Math.round((h.n.b/h.n.m)*100):0;
     return '<div class="hist-item">'+
       (h.thumb?'<img class="hist-thumb" src="'+h.thumb+'">':'<div class="hist-thumb">👕</div>')+
       '<div class="hist-info" data-idx="'+i+'">'+
@@ -675,7 +688,7 @@ function renderHist(){
           '<span class="pill '+pc+'">'+p(h.n.p)+'</span>'+
           (h.r.marca?' <span class="tag">'+h.r.marca+'</span>':'')+
           (h.r.talla?' <span class="tag">'+h.r.talla+'</span>':'')+
-          ' '+ve+' <span style="font-size:10px;color:var(--muted);">ROI '+roi+'%</span>'+
+          ' '+ve+' <span style="font-size:10px;color:var(--muted);">ROI '+(h.n.roi||0)+'%</span>'+
         '</div>'+
       '</div>'+
       '<div style="text-align:right;flex-shrink:0;">'+
@@ -703,7 +716,7 @@ function renderHist(){
       var id=hist[i].id;
       hist.splice(i,1);
       lote=lote.filter(function(h){ return h.id!==id; });
-      try{localStorage.setItem('b2s_h',JSON.stringify(hist));}catch(e){}
+      try{localStorage.setItem('vnt_h',JSON.stringify(hist));}catch(e){}
       updateCount(); renderHist(); renderLote();
     });
   });
@@ -714,7 +727,7 @@ function detail(i){ ultima=hist[i]; go('tasar'); renderRes(hist[i].r,hist[i].log
 function clearHist(){
   if(!confirm('¿Borrar todo el lote?')) return;
   hist=[]; lote=[];
-  try{localStorage.removeItem('b2s_h');}catch(e){}
+  try{localStorage.removeItem('vnt_h');}catch(e){}
   renderHist(); renderLote();
 }
 
@@ -737,9 +750,8 @@ function genPDF(h){
   doc.setTextColor(30,30,30); doc.setFontSize(10); doc.setFont('helvetica','bold');
   doc.text('DATOS DE LA PRENDA',m,y);
   doc.setDrawColor(29,158,117); doc.setLineWidth(0.5); doc.line(m,y+2,W-m,y+2); y+=10;
-  var score=calcVelocidad(h.r,h.n);
+  var score=calcVelocidad(h.r);
   var vLabel=score>=70?'RÁPIDA':score>=40?'NORMAL':'LENTA';
-  var roi=h.n.m>0?Math.round((h.n.b/h.n.m)*100):0;
   [['Fecha',h.fecha+' '+h.hora],['Referencia',h.ref||'-'],['Descripción',h.r.descripcion||'-'],['Marca',(h.r.marca||'-')+' Tier '+(h.r.tier_marca||'-')],['Estado',h.r.estado||'-'],['Talla',h.r.talla||'No detectada'],['Velocidad de venta',vLabel+' ('+score+'/100)'],['Confianza IA',h.r.confianza||'-'],['Notas',h.notas||'-']].forEach(function(x){
     doc.setFontSize(9); doc.setFont('helvetica','bold'); doc.setTextColor(80,80,80); doc.text(x[0]+':',m,y);
     doc.setFont('helvetica','normal'); doc.setTextColor(30,30,30);
@@ -751,18 +763,12 @@ function genPDF(h){
   doc.setDrawColor(200,200,200); doc.line(m,y+2,W-m,y+2); y+=10;
   var tallaF=h.n.tallaF||1;
   var tallaAjuste=tallaF>=1.0?'+'+Math.round((tallaF-1)*100)+'%':Math.round((tallaF-1)*100)+'%';
-  [['Precio de mercado Vinted',f(h.n.m)],['Precio venta Vinted -10%',f(h.n.v)],['Factor talla ('+( h.r.talla||'-')+')',tallaAjuste],['Oferta al cliente',f(h.n.o)],['Comisión Vinted 5%','- '+f(h.n.c)],['Coste logístico','- '+f(h.n.log||3)]].forEach(function(x){
+  [['Precio medio Vinted',f(h.n.m)],['Precio venta Vinted -10%',f(h.n.v)],['Factor talla ('+( h.r.talla||'-')+')',tallaAjuste],['Oferta al cliente (igual tasador cliente)',f(h.n.o)],['Comisión Vinted 5%','- '+f(h.n.c)],['Coste logístico','- '+f(h.n.log||3)],['Beneficio neto',f(h.n.b)+' ('+p(h.n.p)+')'],['ROI sobre compra',(h.n.roi||0)+'%']].forEach(function(x){
     doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(80,80,80); doc.text(x[0],m,y);
     doc.setTextColor(30,30,30); doc.text(x[1],W-m,y,{align:'right'}); y+=7;
   });
-  doc.setLineWidth(0.3); doc.line(m,y,W-m,y); y+=6;
-  doc.setFont('helvetica','bold'); doc.setFontSize(10);
-  doc.setTextColor(30,30,30); doc.text('Beneficio neto:',m,y);
+  y+=4;
   var col=h.n.p>=65?[15,110,86]:h.n.p>=50?[99,56,6]:[121,31,31];
-  doc.setTextColor(col[0],col[1],col[2]); doc.text(f(h.n.b)+' ('+p(h.n.p)+')',W-m,y,{align:'right'}); y+=7;
-  doc.setTextColor(30,30,30); doc.text('ROI sobre compra:',m,y);
-  doc.setTextColor(col[0],col[1],col[2]); doc.text(roi+'%',W-m,y,{align:'right'});
-  y+=10;
   var bg=h.n.p>=65?[225,245,238]:h.n.p>=50?[250,238,218]:[252,235,235];
   var vt=h.n.p>=65?'OPERACIÓN RENTABLE':h.n.p>=50?'REVISAR OFERTA':'NO RENTABLE';
   doc.setFillColor(bg[0],bg[1],bg[2]); doc.rect(m,y-5,W-2*m,11,'F');
@@ -791,11 +797,11 @@ function genPDFLote(){
   hist.forEach(function(h){ tp+=h.n.o; tv+=h.n.v; tb+=h.n.b; });
   var roiLote=tp>0?Math.round((tb/tp)*100):0;
   doc.setFontSize(9);
-  [['Total prendas:',String(hist.length)],['Total pagado a clientes:',f(tp)],['Ingresos esperados:',f(tv)],['Beneficio esperado:',f(tb)],['ROI medio del lote:',roiLote+'%']].forEach(function(x){
+  [['Total prendas:',String(hist.length)],['Total pagado a clientes:',f(tp)],['Ingresos esperados Vinted:',f(tv)],['Beneficio esperado:',f(tb)],['ROI medio del lote:',roiLote+'%']].forEach(function(x){
     doc.setFont('helvetica','normal'); doc.setTextColor(80,80,80); doc.text(x[0],m,y);
     doc.setFont('helvetica','bold');
     if(x[0].indexOf('Beneficio')>=0||x[0].indexOf('ROI')>=0){ doc.setTextColor(15,110,86); }else{ doc.setTextColor(30,30,30); }
-    doc.text(x[1],m+65,y); y+=7;
+    doc.text(x[1],m+70,y); y+=7;
   });
   y+=8;
   doc.setTextColor(30,30,30); doc.setFontSize(10); doc.setFont('helvetica','bold');
@@ -806,7 +812,7 @@ function genPDFLote(){
   y+=5; doc.setLineWidth(0.3); doc.line(m,y,W-m,y); y+=5;
   hist.forEach(function(h,i){
     if(y>270){ doc.addPage(); y=20; }
-    var score=calcVelocidad(h.r,h.n);
+    var score=calcVelocidad(h.r);
     var vLabel=score>=70?'Rap':score>=40?'Nor':'Len';
     var col=h.n.p>=65?[15,110,86]:h.n.p>=50?[99,56,6]:[121,31,31];
     doc.setFontSize(7); doc.setFont('helvetica','normal'); doc.setTextColor(30,30,30);
@@ -823,21 +829,20 @@ function genPDFLote(){
   doc.setLineWidth(0.8); doc.setDrawColor(29,158,117); doc.line(m,y,W-m,y); y+=8;
   doc.setFontSize(10); doc.setFont('helvetica','bold');
   doc.setTextColor(30,30,30); doc.text('TOTAL PAGADO A CLIENTES',m,y); doc.setTextColor(121,31,31); doc.text(f(tp),W-m,y,{align:'right'}); y+=8;
-  doc.setTextColor(30,30,30); doc.text('INGRESOS ESPERADOS',m,y); doc.setTextColor(30,30,30); doc.text(f(tv),W-m,y,{align:'right'}); y+=8;
+  doc.setTextColor(30,30,30); doc.text('INGRESOS ESPERADOS VINTED',m,y); doc.setTextColor(30,30,30); doc.text(f(tv),W-m,y,{align:'right'}); y+=8;
   doc.setTextColor(30,30,30); doc.text('BENEFICIO TOTAL ESPERADO',m,y); doc.setTextColor(15,110,86); doc.text(f(tb),W-m,y,{align:'right'}); y+=8;
   doc.setTextColor(30,30,30); doc.text('ROI MEDIO DEL LOTE',m,y); doc.setTextColor(15,110,86); doc.text(roiLote+'%',W-m,y,{align:'right'});
   y+=16; doc.setFontSize(7); doc.setTextColor(160,160,160);
   doc.text('vendenosturopa.es · Documento interno · Confidencial',W/2,y,{align:'center'});
-  doc.save('VendenostuRopa_Lote_Empresa_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.pdf');
+  doc.save('VendenostuRopa_Lote_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.pdf');
 }
 
 function toExcel(){
   if(!hist.length){ alert('Lote vacío.'); return; }
-  var hd=[['Fecha','Hora','Referencia','Descripcion','Categoria','Marca','Tier','Talla','Estado','Confianza','Precio mercado','Oferta cliente','Precio venta','Beneficio neto','Margen %','ROI %','Velocidad','Veredicto']];
+  var hd=[['Fecha','Hora','Referencia','Descripcion','Categoria','Marca','Tier','Talla','Estado','Confianza','Precio Vinted','Oferta cliente','Ingreso venta','Beneficio neto','Margen %','ROI %','Velocidad','Veredicto']];
   hist.forEach(function(h){
-    var score=calcVelocidad(h.r,h.n);
-    var roi=h.n.m>0?Math.round((h.n.b/h.n.m)*100):0;
-    hd.push([h.fecha,h.hora,h.ref||'',h.r.descripcion||'',h.r.categoria||'',h.r.marca||'',h.r.tier_marca||'',h.r.talla||'-',h.r.estado||'',h.r.confianza||'',+h.n.m.toFixed(2),+h.n.o.toFixed(2),+h.n.v.toFixed(2),+h.n.b.toFixed(2),+h.n.p.toFixed(1),roi,score>=70?'Rapido':score>=40?'Normal':'Lento',h.n.p>=65?'Rentable':h.n.p>=50?'Revisar':'No rentable']);
+    var score=calcVelocidad(h.r);
+    hd.push([h.fecha,h.hora,h.ref||'',h.r.descripcion||'',h.r.categoria||'',h.r.marca||'',h.r.tier_marca||'',h.r.talla||'-',h.r.estado||'',h.r.confianza||'',+h.n.m.toFixed(2),+h.n.o.toFixed(2),+h.n.v.toFixed(2),+h.n.b.toFixed(2),+h.n.p.toFixed(1),h.n.roi||0,score>=70?'Rapido':score>=40?'Normal':'Lento',h.n.p>=65?'Rentable':h.n.p>=50?'Revisar':'No rentable']);
   });
   var wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(hd);
   ws['!cols']=hd[0].map(function(_,i){ return{wch:i<2?10:i<4?24:12}; });
@@ -846,10 +851,9 @@ function toExcel(){
 }
 
 function buildBody(h){
-  var score=calcVelocidad(h.r,h.n);
+  var score=calcVelocidad(h.r);
   var vLabel=score>=70?'RÁPIDA':score>=40?'NORMAL':'LENTA';
-  var roi=h.n.m>0?Math.round((h.n.b/h.n.m)*100):0;
-  return 'vendenosturopa.es - Informe empresa\n\nFecha: '+h.fecha+' '+h.hora+'\nReferencia: '+(h.ref||'-')+'\nDescripción: '+(h.r.descripcion||'-')+'\nMarca: '+(h.r.marca||'-')+'\nEstado: '+(h.r.estado||'-')+'\nTalla: '+(h.r.talla||'-')+'\nVelocidad: '+vLabel+'\n\nOferta cliente: '+f(h.n.o)+'\nBeneficio neto: '+f(h.n.b)+' ('+p(h.n.p)+')\nROI: '+roi+'%\n\n- vendenosturopa.es -';
+  return 'vendenosturopa.es - Informe empresa\n\nFecha: '+h.fecha+' '+h.hora+'\nReferencia: '+(h.ref||'-')+'\nDescripción: '+(h.r.descripcion||'-')+'\nMarca: '+(h.r.marca||'-')+'\nEstado: '+(h.r.estado||'-')+'\nTalla: '+(h.r.talla||'-')+'\nPrecio medio Vinted: '+f(h.n.m)+'\nVelocidad: '+vLabel+'\n\nOferta al cliente: '+f(h.n.o)+'\nBeneficio neto: '+f(h.n.b)+' ('+p(h.n.p)+')\nROI: '+(h.n.roi||0)+'%\n\n- vendenosturopa.es -';
 }
 
 function openEmail(){
@@ -876,8 +880,7 @@ function sendSummary(){
   hist.forEach(function(h){ tp+=h.n.o; tv+=h.n.v; tb+=h.n.b; });
   var body='vendenosturopa.es - Resumen lote\n'+new Date().toLocaleDateString('es-ES')+'\n\nPrendas: '+hist.length+'\nPagado clientes: '+f(tp)+'\nIngresos esperados: '+f(tv)+'\nBeneficio esperado: '+f(tb)+'\n\n';
   hist.forEach(function(h,i){
-    var roi=h.n.m>0?Math.round((h.n.b/h.n.m)*100):0;
-    body+='\n'+(i+1)+'. '+(h.r.descripcion||h.r.categoria)+' - '+(h.r.marca||'-')+'\n   Oferta: '+f(h.n.o)+' Benef: '+f(h.n.b)+' ('+p(h.n.p)+') ROI: '+roi+'%\n';
+    body+='\n'+(i+1)+'. '+(h.r.descripcion||h.r.categoria)+' - '+(h.r.marca||'-')+'\n   Oferta: '+f(h.n.o)+' Benef: '+f(h.n.b)+' ('+p(h.n.p)+') ROI: '+(h.n.roi||0)+'%\n';
   });
   body+='\n'+(msg?msg+'\n':'')+'\n- vendenosturopa.es -';
   window.location.href='mailto:'+d+'?subject='+a+'&body='+encodeURIComponent(body);
