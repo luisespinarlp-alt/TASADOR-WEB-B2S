@@ -6,38 +6,48 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Back2Street — Tasador Empresa v4</title>
+<title>vendenosturopa.es — Tasador Empresa</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --bg: #f5f4f0; --card: #ffffff; --border: rgba(0,0,0,0.1);
-    --text: #1a1a1a; --muted: #666; --light: #999;
+    --verde: #1D9E75;
+    --verde-oscuro: #0F6E56;
+    --verde-claro: #E1F5EE;
+    --verde-medio: #9FE1CB;
+    --bg: #f5f5f2;
+    --card: #ffffff;
+    --border: rgba(0,0,0,0.08);
+    --text: #1a1a1a;
+    --muted: #6b6b6b;
+    --light: #aaa;
     --green: #27500A; --green-bg: #EAF3DE;
     --amber: #633806; --amber-bg: #FAEEDA;
     --red: #791F1F; --red-bg: #FCEBEB;
-    --neon: #CCFF00; --dark: #0c0c0c;
     --radius: 12px; --radius-sm: 8px;
   }
   body { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
   .container { max-width: 680px; margin: 0 auto; padding: 1rem; }
-  .header { background: var(--dark); border-radius: var(--radius); padding: 1rem 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; }
-  .brand { font-size: 18px; font-weight: 700; color: #F0EDE6; letter-spacing: 3px; }
-  .brand span { color: var(--neon); }
-  .brand-sub { font-size: 9px; color: #444; letter-spacing: 2px; margin-top: 2px; }
-  .obj { font-size: 10px; color: #444; }
-  .obj span { color: var(--neon); font-weight: 700; }
+  .header { background: var(--verde-oscuro); border-radius: var(--radius); padding: 1rem 1.5rem; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; }
+  .logo-wrap { display: flex; align-items: center; gap: 10px; }
+  .logo-icon { width: 40px; height: 40px; background: rgba(255,255,255,0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .logo-nombre { font-size: 17px; font-weight: 600; color: #fff; letter-spacing: -0.3px; line-height: 1; }
+  .logo-nombre span { color: var(--verde-medio); }
+  .logo-nombre small { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 400; }
+  .logo-sub { font-size: 9px; color: rgba(255,255,255,0.4); letter-spacing: 2px; margin-top: 2px; }
+  .obj { font-size: 10px; color: rgba(255,255,255,0.5); text-align: right; }
+  .obj span { color: var(--verde-medio); font-weight: 700; }
   .tabs { display: flex; gap: 4px; margin-bottom: 1rem; }
   .tab { flex: 1; padding: 8px; text-align: center; font-size: 12px; font-weight: 500; border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; color: var(--muted); background: var(--card); transition: all 0.15s; }
-  .tab.active { background: var(--dark); color: #F0EDE6; border-color: var(--dark); }
-  .tab:hover:not(.active) { background: #f0ede6; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+  .tab.active { background: var(--verde-oscuro); color: #fff; border-color: var(--verde-oscuro); }
+  .tab:hover:not(.active) { background: var(--verde-claro); color: var(--verde-oscuro); border-color: rgba(29,158,117,0.3); }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
   .card-title { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
   .foto-guia { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin-bottom: 12px; }
-  .foto-guia-item { background: #f5f4f0; border-radius: var(--radius-sm); padding: 8px 4px; text-align: center; border: 1px solid var(--border); }
+  .foto-guia-item { background: var(--verde-claro); border-radius: var(--radius-sm); padding: 8px 4px; text-align: center; border: 0.5px solid rgba(29,158,117,0.2); }
   .foto-guia-icon { font-size: 20px; margin-bottom: 4px; }
-  .foto-guia-label { font-size: 9px; color: var(--muted); font-weight: 500; }
-  .upload-zone { border: 1.5px dashed #ccc; border-radius: var(--radius); padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.2s; }
-  .upload-zone:hover, .upload-zone.drag { background: #f9f8f5; border-color: #aaa; }
+  .foto-guia-label { font-size: 9px; color: var(--verde-oscuro); font-weight: 600; }
+  .upload-zone { border: 1.5px dashed rgba(29,158,117,0.4); border-radius: var(--radius); padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.2s; background: #fafafa; }
+  .upload-zone:hover, .upload-zone.drag { background: var(--verde-claro); border-color: var(--verde); }
   .upload-text { font-size: 13px; color: var(--muted); }
   .upload-sub { font-size: 11px; color: var(--light); margin-top: 4px; }
   .preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px; margin-top: 10px; }
@@ -49,19 +59,21 @@
   .grid4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; }
   .field { margin-bottom: 10px; }
   .field label { display: block; font-size: 11px; color: var(--muted); margin-bottom: 4px; font-weight: 500; }
-  .field input, .field select { width: 100%; padding: 8px 10px; font-size: 13px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: #fafaf8; color: var(--text); }
+  .field input { width: 100%; padding: 8px 10px; font-size: 13px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: #fafaf8; color: var(--text); transition: border-color 0.2s; }
+  .field input:focus { outline: none; border-color: var(--verde); }
   button { padding: 8px 16px; font-size: 13px; font-weight: 500; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--card); color: var(--text); cursor: pointer; transition: all 0.15s; }
-  button:hover:not(:disabled) { background: #f0ede6; }
+  button:hover:not(:disabled) { background: var(--verde-claro); border-color: rgba(29,158,117,0.3); color: var(--verde-oscuro); }
   button:disabled { opacity: 0.4; cursor: not-allowed; }
-  .btn-primary { background: var(--dark); color: #F0EDE6; border-color: var(--dark); width: 100%; padding: 12px; font-size: 14px; }
-  .btn-primary:hover:not(:disabled) { background: #1a1a1a; }
-  .btn-neon { background: var(--neon); color: var(--dark); border-color: var(--neon); font-weight: 700; }
-  .metric { background: #f5f4f0; border-radius: var(--radius-sm); padding: 10px 12px; }
+  .btn-primary { background: var(--verde); color: #fff; border-color: var(--verde); width: 100%; padding: 12px; font-size: 14px; }
+  .btn-primary:hover:not(:disabled) { background: var(--verde-oscuro); color: #fff; border-color: var(--verde-oscuro); }
+  .btn-neon { background: var(--verde-claro); color: var(--verde-oscuro); border-color: var(--verde); font-weight: 700; }
+  .btn-neon:hover { background: var(--verde); color: #fff; }
+  .metric { background: #f5f5f2; border-radius: var(--radius-sm); padding: 10px 12px; }
   .metric-label { font-size: 10px; color: var(--muted); margin-bottom: 2px; }
   .metric-val { font-size: 20px; font-weight: 600; color: var(--text); }
   .metric-sub { font-size: 10px; color: var(--light); }
-  .metric-highlight { background: #EAF3DE; }
-  .metric-highlight .metric-val { color: var(--green); }
+  .metric-highlight { background: var(--verde-claro); }
+  .metric-highlight .metric-val { color: var(--verde-oscuro); }
   .result-ok { background: var(--green-bg); border-radius: var(--radius-sm); padding: 12px 16px; }
   .result-warn { background: var(--amber-bg); border-radius: var(--radius-sm); padding: 12px 16px; }
   .result-bad { background: var(--red-bg); border-radius: var(--radius-sm); padding: 12px 16px; }
@@ -88,13 +100,13 @@
   .velocidad-rapido .velocidad-desc { color: var(--green); }
   .velocidad-normal .velocidad-desc { color: var(--amber); }
   .velocidad-lento .velocidad-desc { color: var(--red); }
-  .beneficio-box { background: var(--dark); border-radius: var(--radius); padding: 1rem 1.5rem; margin-top: 10px; }
-  .beneficio-titulo { font-size: 10px; font-weight: 600; color: var(--neon); letter-spacing: 2px; margin-bottom: 10px; }
+  .beneficio-box { background: var(--verde-oscuro); border-radius: var(--radius); padding: 1rem 1.5rem; margin-top: 10px; }
+  .beneficio-titulo { font-size: 10px; font-weight: 600; color: var(--verde-medio); letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase; }
   .beneficio-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
-  .beneficio-item { background: #1a1a1a; border-radius: var(--radius-sm); padding: 8px 10px; text-align: center; }
-  .beneficio-label { font-size: 9px; color: #666; margin-bottom: 4px; }
-  .beneficio-val { font-size: 16px; font-weight: 700; color: #F0EDE6; }
-  .beneficio-val.verde { color: var(--neon); }
+  .beneficio-item { background: rgba(255,255,255,0.08); border-radius: var(--radius-sm); padding: 8px 10px; text-align: center; }
+  .beneficio-label { font-size: 9px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .beneficio-val { font-size: 16px; font-weight: 700; color: #fff; }
+  .beneficio-val.verde { color: var(--verde-medio); }
   .row-data { display: flex; justify-content: space-between; font-size: 12px; padding: 5px 0; border-bottom: 1px solid #f0ede6; }
   .row-data:last-child { border-bottom: none; }
   .row-data .n { color: var(--muted); }
@@ -103,28 +115,29 @@
   .p-green { background: var(--green-bg); color: var(--green); }
   .p-amber { background: var(--amber-bg); color: var(--amber); }
   .p-red { background: var(--red-bg); color: var(--red); }
-  .tag { display: inline-block; font-size: 11px; padding: 2px 7px; border-radius: 4px; margin: 2px; background: #f5f4f0; color: var(--muted); border: 1px solid var(--border); }
-  .hist-item { display: flex; align-items: center; gap: 10px; padding: 8px 6px; border-bottom: 1px solid #f0ede6; border-radius: var(--radius-sm); }
+  .p-verde { background: var(--verde-claro); color: var(--verde-oscuro); }
+  .tag { display: inline-block; font-size: 11px; padding: 2px 7px; border-radius: 4px; margin: 2px; background: #f5f5f2; color: var(--muted); border: 1px solid var(--border); }
+  .hist-item { display: flex; align-items: center; gap: 10px; padding: 8px 6px; border-bottom: 1px solid #f0ede6; }
   .hist-item:last-child { border-bottom: none; }
-  .hist-thumb { width: 48px; height: 48px; border-radius: var(--radius-sm); object-fit: cover; border: 1px solid var(--border); flex-shrink: 0; background: #f5f4f0; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+  .hist-thumb { width: 48px; height: 48px; border-radius: var(--radius-sm); object-fit: cover; border: 1px solid var(--border); flex-shrink: 0; background: var(--verde-claro); display: flex; align-items: center; justify-content: center; font-size: 22px; }
   .hist-info { flex: 1; min-width: 0; cursor: pointer; }
   .hist-name { font-size: 12px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .hist-meta { font-size: 11px; color: var(--muted); }
   .empty-hist { text-align: center; padding: 3rem; color: var(--light); font-size: 13px; }
-  .summary-card { background: #f5f4f0; border-radius: var(--radius-sm); padding: 10px 14px; }
+  .summary-card { background: #f5f5f2; border-radius: var(--radius-sm); padding: 10px 14px; }
   .sc-label { font-size: 10px; color: var(--muted); }
   .sc-val { font-size: 18px; font-weight: 600; color: var(--text); }
-  .brand-tag { font-size: 11px; padding: 4px 10px; border-radius: 4px; background: #f5f4f0; color: var(--muted); border: 1px solid var(--border); cursor: pointer; display: inline-block; margin: 2px; transition: all 0.15s; }
-  .brand-tag.on { background: var(--dark); color: var(--neon); border-color: var(--dark); }
+  .brand-tag { font-size: 11px; padding: 4px 10px; border-radius: 4px; background: #f5f5f2; color: var(--muted); border: 1px solid var(--border); cursor: pointer; display: inline-block; margin: 2px; transition: all 0.15s; }
+  .brand-tag.on { background: var(--verde-oscuro); color: var(--verde-medio); border-color: var(--verde-oscuro); }
   .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; padding: 1rem; }
   .modal-overlay.show { display: flex; }
   .modal-box { background: var(--card); border-radius: var(--radius); padding: 1.5rem; width: 100%; max-width: 420px; }
   .loading { display: flex; align-items: center; gap: 10px; padding: 1rem; color: var(--muted); font-size: 13px; }
-  .spinner { width: 18px; height: 18px; border: 2px solid #ddd; border-top-color: var(--dark); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+  .spinner { width: 18px; height: 18px; border: 2px solid rgba(29,158,117,0.2); border-top-color: var(--verde); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .lote-box { background: var(--dark); border-radius: var(--radius); padding: 1rem 1.5rem; margin-bottom: 1rem; display: none; }
-  .lote-title { font-size: 11px; font-weight: 600; color: var(--neon); letter-spacing: 2px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-  .lote-item { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #222; font-size: 12px; gap: 6px; }
+  .lote-box { background: var(--verde-oscuro); border-radius: var(--radius); padding: 1rem 1.5rem; margin-bottom: 1rem; display: none; }
+  .lote-title { font-size: 11px; font-weight: 600; color: var(--verde-medio); letter-spacing: 2px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+  .lote-item { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 12px; gap: 6px; }
   .lote-item:last-child { border-bottom: none; }
   .lote-del { background: transparent; border: none; color: #F09595; font-size: 14px; cursor: pointer; padding: 0 4px; flex-shrink: 0; }
   @media (max-width: 480px) {
@@ -140,9 +153,18 @@
 <body>
  <div class="container">
   <div class="header">
-    <div>
-      <div class="brand">BACK<span>2</span>STREET</div>
-      <div class="brand-sub">TASADOR EMPRESA · USO INTERNO</div>
+    <div class="logo-wrap">
+      <div class="logo-icon">
+        <svg width="26" height="24" viewBox="0 0 90 60" fill="none">
+          <path d="M34 4 C34 4 34 12 42 17 L8 38 Q2 42 2 48 Q2 55 8 55 L84 55 Q90 55 90 48 Q90 42 84 38 L42 17" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="34" cy="5" r="5" stroke="#ffffff" stroke-width="3" fill="none"/>
+          <polyline points="28,36 36,46 56,26" stroke="#9FE1CB" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="logo-nombre">vende<span>nos</span>turopa<small>.es</small></div>
+        <div class="logo-sub">TASADOR EMPRESA · USO INTERNO</div>
+      </div>
     </div>
     <div class="obj">Objetivo: <span>65% margen</span></div>
   </div>
@@ -158,7 +180,7 @@
     <div class="lote-box" id="lote-activo">
       <div class="lote-title">
         <span>LOTE ACTIVO</span>
-        <button id="btn-cerrar-lote" style="font-size:11px;padding:3px 10px;background:transparent;border-color:#444;color:#F0EDE6;">Cerrar y exportar Excel</button>
+        <button id="btn-cerrar-lote" style="font-size:11px;padding:3px 10px;background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.2);color:#fff;">Cerrar y exportar Excel</button>
       </div>
       <div class="grid4" id="lote-summary" style="margin-bottom:10px;"></div>
       <div id="lote-lista" style="max-height:180px;overflow-y:auto;"></div>
@@ -167,17 +189,17 @@
     <div class="card">
       <div class="card-title">Fotos de la prenda</div>
       <div class="foto-guia">
-        <div class="foto-guia-item"><div class="foto-guia-icon">👕</div><div class="foto-guia-label">DELANTERA</div></div>
-        <div class="foto-guia-item"><div class="foto-guia-icon">🔄</div><div class="foto-guia-label">TRASERA</div></div>
-        <div class="foto-guia-item"><div class="foto-guia-icon">🏷️</div><div class="foto-guia-label">ETIQUETA MARCA</div></div>
-        <div class="foto-guia-item"><div class="foto-guia-icon">🔍</div><div class="foto-guia-label">DETALLES</div></div>
+        <div class="foto-guia-item"><div class="foto-guia-icon">👕</div><div class="foto-guia-label">Delantera</div></div>
+        <div class="foto-guia-item"><div class="foto-guia-icon">🔄</div><div class="foto-guia-label">Trasera</div></div>
+        <div class="foto-guia-item"><div class="foto-guia-icon">🏷️</div><div class="foto-guia-label">Etiqueta</div></div>
+        <div class="foto-guia-item"><div class="foto-guia-icon">🔍</div><div class="foto-guia-label">Detalles</div></div>
       </div>
-      <div style="background:#FFF8E1;border-radius:var(--radius-sm);padding:8px 12px;margin-bottom:12px;font-size:11px;color:#633806;border-left:3px solid #EF9F27;">
+      <div style="background:#fffbeb;border-radius:var(--radius-sm);padding:8px 12px;margin-bottom:12px;font-size:11px;color:#854F0B;border-left:3px solid #EF9F27;">
         Incluye siempre foto de la etiqueta con marca y talla visibles
       </div>
       <div class="upload-zone" id="zona-subida">
-        <div class="upload-text">Pulsa aqui o arrastra las fotos</div>
-        <div class="upload-sub">Maximo 8 fotos · JPG o PNG</div>
+        <div class="upload-text">Pulsa aquí o arrastra las fotos</div>
+        <div class="upload-sub">Máximo 8 fotos · JPG o PNG</div>
       </div>
       <input type="file" id="input-fotos" accept="image/*" multiple style="display:none">
       <div class="preview-grid" id="pg"></div>
@@ -186,11 +208,11 @@
     <div class="card">
       <div class="card-title">Datos opcionales</div>
       <div class="grid2">
-        <div class="field"><label>Referencia / cliente</label><input type="text" id="ref" placeholder="Ej: Maria Garcia lote 1"></div>
+        <div class="field"><label>Referencia / cliente</label><input type="text" id="ref" placeholder="Ej: María García lote 1"></div>
         <div class="field"><label>Precio Vinted (euros) — 0 = estima IA</label><input type="number" id="pm" value="0" min="0"></div>
       </div>
       <div class="grid2">
-        <div class="field"><label>Coste logistico (euros)</label><input type="number" id="lg" value="3" min="0" step="0.5"></div>
+        <div class="field"><label>Coste logístico (euros)</label><input type="number" id="lg" value="3" min="0" step="0.5"></div>
         <div class="field"><label>Notas internas</label><input type="text" id="notas" placeholder="Opcional"></div>
       </div>
     </div>
@@ -208,31 +230,26 @@
 
     <div id="resultado" style="display:none;">
       <div class="card">
-        <div class="card-title"><span>Analisis IA</span><span class="pill p-green">Original verificada</span></div>
+        <div class="card-title"><span>Análisis IA</span><span class="pill p-verde">Original verificada</span></div>
         <div id="analisis"></div>
       </div>
-
       <div class="card">
         <div class="card-title">Precios y oferta</div>
         <div class="grid4" id="metrics" style="margin-bottom:12px;"></div>
         <div id="verdict"></div>
       </div>
-
       <div class="card">
         <div class="card-title">Velocidad de venta estimada en Vinted</div>
         <div id="velocidad-venta"></div>
       </div>
-
       <div class="card">
         <div class="card-title">Beneficio estimado de esta prenda</div>
         <div id="beneficio-prenda"></div>
       </div>
-
       <div class="card">
-        <div class="card-title">Desglose economico</div>
+        <div class="card-title">Desglose económico</div>
         <div id="breakdown"></div>
       </div>
-
       <div class="grid3" style="margin-bottom:1rem;gap:8px;">
         <button class="btn-neon" id="btn-guardar">Añadir al lote</button>
         <button id="btn-pdf">Descargar PDF</button>
@@ -255,7 +272,7 @@
   <div id="panel-marcas" style="display:none;">
     <div class="card">
       <div class="card-title">Marcas aceptadas</div>
-      <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">Activa las marcas que aceptas. La IA rechazara el resto.</p>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">Activa las marcas que aceptas. La IA rechazará el resto.</p>
       <div id="brand-list"></div>
       <div style="display:flex;gap:8px;margin-top:14px;">
         <input type="text" id="new-brand" placeholder="Añadir marca..." style="flex:1;padding:7px 10px;font-size:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:#fafaf8;">
@@ -266,7 +283,7 @@
       <div class="card-title">Factor talla</div>
       <div class="row-data"><span class="n">XS / 34 / 36</span><span class="v" style="color:var(--amber);">x0.85 — poca demanda</span></div>
       <div class="row-data"><span class="n">S / 38</span><span class="v" style="color:var(--amber);">x0.95 — demanda media</span></div>
-      <div class="row-data"><span class="n">M / 40 / 42</span><span class="v" style="color:var(--green);">x1.10 — maxima demanda</span></div>
+      <div class="row-data"><span class="n">M / 40 / 42</span><span class="v" style="color:var(--green);">x1.10 — máxima demanda</span></div>
       <div class="row-data"><span class="n">L / 44</span><span class="v" style="color:var(--green);">x1.05 — alta demanda</span></div>
       <div class="row-data"><span class="n">XL / 46</span><span class="v" style="color:var(--amber);">x0.90 — demanda media</span></div>
       <div class="row-data"><span class="n">XXL / 48+</span><span class="v" style="color:var(--red);">x0.80 — poca demanda</span></div>
@@ -281,7 +298,7 @@
     <div class="card">
       <div class="card-title">Email resumen</div>
       <div class="field"><label>Destinatario</label><input type="text" id="ed" placeholder="email@correo.com"></div>
-      <div class="field"><label>Asunto</label><input type="text" id="ea" value="Back2Street Resumen tasaciones"></div>
+      <div class="field"><label>Asunto</label><input type="text" id="ea" value="vendenosturopa.es Resumen tasaciones"></div>
       <div class="field"><label>Mensaje adicional</label><input type="text" id="em" placeholder="Opcional"></div>
       <button style="width:100%;padding:10px;" id="btn-send-summary">Enviar resumen</button>
       <div id="ef" style="margin-top:8px;font-size:12px;color:var(--muted);"></div>
@@ -403,10 +420,10 @@ function getTallaFactor(talla){
   return 1.0;
 }
 
-function f(n){ return n.toFixed(2).replace('.',',')+' euros'; }
+function f(n){ return n.toFixed(2).replace('.',',')+' €'; }
 function p(n){ return Math.round(n)+'%'; }
 
-function calcOferta(m, estadoF, tallaF){
+function calcOferta(m,estadoF,tallaF){
   var v=m*0.90;
   var base=(v*0.35)-COSTE_OP;
   if(base<1) base=1;
@@ -456,7 +473,7 @@ function tasar(){
   var content=imgs.map(function(d){
     return{type:'image',source:{type:'base64',media_type:'image/jpeg',data:d.split(',')[1]}};
   });
-  content.push({type:'text',text:'Eres el tasador IA de Back2Street. Solo aceptamos ropa de marca original. Marcas aceptadas: '+ml+'.\nDevuelve SOLO JSON sin texto extra:\n{"categoria":"camiseta/sudadera/chaqueta/pantalon/vestido/zapatillas/bolso/basico","marca":"nombre o Sin marca","marca_en_lista":true,"tier_marca":"S/A/B/C/Sin marca","es_original":true,"motivo_rechazo":"","estado":"nuevo con etiqueta/como nuevo/muy buen estado/buen estado/estado aceptable","factor_estado":0.0,"talla":"talla visible o desconocida","demanda":"alta/media/baja","color":"color","descripcion":"descripcion breve","precio_mercado_estimado":'+(pm>0?pm:0)+',"confianza":"alta/media/baja","observaciones":"notas","dias_venta_estimados":7}\nFactores: nuevo=1.0,como nuevo=0.85,muy buen=0.70,buen=0.55,aceptable=0.40.'+(pm>0?' Precio: '+pm+' euros.':' Estima precio en Vinted.')+'\nPara dias_venta_estimados: estima cuantos dias tardara en venderse en Vinted (1-3 rapido, 4-14 normal, 15-60 lento).\nSi ves costuras irregulares, logos deformados o etiquetas mal impresas: es_original=false.'});
+  content.push({type:'text',text:'Eres el tasador IA de vendenosturopa.es. Solo aceptamos ropa de marca original. Marcas aceptadas: '+ml+'.\nDevuelve SOLO JSON sin texto extra:\n{"categoria":"camiseta/sudadera/chaqueta/pantalon/vestido/zapatillas/bolso/basico","marca":"nombre o Sin marca","marca_en_lista":true,"tier_marca":"S/A/B/C/Sin marca","es_original":true,"motivo_rechazo":"","estado":"nuevo con etiqueta/como nuevo/muy buen estado/buen estado/estado aceptable","factor_estado":0.0,"talla":"talla visible o desconocida","demanda":"alta/media/baja","color":"color","descripcion":"descripcion breve","precio_mercado_estimado":'+(pm>0?pm:0)+',"confianza":"alta/media/baja","observaciones":"notas","dias_venta_estimados":7}\nFactores: nuevo=1.0,como nuevo=0.85,muy buen=0.70,buen=0.55,aceptable=0.40.'+(pm>0?' Precio: '+pm+' euros.':' Estima precio en Vinted.')+'\nPara dias_venta_estimados estima cuantos dias tardara en venderse (1-3 rapido, 4-14 normal, 15-60 lento).\nSi ves costuras irregulares, logos deformados o etiquetas mal impresas: es_original=false.'});
   fetch('/api/tasar',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
@@ -489,8 +506,8 @@ function process(r,log){
   var bad=!r.es_original||!r.marca_en_lista||r.tier_marca==='Sin marca'||r.tier_marca==='C';
   if(bad){
     document.getElementById('rechazo').style.display='block';
-    var tit=!r.es_original?'Prenda rechazada — posible falsificacion':'Prenda rechazada — "'+(r.marca||'Sin marca')+'" no aceptada';
-    var mot=!r.es_original?'La IA detecto indicios de que esta prenda no es original. '+(r.observaciones||''):'Esta marca no esta en tu lista. '+(r.motivo_rechazo||'');
+    var tit=!r.es_original?'Prenda rechazada — posible falsificación':'Prenda rechazada — "'+(r.marca||'Sin marca')+'" no aceptada';
+    var mot=!r.es_original?'La IA detectó indicios de que esta prenda no es original. '+(r.observaciones||''):'Esta marca no está en tu lista. '+(r.motivo_rechazo||'');
     document.getElementById('r-tit').textContent=tit;
     document.getElementById('r-mot').textContent=mot;
     return;
@@ -502,11 +519,9 @@ function renderRes(r,log){
   document.getElementById('resultado').style.display='block';
   var n=calc(r,log);
   ultima={r:r,n:n,log:log,imgs:imgs.slice(),ref:document.getElementById('ref').value,notas:document.getElementById('notas').value,thumb:imgs[0]||null,fecha:new Date().toLocaleDateString('es-ES'),hora:new Date().toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}),id:Date.now()};
-
-  var cC=r.confianza==='alta'?'p-green':r.confianza==='media'?'p-amber':'p-red';
+  var cC=r.confianza==='alta'?'p-verde':r.confianza==='media'?'p-amber':'p-red';
   var tallaLabel=r.talla||'No detectada';
   var tallaColor=n.tallaF>=1.05?'var(--green)':n.tallaF>=0.95?'var(--amber)':'var(--red)';
-
   document.getElementById('analisis').innerHTML=
     '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">'+
     '<span class="tag">'+(r.categoria||'-')+'</span>'+
@@ -516,66 +531,53 @@ function renderRes(r,log){
     '<span class="tag">'+(r.color||'-')+'</span>'+
     '<span class="tag" style="color:'+tallaColor+';font-weight:600;">Talla: '+tallaLabel+'</span>'+
     '<span class="pill '+cC+'">Confianza: '+r.confianza+'</span>'+
-    '<span class="pill p-green">Original</span>'+
+    '<span class="pill p-verde">Original</span>'+
     '</div>'+
     '<div style="font-size:13px;margin-bottom:4px;">'+(r.descripcion||'')+'</div>'+
     (r.observaciones?'<div style="font-size:11px;color:var(--muted);">'+r.observaciones+'</div>':'');
-
   document.getElementById('metrics').innerHTML=
     '<div class="metric"><div class="metric-label">Precio mercado</div><div class="metric-val">'+f(n.m)+'</div><div class="metric-sub">ref Vinted</div></div>'+
     '<div class="metric"><div class="metric-label">Precio venta</div><div class="metric-val">'+f(n.v)+'</div><div class="metric-sub">Vinted -10%</div></div>'+
-    '<div class="metric metric-highlight"><div class="metric-label">Oferta al cliente</div><div class="metric-val">'+f(n.o)+'</div><div class="metric-sub">lo que pagas tu</div></div>'+
+    '<div class="metric metric-highlight"><div class="metric-label">Oferta cliente</div><div class="metric-val">'+f(n.o)+'</div><div class="metric-sub">lo que pagas tú</div></div>'+
     '<div class="metric"><div class="metric-label">Beneficio neto</div><div class="metric-val">'+f(n.b)+'</div><div class="metric-sub">'+p(n.p)+' margen</div></div>';
-
   var vc,vt,vm,vtxt,vmsg;
-  if(n.p>=65){vc='result-ok';vt='rt rt-ok';vm='rb rb-ok';vtxt='Operacion rentable';vmsg='Margen '+p(n.p)+'. Oferta al cliente: '+f(n.o)+'.';}
+  if(n.p>=65){vc='result-ok';vt='rt rt-ok';vm='rb rb-ok';vtxt='Operación rentable';vmsg='Margen '+p(n.p)+'. Oferta al cliente: '+f(n.o)+'.';}
   else if(n.p>=50){vc='result-warn';vt='rt rt-warn';vm='rb rb-warn';vtxt='Por debajo del objetivo';vmsg='Margen '+p(n.p)+'. Considera ajustar la oferta.';}
   else{vc='result-bad';vt='rt rt-bad';vm='rb rb-bad';vtxt='No rentable — rechazar';vmsg='Margen '+p(n.p)+'. Precio demasiado bajo.';}
   document.getElementById('verdict').innerHTML='<div class="'+vc+'"><div class="'+vt+'">'+vtxt+'</div><div class="'+vm+'">'+vmsg+'</div></div>';
-
   var score=calcVelocidad(r,n);
   var dias=r.dias_venta_estimados||14;
   var vClass,vLabel,vEmoji,vDesc;
-  if(score>=70||dias<=3){
-    vClass='velocidad-rapido'; vLabel='VENTA RAPIDA'; vEmoji='🚀';
-    vDesc='Se vendera en menos de 3 dias. Marca muy solicitada, talla demandada y buen estado.';
-  } else if(score>=40||dias<=14){
-    vClass='velocidad-normal'; vLabel='VENTA NORMAL'; vEmoji='📦';
-    vDesc='Se vendera en unos '+(dias<=14?dias:14)+' dias aproximadamente. Demanda media en Vinted.';
-  } else {
-    vClass='velocidad-lento'; vLabel='VENTA LENTA'; vEmoji='⚠️';
-    vDesc='Puede tardar mas de '+(dias||30)+' dias en venderse. Talla poco demandada o marca con poca salida.';
-  }
+  if(score>=70||dias<=3){ vClass='velocidad-rapido'; vLabel='VENTA RÁPIDA'; vEmoji='🚀'; vDesc='Se venderá en menos de 3 días. Marca muy solicitada, talla demandada y buen estado.'; }
+  else if(score>=40||dias<=14){ vClass='velocidad-normal'; vLabel='VENTA NORMAL'; vEmoji='📦'; vDesc='Se venderá en unos '+(dias<=14?dias:14)+' días aproximadamente.'; }
+  else{ vClass='velocidad-lento'; vLabel='VENTA LENTA'; vEmoji='⚠️'; vDesc='Puede tardar más de '+(dias||30)+' días en venderse.'; }
   document.getElementById('velocidad-venta').innerHTML=
     '<div class="velocidad '+vClass+'">'+
     '<div class="velocidad-titulo">'+vEmoji+' '+vLabel+'</div>'+
     '<div class="velocidad-barra"><div class="velocidad-fill" style="width:'+score+'%"></div></div>'+
-    '<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:6px;"><span>Lento</span><span>Puntuacion: '+score+'/100</span><span>Rapido</span></div>'+
+    '<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:6px;"><span>Lento</span><span>Puntuación: '+score+'/100</span><span>Rápido</span></div>'+
     '<div class="velocidad-desc">'+vDesc+'</div>'+
     '</div>';
-
   var roi=n.m>0?Math.round((n.b/n.m)*100):0;
   document.getElementById('beneficio-prenda').innerHTML=
     '<div class="beneficio-box">'+
-    '<div class="beneficio-titulo">DESGLOSE DE RENTABILIDAD</div>'+
+    '<div class="beneficio-titulo">Desglose de rentabilidad</div>'+
     '<div class="beneficio-grid">'+
     '<div class="beneficio-item"><div class="beneficio-label">Ingreso venta</div><div class="beneficio-val verde">'+f(n.v)+'</div></div>'+
     '<div class="beneficio-item"><div class="beneficio-label">Beneficio neto</div><div class="beneficio-val verde">'+f(n.b)+'</div></div>'+
     '<div class="beneficio-item"><div class="beneficio-label">Margen s/venta</div><div class="beneficio-val verde">'+p(n.p)+'</div></div>'+
     '<div class="beneficio-item"><div class="beneficio-label">Pagas al cliente</div><div class="beneficio-val">'+f(n.o)+'</div></div>'+
-    '<div class="beneficio-item"><div class="beneficio-label">Comision Vinted</div><div class="beneficio-val">'+f(n.c)+'</div></div>'+
+    '<div class="beneficio-item"><div class="beneficio-label">Comisión Vinted</div><div class="beneficio-val">'+f(n.c)+'</div></div>'+
     '<div class="beneficio-item"><div class="beneficio-label">ROI sobre compra</div><div class="beneficio-val verde">'+roi+'%</div></div>'+
-    '</div>'+
-    '</div>';
-
+    '</div></div>';
   var tallaAjuste=n.tallaF>=1.0?'+'+Math.round((n.tallaF-1)*100)+'%':Math.round((n.tallaF-1)*100)+'%';
   document.getElementById('breakdown').innerHTML=[
     ['Precio mercado Vinted',f(n.m)],
     ['Precio venta Vinted -10%',f(n.v)],
     ['Factor talla ('+tallaLabel+')',tallaAjuste],
     ['Oferta cliente = (venta×35% - '+COSTE_OP+'€)×estado×talla',f(n.o)],
-    ['Comision Vinted 5%','- '+f(n.c)],
-    ['Coste logistico','- '+f(log)],
+    ['Comisión Vinted 5%','- '+f(n.c)],
+    ['Coste logístico','- '+f(log)],
     ['Beneficio neto',f(n.b)+' ('+p(n.p)+')']
   ].map(function(x){ return '<div class="row-data"><span class="n">'+x[0]+'</span><span class="v">'+x[1]+'</span></div>'; }).join('');
 }
@@ -598,21 +600,21 @@ function renderLote(){
   var tp=0,tv=0,tb=0;
   lote.forEach(function(h){ tp+=h.n.o; tv+=h.n.v; tb+=h.n.b; });
   document.getElementById('lote-summary').innerHTML=
-    '<div style="background:#1a1a1a;border-radius:8px;padding:8px 12px;"><div style="font-size:10px;color:#666;">Prendas</div><div style="font-size:18px;font-weight:600;color:#F0EDE6;">'+lote.length+'</div></div>'+
-    '<div style="background:#1a1a1a;border-radius:8px;padding:8px 12px;"><div style="font-size:10px;color:#666;">Pagas cliente</div><div style="font-size:18px;font-weight:600;color:#F0EDE6;">'+f(tp)+'</div></div>'+
-    '<div style="background:#1a1a1a;border-radius:8px;padding:8px 12px;"><div style="font-size:10px;color:#666;">Ingresos esperados</div><div style="font-size:18px;font-weight:600;color:#F0EDE6;">'+f(tv)+'</div></div>'+
-    '<div style="background:#1a1a1a;border-radius:8px;padding:8px 12px;"><div style="font-size:10px;color:#666;">Beneficio esperado</div><div style="font-size:18px;font-weight:600;color:#CCFF00;">'+f(tb)+'</div></div>';
+    '<div style="background:rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;"><div style="font-size:10px;color:rgba(255,255,255,0.5);">Prendas</div><div style="font-size:18px;font-weight:600;color:#fff;">'+lote.length+'</div></div>'+
+    '<div style="background:rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;"><div style="font-size:10px;color:rgba(255,255,255,0.5);">Pagas cliente</div><div style="font-size:18px;font-weight:600;color:#fff;">'+f(tp)+'</div></div>'+
+    '<div style="background:rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;"><div style="font-size:10px;color:rgba(255,255,255,0.5);">Ingresos esperados</div><div style="font-size:18px;font-weight:600;color:#fff;">'+f(tv)+'</div></div>'+
+    '<div style="background:rgba(255,255,255,0.08);border-radius:8px;padding:8px 12px;"><div style="font-size:10px;color:rgba(255,255,255,0.5);">Beneficio esperado</div><div style="font-size:18px;font-weight:600;color:var(--verde-medio);">'+f(tb)+'</div></div>';
   document.getElementById('lote-lista').innerHTML=lote.map(function(h,i){
-    var col=h.n.p>=65?'#CCFF00':h.n.p>=50?'#EF9F27':'#F09595';
     var score=calcVelocidad(h.r,h.n);
     var ve=score>=70?'🚀':score>=40?'📦':'⚠️';
+    var col=h.n.p>=65?'var(--verde-medio)':h.n.p>=50?'#EF9F27':'#F09595';
     return '<div class="lote-item">'+
-      '<span style="color:#F0EDE6;flex:1;">'+(i+1)+'. '+(h.r.descripcion||h.r.categoria||'Prenda')+'</span>'+
-      '<span style="color:#888;margin:0 4px;">'+(h.r.marca||'-')+'</span>'+
-      '<span style="color:#aaa;margin:0 4px;">'+(h.r.talla||'-')+'</span>'+
+      '<span style="color:#fff;flex:1;">'+(i+1)+'. '+(h.r.descripcion||h.r.categoria||'Prenda')+'</span>'+
+      '<span style="color:rgba(255,255,255,0.5);margin:0 4px;">'+(h.r.marca||'-')+'</span>'+
+      '<span style="color:rgba(255,255,255,0.5);margin:0 4px;">'+(h.r.talla||'-')+'</span>'+
       '<span style="margin:0 4px;">'+ve+'</span>'+
       '<span style="color:'+col+';font-weight:600;">'+f(h.n.o)+'</span>'+
-      '<button class="lote-del" data-idx="'+i+'" title="Eliminar">✕</button>'+
+      '<button class="lote-del" data-idx="'+i+'">✕</button>'+
     '</div>';
   }).join('');
   document.querySelectorAll('.lote-del').forEach(function(btn){
@@ -628,9 +630,9 @@ function renderLote(){
 }
 
 function cerrarLote(){
-  if(!lote.length){ alert('El lote esta vacio.'); return; }
-  if(!confirm('Cerrar el lote y exportar a Excel?')) return;
-  var hd=[['Num','Descripcion','Marca','Talla','Estado','Precio mercado','Oferta cliente','Precio venta','Beneficio','Margen %','ROI %','Velocidad venta']];
+  if(!lote.length){ alert('El lote está vacío.'); return; }
+  if(!confirm('¿Cerrar el lote y exportar a Excel?')) return;
+  var hd=[['Num','Descripcion','Marca','Talla','Estado','Precio mercado','Oferta cliente','Precio venta','Beneficio','Margen %','ROI %','Velocidad']];
   var to=0,tv=0,tb=0;
   lote.forEach(function(h,i){
     to+=h.n.o; tv+=h.n.v; tb+=h.n.b;
@@ -640,9 +642,8 @@ function cerrarLote(){
   });
   hd.push(['','','','','TOTALES','',+to.toFixed(2),+tv.toFixed(2),+tb.toFixed(2),'','','']);
   var wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(hd);
-  ws['!cols']=[{wch:5},{wch:28},{wch:14},{wch:8},{wch:18},{wch:14},{wch:14},{wch:14},{wch:12},{wch:10},{wch:8},{wch:10}];
   XLSX.utils.book_append_sheet(wb,ws,'Lote');
-  XLSX.writeFile(wb,'Back2Street_Lote_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.xlsx');
+  XLSX.writeFile(wb,'VendenostuRopa_Lote_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.xlsx');
   lote=[]; renderLote();
 }
 
@@ -650,7 +651,7 @@ function renderHist(){
   updateCount();
   if(!hist.length){
     document.getElementById('summary').innerHTML='';
-    document.getElementById('hist-list').innerHTML='<div class="empty-hist">Sin prendas en el lote aun.</div>';
+    document.getElementById('hist-list').innerHTML='<div class="empty-hist">Sin prendas en el lote aún.</div>';
     return;
   }
   var tp=0,tv=0,tb=0;
@@ -659,13 +660,13 @@ function renderHist(){
     '<div class="summary-card"><div class="sc-label">Prendas</div><div class="sc-val">'+hist.length+'</div></div>'+
     '<div class="summary-card"><div class="sc-label">Pagado clientes</div><div class="sc-val">'+f(tp)+'</div></div>'+
     '<div class="summary-card"><div class="sc-label">Ingresos esperados</div><div class="sc-val">'+f(tv)+'</div></div>'+
-    '<div class="summary-card"><div class="sc-label">Beneficio esperado</div><div class="sc-val">'+f(tb)+'</div></div>';
+    '<div class="summary-card"><div class="sc-label">Beneficio esperado</div><div class="sc-val" style="color:var(--verde-oscuro);">'+f(tb)+'</div></div>';
   document.getElementById('hist-list').innerHTML=hist.map(function(h,i){
-    var pc=h.n.p>=65?'p-green':h.n.p>=50?'p-amber':'p-red';
+    var pc=h.n.p>=65?'p-verde':h.n.p>=50?'p-amber':'p-red';
     var score=calcVelocidad(h.r,h.n);
     var ve=score>=70?'🚀':score>=40?'📦':'⚠️';
     var roi=h.n.m>0?Math.round((h.n.b/h.n.m)*100):0;
-    return '<div class="hist-item" data-idx="'+i+'">'+
+    return '<div class="hist-item">'+
       (h.thumb?'<img class="hist-thumb" src="'+h.thumb+'">':'<div class="hist-thumb">👕</div>')+
       '<div class="hist-info" data-idx="'+i+'">'+
         '<div class="hist-name">'+(h.r.descripcion||h.r.categoria||'Prenda')+'</div>'+
@@ -674,17 +675,15 @@ function renderHist(){
           '<span class="pill '+pc+'">'+p(h.n.p)+'</span>'+
           (h.r.marca?' <span class="tag">'+h.r.marca+'</span>':'')+
           (h.r.talla?' <span class="tag">'+h.r.talla+'</span>':'')+
-          ' '+ve+
-          ' <span style="font-size:10px;color:var(--muted);">ROI '+roi+'%</span>'+
+          ' '+ve+' <span style="font-size:10px;color:var(--muted);">ROI '+roi+'%</span>'+
         '</div>'+
       '</div>'+
       '<div style="text-align:right;flex-shrink:0;">'+
         '<div style="font-size:14px;font-weight:600;">'+f(h.n.o)+'</div>'+
         '<div style="font-size:10px;color:var(--muted);">al cliente</div>'+
-        '<div style="font-size:11px;color:var(--green);font-weight:600;">+'+f(h.n.b)+' beneficio</div>'+
+        '<div style="font-size:11px;color:var(--verde);font-weight:600;">+'+f(h.n.b)+' benef.</div>'+
         '<div style="display:flex;gap:4px;margin-top:4px;">'+
           '<button class="btn-hist-pdf" data-idx="'+i+'" style="font-size:10px;padding:3px 8px;">PDF</button>'+
-          '<button class="btn-hist-email" data-idx="'+i+'" style="font-size:10px;padding:3px 8px;">Email</button>'+
           '<button class="btn-hist-del" data-idx="'+i+'" style="font-size:10px;padding:3px 8px;color:var(--red);">✕</button>'+
         '</div>'+
       '</div>'+
@@ -696,14 +695,11 @@ function renderHist(){
   document.querySelectorAll('.btn-hist-pdf').forEach(function(btn){
     btn.addEventListener('click',function(e){ e.stopPropagation(); genPDF(hist[parseInt(this.getAttribute('data-idx'))]); });
   });
-  document.querySelectorAll('.btn-hist-email').forEach(function(btn){
-    btn.addEventListener('click',function(e){ e.stopPropagation(); ultima=hist[parseInt(this.getAttribute('data-idx'))]; openEmail(); });
-  });
   document.querySelectorAll('.btn-hist-del').forEach(function(btn){
     btn.addEventListener('click',function(e){
       e.stopPropagation();
       var i=parseInt(this.getAttribute('data-idx'));
-      if(!confirm('Eliminar esta prenda del lote?')) return;
+      if(!confirm('¿Eliminar esta prenda del lote?')) return;
       var id=hist[i].id;
       hist.splice(i,1);
       lote=lote.filter(function(h){ return h.id!==id; });
@@ -716,7 +712,7 @@ function renderHist(){
 function detail(i){ ultima=hist[i]; go('tasar'); renderRes(hist[i].r,hist[i].log||3); }
 
 function clearHist(){
-  if(!confirm('Borrar todo el lote?')) return;
+  if(!confirm('¿Borrar todo el lote?')) return;
   hist=[]; lote=[];
   try{localStorage.removeItem('b2s_h');}catch(e){}
   renderHist(); renderLote();
@@ -726,113 +722,118 @@ function genPDF(h){
   var jsPDF=window.jspdf.jsPDF;
   var doc=new jsPDF({unit:'mm',format:'a4'});
   var W=210,m=20,y=42;
-  doc.setFillColor(12,12,12); doc.rect(0,0,W,30,'F');
-  doc.setTextColor(240,237,230); doc.setFontSize(18); doc.setFont('helvetica','bold'); doc.text('BACK2STREET',m,18);
-  doc.setFontSize(7); doc.setFont('helvetica','normal'); doc.setTextColor(68,68,68); doc.text('TASADOR EMPRESA - USO INTERNO',m,24);
-  doc.setTextColor(204,255,0); doc.text('Confidencial',W-m,18,{align:'right'});
+  doc.setFillColor(15,110,86); doc.rect(0,0,W,32,'F');
+  doc.setTextColor(255,255,255); doc.setFontSize(18); doc.setFont('helvetica','bold');
+  doc.text('vendenosturopa',m,16);
+  doc.setTextColor(157,225,203); doc.text('.es',m+79,16);
+  doc.setFontSize(7); doc.setFont('helvetica','normal');
+  doc.setTextColor(200,240,225); doc.text('TASADOR EMPRESA · USO INTERNO',m,23);
+  doc.setTextColor(157,225,203); doc.text(new Date().toLocaleDateString('es-ES'),W-m,16,{align:'right'});
   if(h.imgs&&h.imgs.length>0){
     var fx=m,maxF=Math.min(h.imgs.length,4);
     for(var i=0;i<maxF;i++){ try{ doc.addImage(h.imgs[i],'JPEG',fx,y,38,38); fx+=40; }catch(e){} }
     y+=44;
   }
-  doc.setTextColor(30,30,30); doc.setFontSize(10); doc.setFont('helvetica','bold'); doc.text('DATOS DE LA PRENDA',m,y);
-  doc.setDrawColor(204,255,0); doc.setLineWidth(0.5); doc.line(m,y+2,W-m,y+2); y+=10;
+  doc.setTextColor(30,30,30); doc.setFontSize(10); doc.setFont('helvetica','bold');
+  doc.text('DATOS DE LA PRENDA',m,y);
+  doc.setDrawColor(29,158,117); doc.setLineWidth(0.5); doc.line(m,y+2,W-m,y+2); y+=10;
   var score=calcVelocidad(h.r,h.n);
-  var vLabel=score>=70?'RAPIDA':score>=40?'NORMAL':'LENTA';
+  var vLabel=score>=70?'RÁPIDA':score>=40?'NORMAL':'LENTA';
   var roi=h.n.m>0?Math.round((h.n.b/h.n.m)*100):0;
-  [['Fecha',h.fecha+' '+h.hora],['Referencia',h.ref||'-'],['Descripcion',h.r.descripcion||'-'],['Marca',(h.r.marca||'-')+' Tier '+(h.r.tier_marca||'-')],['Estado',h.r.estado||'-'],['Talla',h.r.talla||'No detectada'],['Velocidad de venta',vLabel+' ('+score+'/100)'],['Confianza IA',h.r.confianza||'-'],['Notas',h.notas||'-']].forEach(function(x){
+  [['Fecha',h.fecha+' '+h.hora],['Referencia',h.ref||'-'],['Descripción',h.r.descripcion||'-'],['Marca',(h.r.marca||'-')+' Tier '+(h.r.tier_marca||'-')],['Estado',h.r.estado||'-'],['Talla',h.r.talla||'No detectada'],['Velocidad de venta',vLabel+' ('+score+'/100)'],['Confianza IA',h.r.confianza||'-'],['Notas',h.notas||'-']].forEach(function(x){
     doc.setFontSize(9); doc.setFont('helvetica','bold'); doc.setTextColor(80,80,80); doc.text(x[0]+':',m,y);
     doc.setFont('helvetica','normal'); doc.setTextColor(30,30,30);
     var val=String(x[1]); if(val.length>60) val=val.substring(0,60)+'...';
     doc.text(val,m+42,y); y+=7;
   });
-  y+=4; doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.text('ANALISIS ECONOMICO',m,y);
+  y+=4; doc.setFont('helvetica','bold'); doc.setFontSize(10);
+  doc.text('ANÁLISIS ECONÓMICO',m,y);
   doc.setDrawColor(200,200,200); doc.line(m,y+2,W-m,y+2); y+=10;
   var tallaF=h.n.tallaF||1;
   var tallaAjuste=tallaF>=1.0?'+'+Math.round((tallaF-1)*100)+'%':Math.round((tallaF-1)*100)+'%';
-  [['Precio de mercado Vinted',f(h.n.m)],['Precio venta Vinted -10%',f(h.n.v)],['Factor talla ('+( h.r.talla||'-')+')',tallaAjuste],['Oferta al cliente',f(h.n.o)],['Comision Vinted 5%','- '+f(h.n.c)],['Coste logistico','- '+f(h.n.log||3)]].forEach(function(x){
+  [['Precio de mercado Vinted',f(h.n.m)],['Precio venta Vinted -10%',f(h.n.v)],['Factor talla ('+( h.r.talla||'-')+')',tallaAjuste],['Oferta al cliente',f(h.n.o)],['Comisión Vinted 5%','- '+f(h.n.c)],['Coste logístico','- '+f(h.n.log||3)]].forEach(function(x){
     doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(80,80,80); doc.text(x[0],m,y);
     doc.setTextColor(30,30,30); doc.text(x[1],W-m,y,{align:'right'}); y+=7;
   });
   doc.setLineWidth(0.3); doc.line(m,y,W-m,y); y+=6;
   doc.setFont('helvetica','bold'); doc.setFontSize(10);
   doc.setTextColor(30,30,30); doc.text('Beneficio neto:',m,y);
-  var col=h.n.p>=65?[39,80,10]:h.n.p>=50?[99,56,6]:[121,31,31];
+  var col=h.n.p>=65?[15,110,86]:h.n.p>=50?[99,56,6]:[121,31,31];
   doc.setTextColor(col[0],col[1],col[2]); doc.text(f(h.n.b)+' ('+p(h.n.p)+')',W-m,y,{align:'right'}); y+=7;
   doc.setTextColor(30,30,30); doc.text('ROI sobre compra:',m,y);
   doc.setTextColor(col[0],col[1],col[2]); doc.text(roi+'%',W-m,y,{align:'right'});
   y+=10;
-  var bg=h.n.p>=65?[234,243,222]:h.n.p>=50?[250,238,218]:[252,235,235];
-  var vt=h.n.p>=65?'OPERACION RENTABLE':h.n.p>=50?'REVISAR OFERTA':'NO RENTABLE';
+  var bg=h.n.p>=65?[225,245,238]:h.n.p>=50?[250,238,218]:[252,235,235];
+  var vt=h.n.p>=65?'OPERACIÓN RENTABLE':h.n.p>=50?'REVISAR OFERTA':'NO RENTABLE';
   doc.setFillColor(bg[0],bg[1],bg[2]); doc.rect(m,y-5,W-2*m,11,'F');
   doc.setFontSize(9); doc.setTextColor(col[0],col[1],col[2]); doc.text(vt,W/2,y+1,{align:'center'});
   y+=18; doc.setFontSize(7); doc.setTextColor(160,160,160);
-  doc.text('Back2Street - Documento interno - Confidencial',W/2,y,{align:'center'});
-  doc.save('Back2Street_Empresa_'+(h.ref||'prenda').replace(/[^a-z0-9]/gi,'_')+'_'+(h.fecha||'').replace(/\//g,'-')+'.pdf');
+  doc.text('vendenosturopa.es · Documento interno · Confidencial',W/2,y,{align:'center'});
+  doc.save('VendenostuRopa_Empresa_'+(h.ref||'prenda').replace(/[^a-z0-9]/gi,'_')+'_'+(h.fecha||'').replace(/\//g,'-')+'.pdf');
 }
 
 function genPDFLote(){
-  if(!hist.length){ alert('El lote esta vacio.'); return; }
+  if(!hist.length){ alert('El lote está vacío.'); return; }
   var jsPDF=window.jspdf.jsPDF;
   var doc=new jsPDF({unit:'mm',format:'a4'});
   var W=210,m=20,y=42;
-  doc.setFillColor(12,12,12); doc.rect(0,0,W,30,'F');
-  doc.setTextColor(240,237,230); doc.setFontSize(18); doc.setFont('helvetica','bold'); doc.text('BACK2STREET',m,18);
-  doc.setFontSize(7); doc.setFont('helvetica','normal'); doc.setTextColor(68,68,68); doc.text('INFORME DE LOTE - USO INTERNO',m,24);
-  doc.setTextColor(204,255,0); doc.text(new Date().toLocaleDateString('es-ES'),W-m,18,{align:'right'});
-  doc.setTextColor(30,30,30); doc.setFontSize(12); doc.setFont('helvetica','bold'); doc.text('RESUMEN DEL LOTE',m,y);
-  doc.setDrawColor(204,255,0); doc.setLineWidth(0.5); doc.line(m,y+2,W-m,y+2); y+=12;
+  doc.setFillColor(15,110,86); doc.rect(0,0,W,32,'F');
+  doc.setTextColor(255,255,255); doc.setFontSize(18); doc.setFont('helvetica','bold');
+  doc.text('vendenosturopa',m,16);
+  doc.setTextColor(157,225,203); doc.text('.es',m+79,16);
+  doc.setFontSize(7); doc.setFont('helvetica','normal');
+  doc.setTextColor(200,240,225); doc.text('INFORME DE LOTE · USO INTERNO',m,23);
+  doc.setTextColor(157,225,203); doc.text(new Date().toLocaleDateString('es-ES'),W-m,16,{align:'right'});
+  doc.setTextColor(30,30,30); doc.setFontSize(12); doc.setFont('helvetica','bold');
+  doc.text('RESUMEN DEL LOTE',m,y);
+  doc.setDrawColor(29,158,117); doc.setLineWidth(0.5); doc.line(m,y+2,W-m,y+2); y+=12;
   var tp=0,tv=0,tb=0;
   hist.forEach(function(h){ tp+=h.n.o; tv+=h.n.v; tb+=h.n.b; });
   var roiLote=tp>0?Math.round((tb/tp)*100):0;
   doc.setFontSize(9);
-  [['Total prendas:',String(hist.length)],['Total pagado a clientes:',f(tp)],['Ingresos esperados Vinted:',f(tv)],['Beneficio esperado:',f(tb)],['ROI medio del lote:',roiLote+'%']].forEach(function(x){
+  [['Total prendas:',String(hist.length)],['Total pagado a clientes:',f(tp)],['Ingresos esperados:',f(tv)],['Beneficio esperado:',f(tb)],['ROI medio del lote:',roiLote+'%']].forEach(function(x){
     doc.setFont('helvetica','normal'); doc.setTextColor(80,80,80); doc.text(x[0],m,y);
     doc.setFont('helvetica','bold');
-    if(x[0].indexOf('Beneficio')>=0||x[0].indexOf('ROI')>=0){ doc.setTextColor(39,80,10); }else{ doc.setTextColor(30,30,30); }
+    if(x[0].indexOf('Beneficio')>=0||x[0].indexOf('ROI')>=0){ doc.setTextColor(15,110,86); }else{ doc.setTextColor(30,30,30); }
     doc.text(x[1],m+65,y); y+=7;
   });
   y+=8;
-  doc.setTextColor(30,30,30); doc.setFontSize(10); doc.setFont('helvetica','bold'); doc.text('DETALLE DE PRENDAS',m,y);
+  doc.setTextColor(30,30,30); doc.setFontSize(10); doc.setFont('helvetica','bold');
+  doc.text('DETALLE DE PRENDAS',m,y);
   doc.setDrawColor(200,200,200); doc.line(m,y+2,W-m,y+2); y+=10;
   doc.setFontSize(7); doc.setFont('helvetica','bold'); doc.setTextColor(80,80,80);
   doc.text('N',m,y); doc.text('Prenda',m+8,y); doc.text('Marca',m+65,y); doc.text('Talla',m+95,y); doc.text('Oferta',m+110,y); doc.text('Venta',m+128,y); doc.text('Benef.',m+146,y); doc.text('Margen',m+162,y); doc.text('Vel.',W-m,y,{align:'right'});
   y+=5; doc.setLineWidth(0.3); doc.line(m,y,W-m,y); y+=5;
   hist.forEach(function(h,i){
     if(y>270){ doc.addPage(); y=20; }
-    var col=h.n.p>=65?[39,80,10]:h.n.p>=50?[99,56,6]:[121,31,31];
     var score=calcVelocidad(h.r,h.n);
     var vLabel=score>=70?'Rap':score>=40?'Nor':'Len';
+    var col=h.n.p>=65?[15,110,86]:h.n.p>=50?[99,56,6]:[121,31,31];
     doc.setFontSize(7); doc.setFont('helvetica','normal'); doc.setTextColor(30,30,30);
     doc.text(String(i+1),m,y);
     var nombre=(h.r.descripcion||h.r.categoria||'Prenda'); if(nombre.length>24) nombre=nombre.substring(0,24)+'...';
-    doc.text(nombre,m+8,y);
-    doc.text(h.r.marca||'-',m+65,y);
-    doc.text(h.r.talla||'-',m+95,y);
-    doc.text(f(h.n.o),m+110,y);
-    doc.text(f(h.n.v),m+128,y);
+    doc.text(nombre,m+8,y); doc.text(h.r.marca||'-',m+65,y); doc.text(h.r.talla||'-',m+95,y);
+    doc.text(f(h.n.o),m+110,y); doc.text(f(h.n.v),m+128,y);
     doc.setTextColor(col[0],col[1],col[2]);
-    doc.text(f(h.n.b),m+146,y);
-    doc.text(p(h.n.p),m+162,y);
-    doc.text(vLabel,W-m,y,{align:'right'});
+    doc.text(f(h.n.b),m+146,y); doc.text(p(h.n.p),m+162,y); doc.text(vLabel,W-m,y,{align:'right'});
     doc.setTextColor(30,30,30);
     y+=6; doc.setDrawColor(240,240,240); doc.setLineWidth(0.2); doc.line(m,y-1,W-m,y-1);
   });
   y+=6;
-  doc.setLineWidth(0.8); doc.setDrawColor(204,255,0); doc.line(m,y,W-m,y); y+=8;
+  doc.setLineWidth(0.8); doc.setDrawColor(29,158,117); doc.line(m,y,W-m,y); y+=8;
   doc.setFontSize(10); doc.setFont('helvetica','bold');
   doc.setTextColor(30,30,30); doc.text('TOTAL PAGADO A CLIENTES',m,y); doc.setTextColor(121,31,31); doc.text(f(tp),W-m,y,{align:'right'}); y+=8;
-  doc.setTextColor(30,30,30); doc.text('INGRESOS ESPERADOS VINTED',m,y); doc.setTextColor(30,30,30); doc.text(f(tv),W-m,y,{align:'right'}); y+=8;
-  doc.setTextColor(30,30,30); doc.text('BENEFICIO TOTAL ESPERADO',m,y); doc.setTextColor(39,80,10); doc.text(f(tb),W-m,y,{align:'right'}); y+=8;
-  doc.setTextColor(30,30,30); doc.text('ROI MEDIO DEL LOTE',m,y); doc.setTextColor(39,80,10); doc.text(roiLote+'%',W-m,y,{align:'right'});
+  doc.setTextColor(30,30,30); doc.text('INGRESOS ESPERADOS',m,y); doc.setTextColor(30,30,30); doc.text(f(tv),W-m,y,{align:'right'}); y+=8;
+  doc.setTextColor(30,30,30); doc.text('BENEFICIO TOTAL ESPERADO',m,y); doc.setTextColor(15,110,86); doc.text(f(tb),W-m,y,{align:'right'}); y+=8;
+  doc.setTextColor(30,30,30); doc.text('ROI MEDIO DEL LOTE',m,y); doc.setTextColor(15,110,86); doc.text(roiLote+'%',W-m,y,{align:'right'});
   y+=16; doc.setFontSize(7); doc.setTextColor(160,160,160);
-  doc.text('Back2Street - Documento interno - Confidencial',W/2,y,{align:'center'});
-  doc.save('Back2Street_Lote_Empresa_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.pdf');
+  doc.text('vendenosturopa.es · Documento interno · Confidencial',W/2,y,{align:'center'});
+  doc.save('VendenostuRopa_Lote_Empresa_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.pdf');
 }
 
 function toExcel(){
-  if(!hist.length){ alert('Lote vacio.'); return; }
-  var hd=[['Fecha','Hora','Referencia','Descripcion','Categoria','Marca','Tier','Talla','Estado','Confianza','Precio mercado','Oferta cliente','Precio venta','Beneficio neto','Margen %','ROI %','Velocidad venta','Veredicto']];
+  if(!hist.length){ alert('Lote vacío.'); return; }
+  var hd=[['Fecha','Hora','Referencia','Descripcion','Categoria','Marca','Tier','Talla','Estado','Confianza','Precio mercado','Oferta cliente','Precio venta','Beneficio neto','Margen %','ROI %','Velocidad','Veredicto']];
   hist.forEach(function(h){
     var score=calcVelocidad(h.r,h.n);
     var roi=h.n.m>0?Math.round((h.n.b/h.n.m)*100):0;
@@ -841,20 +842,20 @@ function toExcel(){
   var wb=XLSX.utils.book_new(),ws=XLSX.utils.aoa_to_sheet(hd);
   ws['!cols']=hd[0].map(function(_,i){ return{wch:i<2?10:i<4?24:12}; });
   XLSX.utils.book_append_sheet(wb,ws,'Lote');
-  XLSX.writeFile(wb,'Back2Street_Empresa_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.xlsx');
+  XLSX.writeFile(wb,'VendenostuRopa_Empresa_'+new Date().toLocaleDateString('es-ES').replace(/\//g,'-')+'.xlsx');
 }
 
 function buildBody(h){
   var score=calcVelocidad(h.r,h.n);
-  var vLabel=score>=70?'RAPIDA':score>=40?'NORMAL':'LENTA';
+  var vLabel=score>=70?'RÁPIDA':score>=40?'NORMAL':'LENTA';
   var roi=h.n.m>0?Math.round((h.n.b/h.n.m)*100):0;
-  return 'Informe Back2Street - USO INTERNO\n\nFecha: '+h.fecha+' '+h.hora+'\nReferencia: '+(h.ref||'-')+'\nDescripcion: '+(h.r.descripcion||'-')+'\nMarca: '+(h.r.marca||'-')+' Tier '+(h.r.tier_marca||'-')+'\nEstado: '+(h.r.estado||'-')+'\nTalla: '+(h.r.talla||'-')+'\nVelocidad de venta: '+vLabel+'\n\nOferta cliente: '+f(h.n.o)+'\nPrecio venta Vinted: '+f(h.n.v)+'\nBeneficio neto: '+f(h.n.b)+' ('+p(h.n.p)+')\nROI sobre compra: '+roi+'%\n\n- Back2Street - Documento interno -';
+  return 'vendenosturopa.es - Informe empresa\n\nFecha: '+h.fecha+' '+h.hora+'\nReferencia: '+(h.ref||'-')+'\nDescripción: '+(h.r.descripcion||'-')+'\nMarca: '+(h.r.marca||'-')+'\nEstado: '+(h.r.estado||'-')+'\nTalla: '+(h.r.talla||'-')+'\nVelocidad: '+vLabel+'\n\nOferta cliente: '+f(h.n.o)+'\nBeneficio neto: '+f(h.n.b)+' ('+p(h.n.p)+')\nROI: '+roi+'%\n\n- vendenosturopa.es -';
 }
 
 function openEmail(){
   document.getElementById('modal-email').classList.add('show');
   document.getElementById('me-d').value='';
-  if(ultima) document.getElementById('me-a').value='Back2Street Empresa '+(ultima.r.descripcion||ultima.r.categoria||'prenda');
+  if(ultima) document.getElementById('me-a').value='vendenosturopa.es '+(ultima.r.descripcion||ultima.r.categoria||'prenda');
 }
 
 function sendEmail(){
@@ -867,19 +868,18 @@ function sendEmail(){
 }
 
 function sendSummary(){
-  if(!hist.length){ document.getElementById('ef').textContent='Lote vacio.'; return; }
+  if(!hist.length){ document.getElementById('ef').textContent='Lote vacío.'; return; }
   var d=document.getElementById('ed').value.trim();
   var a=encodeURIComponent(document.getElementById('ea').value);
   var msg=document.getElementById('em').value;
   var tp=0,tv=0,tb=0;
   hist.forEach(function(h){ tp+=h.n.o; tv+=h.n.v; tb+=h.n.b; });
-  var body='Back2Street - Resumen del lote\n'+new Date().toLocaleDateString('es-ES')+'\n\nPrendas: '+hist.length+'\nPagado a clientes: '+f(tp)+'\nIngresos esperados: '+f(tv)+'\nBeneficio esperado: '+f(tb)+'\n\nDETALLE\n';
+  var body='vendenosturopa.es - Resumen lote\n'+new Date().toLocaleDateString('es-ES')+'\n\nPrendas: '+hist.length+'\nPagado clientes: '+f(tp)+'\nIngresos esperados: '+f(tv)+'\nBeneficio esperado: '+f(tb)+'\n\n';
   hist.forEach(function(h,i){
-    var score=calcVelocidad(h.r,h.n);
     var roi=h.n.m>0?Math.round((h.n.b/h.n.m)*100):0;
-    body+='\n'+(i+1)+'. '+(h.r.descripcion||h.r.categoria)+' - '+(h.r.marca||'-')+'\n   Oferta: '+f(h.n.o)+' Beneficio: '+f(h.n.b)+' ('+p(h.n.p)+') ROI: '+roi+'% Vel: '+(score>=70?'Rapido':score>=40?'Normal':'Lento')+'\n';
+    body+='\n'+(i+1)+'. '+(h.r.descripcion||h.r.categoria)+' - '+(h.r.marca||'-')+'\n   Oferta: '+f(h.n.o)+' Benef: '+f(h.n.b)+' ('+p(h.n.p)+') ROI: '+roi+'%\n';
   });
-  body+='\n'+(msg?msg+'\n':'')+'\n- Back2Street - Uso interno -';
+  body+='\n'+(msg?msg+'\n':'')+'\n- vendenosturopa.es -';
   window.location.href='mailto:'+d+'?subject='+a+'&body='+encodeURIComponent(body);
   document.getElementById('ef').textContent='Abriendo cliente de email...';
 }
