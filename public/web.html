@@ -449,8 +449,54 @@
     </div>
   </div>
 </div>
-
-<!-- PASOS -->
+// OPINIONES
+(function(){
+  var estrellas=0;
+  document.querySelectorAll('.star').forEach(function(s){
+    s.addEventListener('mouseover',function(){
+      var v=parseInt(this.getAttribute('data-val'));
+      document.querySelectorAll('.star').forEach(function(st){
+        st.style.color=parseInt(st.getAttribute('data-val'))<=v?'#F5A623':'#ddd';
+      });
+    });
+    s.addEventListener('mouseout',function(){
+      document.querySelectorAll('.star').forEach(function(st){
+        st.style.color=parseInt(st.getAttribute('data-val'))<=estrellas?'#F5A623':'#ddd';
+      });
+    });
+    s.addEventListener('click',function(){
+      estrellas=parseInt(this.getAttribute('data-val'));
+      document.getElementById('op-estrellas').value=estrellas;
+      document.querySelectorAll('.star').forEach(function(st){
+        st.style.color=parseInt(st.getAttribute('data-val'))<=estrellas?'#F5A623':'#ddd';
+      });
+    });
+  });
+  document.getElementById('btn-enviar-opinion').addEventListener('click',function(){
+    var nombre=document.getElementById('op-nombre').value.trim();
+    var comentario=document.getElementById('op-comentario').value.trim();
+    var stars=parseInt(document.getElementById('op-estrellas').value)||0;
+    var prendas=document.getElementById('op-prendas').value.trim();
+    var err=document.getElementById('op-error');
+    if(!nombre){ err.textContent='Por favor introduce tu nombre.'; err.style.display='block'; return; }
+    if(stars===0){ err.textContent='Por favor selecciona una valoración.'; err.style.display='block'; return; }
+    if(!comentario){ err.textContent='Por favor escribe un comentario.'; err.style.display='block'; return; }
+    err.style.display='none';
+    var starsText='★'.repeat(stars)+'☆'.repeat(5-stars);
+    var asunto=encodeURIComponent('Nueva opinión - '+nombre+' - '+starsText);
+    var cuerpo=encodeURIComponent(
+      'Nueva opinión en vendenosturopa.es\n\n'+
+      'Nombre: '+nombre+'\n'+
+      'Valoración: '+starsText+' ('+stars+'/5)\n'+
+      (prendas?'Prendas vendidas: '+prendas+'\n':'')+
+      '\nComentario:\n'+comentario+'\n\n'+
+      '---\nvendenosturopa.es'
+    );
+    window.location.href='mailto:info@vendenosturopa.es?subject='+asunto+'&body='+cuerpo;
+    document.getElementById('opinion-form').style.display='none';
+    document.getElementById('opinion-ok').style.display='block';
+  });
+})();<!-- PASOS -->
 <div class="steps-section" id="como-funciona">
   <div class="steps-inner">
     <div class="section-label">El proceso</div>
